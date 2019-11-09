@@ -1,5 +1,5 @@
-import { ComponentEngine } from "../engine/componentEngine";
-import { State } from "../state";
+import { ComponentEngine } from '../engine/componentEngine';
+import { State } from '../state';
 
 export class Router {
   public state: State;
@@ -10,25 +10,25 @@ export class Router {
   constructor(state: State) {
     this.state = state;
     const that = this;
-    this.selector = "yield";
-    this.hashRoute = window.location.hash.replace("#/", "");
+    this.selector = 'yield';
+    this.hashRoute = window.location.hash.replace('#/', '');
 
     this.engine = state.componentEngine;
     window.onhashchange = () => {
-      if (typeof that.engine === "undefined") {
+      if (typeof that.engine === 'undefined') {
         return;
       }
 
-      that.hashRoute = window.location.hash.replace("#/", "");
+      that.hashRoute = window.location.hash.replace('#/', '');
 
-      that.engine.recreateComponentsByName("yield"); // TODO: Find better way
+      that.engine.recreateComponentsByName('yield'); // TODO: Find better way
     };
   }
 
   public isFunction(functionToCheck: any) {
     return (
       functionToCheck &&
-      {}.toString.call(functionToCheck) === "[object Function]"
+      {}.toString.call(functionToCheck) === '[object Function]'
     );
   }
   public addRoutings(routings: any) {
@@ -36,12 +36,12 @@ export class Router {
   }
 
   public getHashRoute() {
-    return window.location.hash.replace("#/", "");
+    return window.location.hash.replace('#/', '');
   }
 
   public getComponent() {
-    if (typeof this.routings === "undefined") {
-      return "div";
+    if (typeof this.routings === 'undefined') {
+      return 'div';
     }
     for (const route of this.routings) {
       if (route.route === this.getHashRoute()) {
@@ -50,7 +50,7 @@ export class Router {
             const instance = new route.component(this.state);
             return instance.selector;
           } else {
-            return "div";
+            return 'div';
           }
         } else {
           const instance = new route.component(this.state);
@@ -60,7 +60,7 @@ export class Router {
     }
   }
   public navigate(where: string) {
-    window.location.hash = "/" + where.replace("/", "");
+    window.location.hash = '/' + where.replace('/', '');
   }
 
   public render() {

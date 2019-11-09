@@ -1,8 +1,8 @@
-"use strict";
-import { ComponentEngine } from "./core/engine/componentEngine";
-import { RenderingEngine } from "./core/engine/engine";
-import { Injector } from "./core/injector";
-import { State } from "./core/state";
+'use strict';
+import { ComponentEngine } from './core/engine/componentEngine';
+import { RenderingEngine } from './core/engine/engine';
+import { Injector } from './core/injector';
+import { State } from './core/state';
 
 class Factory {
   public create<T>(type: new () => T): T {
@@ -19,23 +19,23 @@ export class Nails {
   constructor(object: any) {
     this.state = new State();
 
-    if (typeof object.methods.onInit !== "undefined") {
+    if (typeof object.methods.onInit !== 'undefined') {
       object.methods.onInit();
     }
-    if (object.hasOwnProperty("el")) {
+    if (object.hasOwnProperty('el')) {
       this.state.element = object.el;
     } else {
       console.error(
-        "NailsJS cannot be initalized, because no element was specified"
+        'NailsJS cannot be initalized, because no element was specified'
       );
     }
-    if (object.hasOwnProperty("data")) {
+    if (object.hasOwnProperty('data')) {
       this.state.data = object.data;
     }
-    if (object.hasOwnProperty("methods")) {
+    if (object.hasOwnProperty('methods')) {
       this.state.methods = object.methods;
     }
-    if (typeof object.components === "undefined") {
+    if (typeof object.components === 'undefined') {
       this.state.components = [];
     } else {
       if (Array.isArray(object.components)) {
@@ -61,7 +61,7 @@ export class Nails {
     this.state.methods.getState = function() {
       return this.state;
     };
-    if (typeof this.state.methods.onMounted !== "undefined") {
+    if (typeof this.state.methods.onMounted !== 'undefined') {
       this.state.methods.onMounted(this.state);
     }
   }
@@ -70,7 +70,7 @@ export class Nails {
     const factory = new Factory();
     if (!Array.isArray(arr)) {
       console.warn(
-        "Cannot iterate over declarations, since they are not an array"
+        'Cannot iterate over declarations, since they are not an array'
       );
       return;
     }
@@ -104,7 +104,7 @@ export class Nails {
       },
       set(target: any, prop: any, value: string) {
         target[prop] = value;
-        this.notifyDom(target, prop, "");
+        this.notifyDom(target, prop, '');
         return true;
       }
     };

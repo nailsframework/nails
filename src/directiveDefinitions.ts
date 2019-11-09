@@ -1,12 +1,12 @@
-"use strict";
-import { Instance } from "./classes/Instance";
-import { ComponentEngine } from "./core/engine/componentEngine";
-import { RenderingEngine } from "./core/engine/engine";
-import { State } from "./core/state";
+'use strict';
+import { Instance } from './classes/Instance';
+import { ComponentEngine } from './core/engine/componentEngine';
+import { RenderingEngine } from './core/engine/engine';
+import { State } from './core/state';
 export class NailsDirectives {
   public directives: any;
   constructor() {
-    this.directives = ["if", "form", "for", "click", "change"];
+    this.directives = ['if', 'form', 'for', 'click', 'change'];
   }
   /*
           A directive consists of an element (string) in the @directives array and a function declaration
@@ -46,28 +46,28 @@ export class NailsDirectives {
       ) as Instance;
       if (context !== null) {
         // tslint:disable-next-line: no-eval
-        eval("context.getComponent()." + statement);
+        eval('context.getComponent().' + statement);
         return;
       }
       // tslint:disable-next-line: no-eval
-      eval("state.methods." + statement);
+      eval('state.methods.' + statement);
     };
     element.onclick = callback;
   }
   public change(element: HTMLInputElement, statement: string, state: State) {
     const callback = () => {
       // tslint:disable-next-line: no-eval
-      eval("state.methods." + statement + "(" + element.value + ")");
+      eval('state.methods.' + statement + '(' + element.value + ')');
     };
     element.onchange = callback;
   }
   public form(element: HTMLInputElement, statement: string, state: State) {
-    if (element.getAttribute("type") === "text") {
+    if (element.getAttribute('type') === 'text') {
       if (state.data[statement] !== element.value) {
         state.data[statement] = element.value;
       }
     }
-    element.addEventListener("input", () => {
+    element.addEventListener('input', () => {
       if (state.data[statement] !== element.value) {
         state.data[statement] = element.value;
       }
@@ -75,14 +75,14 @@ export class NailsDirectives {
   }
 
   public for(element: HTMLElement, statemenet: string, state: State) {
-    console.error("called");
+    console.error('called');
     const engine = new RenderingEngine(state);
     engine.disableInterpolationForVariableNameOnElement(
-      statemenet.split(" ")[1],
+      statemenet.split(' ')[1],
       element
     );
 
-    element.style.display = "none";
+    element.style.display = 'none';
     // tslint:disable-next-line: no-shadowed-variable
     function interpolateCustomElement(
       el: HTMLElement,
@@ -95,15 +95,15 @@ export class NailsDirectives {
       const interpolations = engine.getInterpolationsForTextContent(html);
       for (const interpolation of interpolations) {
         let stripped = engine.stripAndTrimInterpolation(interpolation);
-        const args = stripped.split(".");
-        args[0] = "";
-        stripped = "";
+        const args = stripped.split('.');
+        args[0] = '';
+        stripped = '';
         for (const arg of args) {
-          stripped += arg + ".";
+          stripped += arg + '.';
         }
         stripped = stripped.substring(0, stripped.length - 1);
 
-        if (engine.getValueOfInterpolation(interpolation) !== "undefined") {
+        if (engine.getValueOfInterpolation(interpolation) !== 'undefined') {
           html = html.replace(
             interpolation,
             engine.getValueOfInterpolation(interpolation)
@@ -112,16 +112,16 @@ export class NailsDirectives {
           // tslint:disable: no-eval
           html = html.replace(
             interpolation,
-            engine.sanitize(eval("object" + stripped))
+            engine.sanitize(eval('object' + stripped))
           );
         }
       }
       el.innerHTML = html;
     }
-    const descriptor = statemenet.split(" ")[1];
-    const arr = statemenet.split(" ")[3];
-    const refArray = eval("state.data." + arr);
-    if (typeof refArray === "undefined" || refArray === null) {
+    const descriptor = statemenet.split(' ')[1];
+    const arr = statemenet.split(' ')[3];
+    const refArray = eval('state.data.' + arr);
+    if (typeof refArray === 'undefined' || refArray === null) {
       return;
     }
 
@@ -132,12 +132,12 @@ export class NailsDirectives {
       interpolateCustomElement(child, i, descriptor);
       parent.appendChild(child);
       engine.disableInterpolationForVariableNameOnElement(
-        statemenet.split(" ")[1],
+        statemenet.split(' ')[1],
         child
       );
 
       for (const attr of element.attributes) {
-        if (attr.name !== "n-for" && attr.name !== "style") {
+        if (attr.name !== 'n-for' && attr.name !== 'style') {
           child.setAttribute(attr.name, attr.value);
         }
       }
@@ -147,39 +147,39 @@ export class NailsDirectives {
     }
   }
   public if(element: HTMLElement, statement: string, state: State) {
-    if (statement === "true" || statement === "false") {
-      if (statement === "true") {
-        element.style.visibility = "visible";
+    if (statement === 'true' || statement === 'false') {
+      if (statement === 'true') {
+        element.style.visibility = 'visible';
 
         return;
       } else {
-        element.style.visibility = "hidden";
+        element.style.visibility = 'hidden';
 
         return;
       }
     }
 
     let reversed = false;
-    if (statement[0] === "!") {
+    if (statement[0] === '!') {
       statement = statement.substring(1);
       reversed = true;
     }
     if (state.data.hasOwnProperty(statement)) {
       if (reversed) {
         if (!eval(state.data[statement])) {
-          element.style.visibility = "visible";
+          element.style.visibility = 'visible';
         } else {
-          element.style.visibility = "hidden";
+          element.style.visibility = 'hidden';
         }
       } else {
         if (eval(state.data[statement])) {
-          element.style.visibility = "visible";
+          element.style.visibility = 'visible';
         } else {
-          element.style.visibility = "hidden";
+          element.style.visibility = 'hidden';
         }
       }
     } else {
-      console.warn("statement: " + statement + " not found in context");
+      console.warn('statement: ' + statement + ' not found in context');
     }
   }
 }
