@@ -8,7 +8,12 @@
     "lib/*"
   ],
   "scripts": {
-    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline",
+    "tsc": "tsc",
     "test": "jest --config jestconfig.json",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json --fix",
@@ -16,7 +21,7 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
   },
   "repository": {
     "type": "git",
@@ -42,7 +47,15 @@
   },
   "homepage": "https://github.com/nailsframework/nails#readme",
   "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-typescript": "^7.7.2",
     "@types/jest": "^24.0.22",
+    "babel-cli": "^6.26.0",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "ts-jest": "^24.1.0",
