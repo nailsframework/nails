@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es3",
+    "lib": [
+      "es2018",
+      "dom",
+      "dom.iterable"
+    ],
     "module": "commonjs",
     "declaration": true,
     "outDir": "./lib",
     "strict": true,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "downlevelIteration": true
   },
   "include": [
     "src"
