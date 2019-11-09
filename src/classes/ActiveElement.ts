@@ -1,4 +1,4 @@
-import { IActiveElement } from '../interfaces/ActiveElement';
+import { IActiveElement } from "../interfaces/ActiveElement";
 export class ActiveElement implements IActiveElement {
   public key: string;
   public statement: string;

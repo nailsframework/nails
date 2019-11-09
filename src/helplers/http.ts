@@ -8,7 +8,7 @@ class RestForm {
   constructor(object: any) {
     this.xhr = new XMLHttpRequest(); // the constructor has no arguments
 
-    if (object.hasOwnProperty('methods')) {
+    if (object.hasOwnProperty("methods")) {
       if (Array.isArray(object.methods)) {
         for (const methode of object.methods) {
           this.methods = [];
@@ -16,10 +16,10 @@ class RestForm {
         }
       }
     }
-    if (object.hasOwnProperty('isArray')) {
+    if (object.hasOwnProperty("isArray")) {
       this.isArray = object.isArray;
     }
-    if (object.hasOwnProperty('url')) {
+    if (object.hasOwnProperty("url")) {
       this.url = object.url;
     }
   }
@@ -31,7 +31,7 @@ class RestForm {
   public get(callback: Function, user: string, password: string) {
     // Assume, that the url is correct and the dev follows RFC we can just do a GET on this.
     this.xhr.open(
-      'GET',
+      "GET",
       this.url,
       false,
       user ? user : undefined,
