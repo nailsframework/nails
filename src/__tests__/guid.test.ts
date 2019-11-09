@@ -1,5 +1,7 @@
 import { Guid } from '../core/math/Guid';
 
 test('Guid generation', () => {
-  expect(Guid.newGuid()).toBeTruthy();
+    const first = Guid.newGuid();
+    const second = Guid.newGuid();
+    expect(first).not.toEqual(second);
 });
