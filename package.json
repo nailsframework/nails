@@ -5,7 +5,7 @@
   "main": "lib/nails.js",
   "types": "lib/nails.d.ts",
   "files": [
-    "lib /**/*"
+    "lib/*"
   ],
   "scripts": {
     "build": "tsc",

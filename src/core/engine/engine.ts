@@ -1,47 +1,47 @@
-"use strict";
-import { ActiveElement } from "../../classes/ActiveElement";
-import { NailsDirectives } from "../../directiveDefinitions";
-import { State } from "../state";
+'use strict';
+import { ActiveElement } from '../../classes/ActiveElement';
+import { NailsDirectives } from '../../directiveDefinitions';
+import { State } from '../state';
 export class RenderingEngine {
   public state: State;
   public directives: NailsDirectives;
 
   constructor(state: State) {
-    if (typeof state === "undefined" || state === null) {
+    if (typeof state === 'undefined' || state === null) {
       // tslint:disable-next-line:no-console
-      console.log("Engine was initialized without a state");
+      console.log('Engine was initialized without a state');
     }
     this.state = state;
     this.directives = new NailsDirectives();
   }
 
   public indexDOM() {
-    if (typeof this.state.element !== "undefined") {
+    if (typeof this.state.element !== 'undefined') {
       let element = null;
-      if (this.state.element.startsWith("#")) {
+      if (this.state.element.startsWith('#')) {
         const selector = this.state.element.substr(1);
         element = document.getElementById(selector);
       } else {
         element = document.getElementsByTagName(this.state.element);
       }
 
-      if (typeof element === "undefined" || element === null) {
+      if (typeof element === 'undefined' || element === null) {
         console.error(
-          "No element with selector: " + this.state.element + " has been found"
+          'No element with selector: ' + this.state.element + ' has been found'
         );
         return;
       }
       if (element instanceof HTMLCollection && element.length > 1) {
         // tslint:disable-next-line:max-line-length
         console.error(
-          "Multiple choices, try using id if the element tag is not unique. Your Selector was: " +
+          'Multiple choices, try using id if the element tag is not unique. Your Selector was: ' +
             this.state.element
         );
         return;
       }
       if (element instanceof HTMLCollection && element.length === 0) {
         console.error(
-          "No element with selector: " + this.state.element + " has been found"
+          'No element with selector: ' + this.state.element + ' has been found'
         );
         return;
       }
@@ -71,7 +71,7 @@ export class RenderingEngine {
 
   public setTitle() {
     if (
-      typeof this.state.data.title !== "undefined" ||
+      typeof this.state.data.title !== 'undefined' ||
       this.state.data.title === null
     ) {
       document.title = this.state.data.title;
@@ -79,12 +79,12 @@ export class RenderingEngine {
   }
 
   public elementCanGetAttribute(element: HTMLElement) {
-    return "getAttribute" in element;
+    return 'getAttribute' in element;
   }
 
   public isNForActivated(element: HTMLElement) {
     if (this.elementCanGetAttribute(element)) {
-      return element.getAttribute("n-for") !== null;
+      return element.getAttribute('n-for') !== null;
     }
     return false;
   }
@@ -93,7 +93,7 @@ export class RenderingEngine {
     name: string,
     element: HTMLElement
   ) {
-    if (typeof name === "undefined" || typeof element === "undefined") {
+    if (typeof name === 'undefined' || typeof element === 'undefined') {
       return;
     }
     for (const el of this.state.disabledElements) {
@@ -101,23 +101,23 @@ export class RenderingEngine {
         return;
       }
     }
-    const activeElement = new ActiveElement(element, null, "", name, "", "");
+    const activeElement = new ActiveElement(element, null, '', name, '', '');
     this.state.disabledElements.push(activeElement);
   }
   public getElementDerrivedObject(element: HTMLElement) {
-    return "object";
+    return 'object';
   }
   public getElementDerrivedProperty(element: HTMLElement) {
-    return "property";
+    return 'property';
   }
   public getForArrayByStatement(statement: string) {
-    const statements = statement.split(" ");
+    const statements = statement.split(' ');
     return statements[statements.length];
   }
   public isForAttribute(element: ActiveElement) {
     const el = element.element;
-    if ("getAttribute" in el) {
-      return el.getAttribute("n-for") !== null;
+    if ('getAttribute' in el) {
+      return el.getAttribute('n-for') !== null;
     } else {
       return false;
     }
@@ -131,16 +131,16 @@ export class RenderingEngine {
     return directive.substring(2);
   }
   public prefixDiretive(directive: string) {
-    return "n-" + directive;
+    return 'n-' + directive;
   }
   public getElementDirectives(element: HTMLElement) {
-    if (typeof element === "undefined") {
+    if (typeof element === 'undefined') {
       return [];
     }
     const directives: string[] = [];
     for (let directive of this.directives.directives) {
       directive = this.prefixDiretive(directive);
-      if ("hasAttribute" in element && element.hasAttribute(directive)) {
+      if ('hasAttribute' in element && element.hasAttribute(directive)) {
         directives.push(directive);
       }
     }
@@ -170,9 +170,9 @@ export class RenderingEngine {
       return element.getAttribute(directive);
     } else {
       console.warn(
-        "directive: " + directive + " not found on element: " + element
+        'directive: ' + directive + ' not found on element: ' + element
       );
-      return "";
+      return '';
     }
   }
   public executeDirectivesOnElement(element: HTMLElement, add: boolean) {
@@ -182,9 +182,9 @@ export class RenderingEngine {
       if (directive in this.directives) {
         // tslint:disable-next-line:no-eval
         eval(
-          "this.directives." +
+          'this.directives.' +
             directive +
-            "(element, this.getElementAttributeForDirective(element, directive), this.state)"
+            '(element, this.getElementAttributeForDirective(element, directive), this.state)'
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -197,14 +197,14 @@ export class RenderingEngine {
           }
         }
       } else {
-        console.warn("not found directive: " + directive);
+        console.warn('not found directive: ' + directive);
       }
     }
   }
 
   public stripAndTrimNForInterpolation(interpolation: string) {
-    interpolation = interpolation.replace("[[[", "");
-    interpolation = interpolation.replace("]]]", "");
+    interpolation = interpolation.replace('[[[', '');
+    interpolation = interpolation.replace(']]]', '');
     interpolation = interpolation.trim();
     return interpolation;
   }
@@ -229,7 +229,7 @@ export class RenderingEngine {
       interpolation = this.stripAndTrimNForInterpolation(interpolation);
     } else {
       console.warn(
-        "Not found interpolation in submitted value: " + interpolation
+        'Not found interpolation in submitted value: ' + interpolation
       );
       return interpolation;
     }
@@ -243,42 +243,42 @@ export class RenderingEngine {
       interpolation = this.stripAndTrimInterpolation(interpolation);
     } else {
       console.warn(
-        "Not found interpolation in submitted value: " + interpolation
+        'Not found interpolation in submitted value: ' + interpolation
       );
       return interpolation;
     }
     interpolation = interpolation.trim();
     let stripped = this.stripAndTrimInterpolation(interpolation);
 
-    const args = stripped.split(".");
-    stripped = "";
+    const args = stripped.split('.');
+    stripped = '';
     for (const arg of args) {
-      stripped += arg + ".";
+      stripped += arg + '.';
     }
     stripped = stripped.substring(0, stripped.length - 1);
-    if (typeof this.state.data[stripped.split(".")[0]] === "undefined") {
+    if (typeof this.state.data[stripped.split('.')[0]] === 'undefined') {
       // tslint:disable-next-line:max-line-length
-      return "undefined"; // This saves us from from crashing when user tries to user data.key.subkey where data.key is not defined. Also leaves n-for alone
+      return 'undefined'; // This saves us from from crashing when user tries to user data.key.subkey where data.key is not defined. Also leaves n-for alone
     }
     // tslint:disable-next-line:no-eval
-    return eval("this.state.data." + stripped);
+    return eval('this.state.data.' + stripped);
   }
 
   public removeWhiteSpaceFromString(str: string) {
-    return str.replace(/\s/g, "");
+    return str.replace(/\s/g, '');
   }
   public stripAndTrimInterpolation(interpolation: string) {
-    if (typeof interpolation === "undefined" || typeof interpolation === null) {
+    if (typeof interpolation === 'undefined' || typeof interpolation === null) {
       return interpolation;
     }
-    interpolation = interpolation.replace("{{", "");
-    interpolation = interpolation.replace("}}", "");
+    interpolation = interpolation.replace('{{', '');
+    interpolation = interpolation.replace('}}', '');
     interpolation = interpolation.trim();
     return interpolation;
   }
   public getInterpolationsForTextContent(text: string) {
     const interpolations: string[] = [];
-    if (typeof text === "undefined" || text === null) {
+    if (typeof text === 'undefined' || text === null) {
       return interpolations;
     }
     // text may come in this format 'hi, this is {{test}} and this is {{abc}}'
@@ -317,7 +317,7 @@ export class RenderingEngine {
   public setContentOfTextNode(node: Node, value: string) {
     if (node.nodeType !== 3) {
       console.error(
-        "setContentOfTextNode... this implies that you *HAVE* to provide nothing else than a textNode as argument."
+        'setContentOfTextNode... this implies that you *HAVE* to provide nothing else than a textNode as argument.'
       );
       return false;
     }
@@ -391,7 +391,7 @@ export class RenderingEngine {
       let text = element.textContent || element.textContent;
       text = text.replace(interpolation, value);
 
-      if ("textContent" in element) {
+      if ('textContent' in element) {
         element.textContent = text;
         continue;
       }
@@ -421,10 +421,10 @@ export class RenderingEngine {
     return element.nodeType === 3;
   }
   public sanitize(str: string) {
-    if (typeof str !== "string") {
+    if (typeof str !== 'string') {
       return str;
     }
-    const temp = document.createElement("div");
+    const temp = document.createElement('div');
     temp.textContent = str;
     const san = temp.innerHTML;
     return san;
@@ -468,10 +468,10 @@ export class RenderingEngine {
 
       const el = element as HTMLElement;
       const interpolation =
-        "{{" + el.getAttribute("n-for").split(" ")[3] + "}}";
+        '{{' + el.getAttribute('n-for').split(' ')[3] + '}}';
       this.state.addActiveElement(
         el,
-        el.getAttribute("n-for").split(" ")[3],
+        el.getAttribute('n-for').split(' ')[3],
         null,
         interpolation
       );
