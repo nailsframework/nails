@@ -1,7 +1,10 @@
 {
     "presets": [
         "@babel/env",
-        "@babel/typescript"
+        "@babel/typescript",
+        "targets": {browsers: ['ie >= 7'
+            ]
+        }
     ],
     "plugins": [
         "@babel/proposal-class-properties",
