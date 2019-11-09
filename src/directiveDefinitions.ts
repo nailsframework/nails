@@ -30,20 +30,13 @@ export class NailsDirectives {
       */
 
   public click(element: HTMLElement, statement: string, state: State) {
-    const componentEngine = new ComponentEngine(
-      state,
-      new RenderingEngine(state),
-      null,
-      []
-    );
+    const componentEngine = new ComponentEngine(state, new RenderingEngine(state), null, []);
 
     if (!state.click) {
       state.click.callbacks = [];
     }
     const callback = () => {
-      const context = componentEngine.getInstanceOfElementOrNull(
-        element
-      ) as Instance;
+      const context = componentEngine.getInstanceOfElementOrNull(element) as Instance;
       if (context !== null) {
         // tslint:disable-next-line: no-eval
         eval('context.getComponent().' + statement);
@@ -77,10 +70,7 @@ export class NailsDirectives {
   public for(element: HTMLElement, statemenet: string, state: State) {
     console.error('called');
     const engine = new RenderingEngine(state);
-    engine.disableInterpolationForVariableNameOnElement(
-      statemenet.split(' ')[1],
-      element
-    );
+    engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], element);
 
     element.style.display = 'none';
     // tslint:disable-next-line: no-shadowed-variable
@@ -88,7 +78,7 @@ export class NailsDirectives {
       el: HTMLElement,
       object: any,
       // tslint:disable-next-line: no-shadowed-variable
-      descriptor: any
+      descriptor: any,
     ) {
       // Performancewise, we render the whole html element.
       let html = el.innerHTML;
@@ -104,16 +94,10 @@ export class NailsDirectives {
         stripped = stripped.substring(0, stripped.length - 1);
 
         if (engine.getValueOfInterpolation(interpolation) !== 'undefined') {
-          html = html.replace(
-            interpolation,
-            engine.getValueOfInterpolation(interpolation)
-          );
+          html = html.replace(interpolation, engine.getValueOfInterpolation(interpolation));
         } else {
           // tslint:disable: no-eval
-          html = html.replace(
-            interpolation,
-            engine.sanitize(eval('object' + stripped))
-          );
+          html = html.replace(interpolation, engine.sanitize(eval('object' + stripped)));
         }
       }
       el.innerHTML = html;
@@ -131,10 +115,7 @@ export class NailsDirectives {
       child.innerHTML = element.innerHTML;
       interpolateCustomElement(child, i, descriptor);
       parent.appendChild(child);
-      engine.disableInterpolationForVariableNameOnElement(
-        statemenet.split(' ')[1],
-        child
-      );
+      engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], child);
 
       for (const attr of element.attributes) {
         if (attr.name !== 'n-for' && attr.name !== 'style') {

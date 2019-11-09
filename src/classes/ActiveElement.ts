@@ -14,7 +14,7 @@ export class ActiveElement implements IActiveElement {
     content: string,
     interpolation: string,
     key: string,
-    statement: string
+    statement: string,
   ) {
     this.element = element;
     this.reference = reference;

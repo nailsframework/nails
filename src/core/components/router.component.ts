@@ -26,10 +26,7 @@ export class Router {
   }
 
   public isFunction(functionToCheck: any) {
-    return (
-      functionToCheck &&
-      {}.toString.call(functionToCheck) === '[object Function]'
-    );
+    return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
   }
   public addRoutings(routings: any) {
     this.routings = routings;

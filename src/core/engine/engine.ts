@@ -26,23 +26,18 @@ export class RenderingEngine {
       }
 
       if (typeof element === 'undefined' || element === null) {
-        console.error(
-          'No element with selector: ' + this.state.element + ' has been found'
-        );
+        console.error('No element with selector: ' + this.state.element + ' has been found');
         return;
       }
       if (element instanceof HTMLCollection && element.length > 1) {
         // tslint:disable-next-line:max-line-length
         console.error(
-          'Multiple choices, try using id if the element tag is not unique. Your Selector was: ' +
-            this.state.element
+          'Multiple choices, try using id if the element tag is not unique. Your Selector was: ' + this.state.element,
         );
         return;
       }
       if (element instanceof HTMLCollection && element.length === 0) {
-        console.error(
-          'No element with selector: ' + this.state.element + ' has been found'
-        );
+        console.error('No element with selector: ' + this.state.element + ' has been found');
         return;
       }
       if (element instanceof HTMLCollection) {
@@ -70,10 +65,7 @@ export class RenderingEngine {
   }
 
   public setTitle() {
-    if (
-      typeof this.state.data.title !== 'undefined' ||
-      this.state.data.title === null
-    ) {
+    if (typeof this.state.data.title !== 'undefined' || this.state.data.title === null) {
       document.title = this.state.data.title;
     }
   }
@@ -89,10 +81,7 @@ export class RenderingEngine {
     return false;
   }
 
-  public disableInterpolationForVariableNameOnElement(
-    name: string,
-    element: HTMLElement
-  ) {
+  public disableInterpolationForVariableNameOnElement(name: string, element: HTMLElement) {
     if (typeof name === 'undefined' || typeof element === 'undefined') {
       return;
     }
@@ -161,17 +150,12 @@ export class RenderingEngine {
     return activeElements;
   }
 
-  public getElementAttributeForDirective(
-    element: HTMLElement,
-    directive: string
-  ) {
+  public getElementAttributeForDirective(element: HTMLElement, directive: string) {
     directive = this.prefixDiretive(directive);
     if (element.hasAttribute(directive)) {
       return element.getAttribute(directive);
     } else {
-      console.warn(
-        'directive: ' + directive + ' not found on element: ' + element
-      );
+      console.warn('directive: ' + directive + ' not found on element: ' + element);
       return '';
     }
   }
@@ -184,16 +168,12 @@ export class RenderingEngine {
         eval(
           'this.directives.' +
             directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)'
+            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
           for (const dir of nDirectives) {
-            this.state.addActiveDirectiveElement(
-              dir,
-              element.getAttribute(dir),
-              element
-            );
+            this.state.addActiveDirectiveElement(dir, element.getAttribute(dir), element);
           }
         }
       } else {
@@ -228,9 +208,7 @@ export class RenderingEngine {
     if (interpolation.match(/\[\[\[(( +)?\w+.?\w+( +)?)\]\]\]/g)) {
       interpolation = this.stripAndTrimNForInterpolation(interpolation);
     } else {
-      console.warn(
-        'Not found interpolation in submitted value: ' + interpolation
-      );
+      console.warn('Not found interpolation in submitted value: ' + interpolation);
       return interpolation;
     }
 
@@ -242,9 +220,7 @@ export class RenderingEngine {
     if (interpolation.match(/{{(.?\s?\w?.?\w\s?)+}}/g)) {
       interpolation = this.stripAndTrimInterpolation(interpolation);
     } else {
-      console.warn(
-        'Not found interpolation in submitted value: ' + interpolation
-      );
+      console.warn('Not found interpolation in submitted value: ' + interpolation);
       return interpolation;
     }
     interpolation = interpolation.trim();
@@ -317,7 +293,7 @@ export class RenderingEngine {
   public setContentOfTextNode(node: Node, value: string) {
     if (node.nodeType !== 3) {
       console.error(
-        'setContentOfTextNode... this implies that you *HAVE* to provide nothing else than a textNode as argument.'
+        'setContentOfTextNode... this implies that you *HAVE* to provide nothing else than a textNode as argument.',
       );
       return false;
     }
@@ -334,12 +310,7 @@ export class RenderingEngine {
     for (const interpolation of interpolations) {
       const value = this.getValueOfInterpolation(interpolation);
 
-      if (
-        this.isElementDisabled(
-          this.stripAndTrimInterpolation(interpolation),
-          ref
-        )
-      ) {
+      if (this.isElementDisabled(this.stripAndTrimInterpolation(interpolation), ref)) {
         continue;
       }
 
@@ -361,10 +332,7 @@ export class RenderingEngine {
 
   public isElementDisabled(name: string, element: HTMLElement) {
     for (const disabled of this.state.disabledElements) {
-      if (
-        this.isDescendant(element, disabled.element) ||
-        this.isDescendant(disabled.element, element)
-      ) {
+      if (this.isDescendant(element, disabled.element) || this.isDescendant(disabled.element, element)) {
         if (name.includes(disabled.content)) {
           return true;
         } // Edge case, we have a f***ing scope
@@ -379,12 +347,7 @@ export class RenderingEngine {
     for (const interpolation of interpolations) {
       this.state.disableElementIfNeeded(element);
       const value = this.getValueOfInterpolation(interpolation);
-      if (
-        this.isElementDisabled(
-          this.stripAndTrimInterpolation(interpolation).trim(),
-          element
-        )
-      ) {
+      if (this.isElementDisabled(this.stripAndTrimInterpolation(interpolation).trim(), element)) {
         continue;
       }
 
@@ -435,9 +398,7 @@ export class RenderingEngine {
       this.executeInerpolationsOnElement(child as HTMLElement);
     }
 
-    const interpolations = this.getInterpolationsForTextContent(
-      element.nodeValue
-    );
+    const interpolations = this.getInterpolationsForTextContent(element.nodeValue);
 
     if (this.isTextNode(element)) {
       // Interpolation should only happen on a text node. Otherwise, DOM may be damaged.
@@ -455,7 +416,7 @@ export class RenderingEngine {
           element as HTMLElement,
           this.getObjectReferenceByInterpolationName(interpolation),
           element.nodeValue,
-          interpolation
+          interpolation,
         );
       }
       this.interpolateElement(element as HTMLElement, interpolations);
@@ -467,14 +428,8 @@ export class RenderingEngine {
       }
 
       const el = element as HTMLElement;
-      const interpolation =
-        '{{' + el.getAttribute('n-for').split(' ')[3] + '}}';
-      this.state.addActiveElement(
-        el,
-        el.getAttribute('n-for').split(' ')[3],
-        null,
-        interpolation
-      );
+      const interpolation = '{{' + el.getAttribute('n-for').split(' ')[3] + '}}';
+      this.state.addActiveElement(el, el.getAttribute('n-for').split(' ')[3], null, interpolation);
     }
   }
 }

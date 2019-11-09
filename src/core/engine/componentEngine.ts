@@ -14,12 +14,7 @@ export class ComponentEngine {
   public instance: ComponentEngine;
   public renderedElements: HTMLElement[] = [];
 
-  constructor(
-    state: State,
-    engine: RenderingEngine,
-    nails: Nails,
-    routings: any
-  ) {
+  constructor(state: State, engine: RenderingEngine, nails: Nails, routings: any) {
     this.state = state;
     this.engine = engine;
     this.instance = this;
@@ -66,18 +61,13 @@ export class ComponentEngine {
     while (element.parentElement != null) {
       if (this.engine.elementCanGetAttribute(element)) {
         if (element.hasAttribute('element-guid')) {
-          return this.getInstanceFromInstanceId(
-            element.getAttribute('element-guid')
-          );
+          return this.getInstanceFromInstanceId(element.getAttribute('element-guid'));
         }
       }
       element = element.parentElement;
     }
   }
-  public setInstanceIdOnElement(
-    element: HTMLElement,
-    component: IComponent
-  ): any {
+  public setInstanceIdOnElement(element: HTMLElement, component: IComponent): any {
     const guid = Guid.newGuid();
     element.setAttribute('element-guid', guid);
     this.state.instances.push(new Instance(guid, component));
@@ -158,10 +148,7 @@ export class ComponentEngine {
   }
 
   public recreateComponentsByName(name: string) {
-    if (
-      typeof this.state.mountedComponents !== 'undefined' &&
-      this.state.mountedComponents !== null
-    ) {
+    if (typeof this.state.mountedComponents !== 'undefined' && this.state.mountedComponents !== null) {
       let component = null;
       for (const c of this.state.mountedComponents) {
         if (c.selector === name) {
@@ -178,11 +165,7 @@ export class ComponentEngine {
       for (const element of elements) {
         const componentHTML = component.render();
         if (componentHTML.includes('<' + component.selector + '>')) {
-          console.error(
-            'component ' +
-              component.selector +
-              ' has a recursion with no exit condition'
-          );
+          console.error('component ' + component.selector + ' has a recursion with no exit condition');
           continue;
         }
         element.innerHTML = componentHTML;

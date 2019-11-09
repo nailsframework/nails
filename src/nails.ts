@@ -25,9 +25,7 @@ export class Nails {
     if (object.hasOwnProperty('el')) {
       this.state.element = object.el;
     } else {
-      console.error(
-        'NailsJS cannot be initalized, because no element was specified'
-      );
+      console.error('NailsJS cannot be initalized, because no element was specified');
     }
     if (object.hasOwnProperty('data')) {
       this.state.data = object.data;
@@ -45,12 +43,7 @@ export class Nails {
       }
     }
     this.engine = new RenderingEngine(this.state);
-    this.componentEngine = new ComponentEngine(
-      this.state,
-      this.engine,
-      this,
-      object.routings
-    );
+    this.componentEngine = new ComponentEngine(this.state, this.engine, this, object.routings);
     this.setUpProxy();
     this.injector = new Injector(this.state);
     this.prepareInjector(object.declarations);
@@ -69,9 +62,7 @@ export class Nails {
   public prepareInjector(arr: []) {
     const factory = new Factory();
     if (!Array.isArray(arr)) {
-      console.warn(
-        'Cannot iterate over declarations, since they are not an array'
-      );
+      console.warn('Cannot iterate over declarations, since they are not an array');
       return;
     }
     for (const d of arr) {
@@ -106,7 +97,7 @@ export class Nails {
         target[prop] = value;
         this.notifyDom(target, prop, '');
         return true;
-      }
+      },
     };
 
     const proxy = new Proxy(this.state.data, handler);

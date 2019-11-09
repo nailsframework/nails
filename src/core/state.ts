@@ -42,30 +42,15 @@ export class State {
   public addInjector(injector: Injector) {
     this.injector = injector;
   }
-  public addActiveDirectiveElement(
-    key: string,
-    statement: string,
-    element: HTMLElement
-  ) {
+  public addActiveDirectiveElement(key: string, statement: string, element: HTMLElement) {
     for (const el of this.activeDirectiveElements) {
-      if (
-        el.key === key &&
-        el.statement === statement &&
-        el.element === element
-      ) {
+      if (el.key === key && el.statement === statement && el.element === element) {
         console.warn('refusing to insert element');
         return;
       }
     }
 
-    const activeElement = new ActiveElement(
-      element,
-      '',
-      '',
-      '',
-      key,
-      statement
-    );
+    const activeElement = new ActiveElement(element, '', '', '', key, statement);
 
     this.activeDirectiveElements.push(activeElement);
   }
@@ -78,20 +63,8 @@ export class State {
     }
   }
 
-  public addActiveElement(
-    ref: HTMLElement,
-    object: any,
-    content: string,
-    interpolation: string
-  ) {
-    const activeElement = new ActiveElement(
-      ref,
-      object,
-      content,
-      interpolation,
-      '',
-      ''
-    );
+  public addActiveElement(ref: HTMLElement, object: any, content: string, interpolation: string) {
+    const activeElement = new ActiveElement(ref, object, content, interpolation, '', '');
     this.activeElements.push(activeElement);
   }
 
@@ -138,14 +111,7 @@ export class State {
       prop = prop.replace('!', '');
       element.statement = element.statement.replace('!', '');
       if (this.stripAndTrimInterpolation(element.statement) === prop) {
-        const activeElement = new ActiveElement(
-          element.element,
-          obj,
-          element.element.innerText,
-          '',
-          '',
-          ''
-        );
+        const activeElement = new ActiveElement(element.element, obj, element.element.innerText, '', '', '');
         elements.push(activeElement);
       }
     }
