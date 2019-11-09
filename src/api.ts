@@ -1,4 +1,4 @@
-import { State } from './core/state';
+import { State } from "./core/state";
 
 const get = (
   url: string,
@@ -6,9 +6,9 @@ const get = (
   callback: (text: string, code: number) => void
 ) => {
   const xmlHttp = new XMLHttpRequest();
-  xmlHttp.open('GET', url, true);
+  xmlHttp.open("GET", url, true);
 
-  if (typeof state.data.headers !== 'undefined') {
+  if (typeof state.data.headers !== "undefined") {
     for (const header of state.data.headers) {
       xmlHttp.setRequestHeader(
         Object.keys(header)[0],
