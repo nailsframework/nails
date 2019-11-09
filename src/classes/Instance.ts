@@ -1,4 +1,4 @@
-import { IComponent } from "../interfaces/Component";
+import { IComponent } from '../interfaces/Component';
 
 export class Instance {
   private identifier: string;

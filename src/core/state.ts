@@ -1,11 +1,11 @@
-"use strict";
-import { ActiveElement } from "../classes/ActiveElement";
-import { Instance } from "../classes/Instance";
-import { Router } from "../core/components/router.component";
-import { Injector } from "../core/injector";
-import { IActiveElement } from "../interfaces/ActiveElement";
-import { ComponentEngine } from "./engine/componentEngine";
-import { RenderingEngine } from "./engine/engine";
+'use strict';
+import { ActiveElement } from '../classes/ActiveElement';
+import { Instance } from '../classes/Instance';
+import { Router } from '../core/components/router.component';
+import { Injector } from '../core/injector';
+import { IActiveElement } from '../interfaces/ActiveElement';
+import { ComponentEngine } from './engine/componentEngine';
+import { RenderingEngine } from './engine/engine';
 
 export class State {
   public instance: State;
@@ -53,16 +53,16 @@ export class State {
         el.statement === statement &&
         el.element === element
       ) {
-        console.warn("refusing to insert element");
+        console.warn('refusing to insert element');
         return;
       }
     }
 
     const activeElement = new ActiveElement(
       element,
-      "",
-      "",
-      "",
+      '',
+      '',
+      '',
       key,
       statement
     );
@@ -89,8 +89,8 @@ export class State {
       object,
       content,
       interpolation,
-      "",
-      ""
+      '',
+      ''
     );
     this.activeElements.push(activeElement);
   }
@@ -106,22 +106,22 @@ export class State {
     return element.reference;
   }
   public stripAndTrimInterpolation(interpolation: string) {
-    if (typeof interpolation !== "string") {
+    if (typeof interpolation !== 'string') {
       return interpolation;
     }
-    interpolation = interpolation.replace("{{", "");
-    interpolation = interpolation.replace("}}", "");
+    interpolation = interpolation.replace('{{', '');
+    interpolation = interpolation.replace('}}', '');
     interpolation = interpolation.trim();
     return interpolation;
   }
 
   public disableElementIfNeeded(element: HTMLElement) {
-    if ("getAttribute" in element) {
-      const statement = element.getAttribute("n-for");
+    if ('getAttribute' in element) {
+      const statement = element.getAttribute('n-for');
       if (statement === null) {
         return;
       }
-      const statementSplit = statement.split(" ");
+      const statementSplit = statement.split(' ');
       const name = statementSplit[1]; // var name of array
       this.engine.disableInterpolationForVariableNameOnElement(name, element);
     }
@@ -135,16 +135,16 @@ export class State {
     }
 
     for (const element of this.activeDirectiveElements) {
-      prop = prop.replace("!", "");
-      element.statement = element.statement.replace("!", "");
+      prop = prop.replace('!', '');
+      element.statement = element.statement.replace('!', '');
       if (this.stripAndTrimInterpolation(element.statement) === prop) {
         const activeElement = new ActiveElement(
           element.element,
           obj,
           element.element.innerText,
-          "",
-          "",
-          ""
+          '',
+          '',
+          ''
         );
         elements.push(activeElement);
       }

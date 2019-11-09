@@ -1,10 +1,10 @@
-import { Instance } from "../../classes/Instance";
-import { IComponent } from "../../interfaces/Component";
-import { Nails } from "../../nails";
-import { Router } from "../components/router.component";
-import { Guid } from "../math/Guid";
-import { State } from "../state";
-import { RenderingEngine } from "./engine";
+import { Instance } from '../../classes/Instance';
+import { IComponent } from '../../interfaces/Component';
+import { Nails } from '../../nails';
+import { Router } from '../components/router.component';
+import { Guid } from '../math/Guid';
+import { State } from '../state';
+import { RenderingEngine } from './engine';
 
 export class ComponentEngine {
   public state: State;
@@ -42,7 +42,7 @@ export class ComponentEngine {
       if (instance instanceof Router) {
         this.state.router = instance;
         instance.addRoutings(this.routings);
-        instance.navigate("");
+        instance.navigate('');
       }
 
       this.state.mountedComponents.push(instance);
@@ -65,9 +65,9 @@ export class ComponentEngine {
   public getInstanceOfElementOrNull(element: HTMLElement): any {
     while (element.parentElement != null) {
       if (this.engine.elementCanGetAttribute(element)) {
-        if (element.hasAttribute("element-guid")) {
+        if (element.hasAttribute('element-guid')) {
           return this.getInstanceFromInstanceId(
-            element.getAttribute("element-guid")
+            element.getAttribute('element-guid')
           );
         }
       }
@@ -79,7 +79,7 @@ export class ComponentEngine {
     component: IComponent
   ): any {
     const guid = Guid.newGuid();
-    element.setAttribute("element-guid", guid);
+    element.setAttribute('element-guid', guid);
     this.state.instances.push(new Instance(guid, component));
     return guid;
   }
@@ -101,7 +101,7 @@ export class ComponentEngine {
     this.injectComponents();
     // tslint:disable-next-line:max-line-length
     if (
-      typeof this.state.mountedComponents !== "undefined" &&
+      typeof this.state.mountedComponents !== 'undefined' &&
       this.state.mountedComponents !== null &&
       this.state.mountedComponents.length > 0
     ) {
@@ -119,7 +119,7 @@ export class ComponentEngine {
               continue;
             }
             const componentHTML = component.render();
-            if (componentHTML.includes("<" + component.selector + ">")) {
+            if (componentHTML.includes('<' + component.selector + '>')) {
               continue;
             }
             this.setInstanceIdOnElement(element, component);
@@ -159,7 +159,7 @@ export class ComponentEngine {
 
   public recreateComponentsByName(name: string) {
     if (
-      typeof this.state.mountedComponents !== "undefined" &&
+      typeof this.state.mountedComponents !== 'undefined' &&
       this.state.mountedComponents !== null
     ) {
       let component = null;
@@ -177,11 +177,11 @@ export class ComponentEngine {
       const elements = document.getElementsByTagName(name);
       for (const element of elements) {
         const componentHTML = component.render();
-        if (componentHTML.includes("<" + component.selector + ">")) {
+        if (componentHTML.includes('<' + component.selector + '>')) {
           console.error(
-            "component " +
+            'component ' +
               component.selector +
-              " has a recursion with no exit condition"
+              ' has a recursion with no exit condition'
           );
           continue;
         }
