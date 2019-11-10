@@ -3,7 +3,7 @@ node_js:
   - 8
 install:
   - npm install --save-dev babel-loader@^7
-  - npm install -D babel-loader @babel/core @babel/preset-env webpack
+  - npm install -D @babel/core @babel/preset-env webpack
   - npm install --save-dev @babel/core @babel/preset-env @babel/plugin-transform-runtime
   - npm install --save-dev @babel/plugin-proposal-class-properties
   - npm install --save-dev @babel/plugin-proposal-numeric-separator @babel/plugin-proposal-object-rest-spread
