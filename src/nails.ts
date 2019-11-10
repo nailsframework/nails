@@ -60,7 +60,7 @@ export class Nails {
     this.engine.indexDOM();
     this.componentEngine.renderComponents();
     this.engine.setTitle();
-    this.state.methods.getState = function() {
+    this.state.methods.getState = function () {
       return this.state;
     };
     if (typeof this.state.methods.onMounted !== 'undefined') {
@@ -93,7 +93,8 @@ export class Nails {
   }
 
   public setUpProxy() {
-    if ('Proxy' in Window) {
+
+    if ('Proxy' in window) {
       const handler = {
         state: this.state,
         // tslint:disable-next-line: object-literal-sort-keys
