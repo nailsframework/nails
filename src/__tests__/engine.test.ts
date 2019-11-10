@@ -10,18 +10,15 @@ const nailsConfig = {
     amet: '4',
   },
   methods: {
-    onInit() { },
+    onInit() {},
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) { },
+    onMounted(currentState: State) {},
   },
 };
 const nails = new Nails(nailsConfig);
 const testText = 'lorem {{ipsum}} {{ dolor}} {{sit}} {amet}';
 const element = document.createElement('div');
 element.innerHTML = testText;
-
-
-
 
 test('Interpolations', () => {
   expect(nails.engine.getInterpolationsForTextContent(testText)).toHaveLength(3);

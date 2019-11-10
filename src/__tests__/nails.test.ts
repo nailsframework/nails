@@ -3,9 +3,9 @@ import { State } from '../core/state';
 const nailsConfig = {
   el: 'body',
   methods: {
-    onInit() { },
+    onInit() {},
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) { },
+    onMounted(currentState: State) {},
   },
 };
 
