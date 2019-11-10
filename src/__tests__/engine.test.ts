@@ -13,9 +13,9 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
 };
 const nails = new Nails(nailsConfig);
@@ -23,7 +23,7 @@ const testText = 'lorem {{ipsum}} {{ dolor}} {{sit}} {amet}';
 const element = document.createElement('div');
 element.innerHTML = testText;
 
-test('Interpolations', () => {
+it('should interpolate', () => {
   expect(nails.engine.getInterpolationsForTextContent(testText)).toHaveLength(3);
   // tslint:disable-next-line: max-line-length
   expect(
@@ -31,7 +31,7 @@ test('Interpolations', () => {
   ).toMatch('lorem 1 2 3 {amet}');
 });
 
-test('Get Attributes', () => {
+it('should get Attributes', () => {
   element.setAttribute('test', 'worked');
   const guid = nails.componentEngine.setInstanceIdOnElement(element, null);
   expect(guid).toBeDefined();

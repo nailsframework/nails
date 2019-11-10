@@ -12,9 +12,11 @@ const nailsConfig = {
 
 const nails = new Nails(nailsConfig);
 
-test('mount nails', () => {
+it('should mount nails', () => {
   expect(nails).toBeDefined();
   expect(nails.componentEngine).toBeDefined();
   expect(nails.engine).toBeDefined();
   expect(nails.injector).toBeDefined();
 });
+
+
