@@ -1,11 +1,12 @@
-import { Nails } from '../nails';
 import { State } from '../core/state';
+import { Nails } from '../nails';
 const nailsConfig = {
   el: 'body',
   methods: {
-    onInit() {},
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onInit() { },
+    // tslint:disable-next-line: no-empty
+    onMounted(currentState: State) { },
   },
 };
 
