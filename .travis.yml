@@ -2,14 +2,7 @@ language: node_js
 node_js:
   - 8
 install:
-  - npm install --save-dev babel-loader@^7
-  - npm install -D @babel/core @babel/preset-env webpack
-  - npm install --save-dev @babel/core @babel/preset-env @babel/plugin-transform-runtime
-  - npm install --save-dev @babel/plugin-proposal-class-properties
-  - npm install --save-dev @babel/plugin-proposal-numeric-separator @babel/plugin-proposal-object-rest-spread
-  - npm install --save-dev @babel/preset-typescript
-  - npm i --save-dev @babel/plugin-transform-runtime @babel/preset-env @babel/preset-typescript
-  - npm i -D
+  - npm i -g jest
   - npm i
-  - test
+  - npm test
   - build
