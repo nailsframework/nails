@@ -13,7 +13,6 @@ import { RenderingEngine } from './core/engine/engine';
 import { Injector } from './core/injector';
 import { State } from './core/state';
 
-
 class Factory {
   public create<T>(type: new () => T): T {
     return new type();
@@ -61,7 +60,7 @@ export class Nails {
     this.engine.indexDOM();
     this.componentEngine.renderComponents();
     this.engine.setTitle();
-    this.state.methods.getState = function () {
+    this.state.methods.getState = function() {
       return this.state;
     };
     if (typeof this.state.methods.onMounted !== 'undefined') {
@@ -116,6 +115,5 @@ export class Nails {
     } else {
       console.log('IE or worse detected. Failing gracefully');
     }
-
   }
 }
