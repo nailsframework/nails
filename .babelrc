@@ -3,7 +3,6 @@
         "@babel/typescript",
     ],
     "plugins": [
-        "transform-class-properties",
-        "@babel/transform-runtime"
+        "transform-class-properties"
     ]
 }
