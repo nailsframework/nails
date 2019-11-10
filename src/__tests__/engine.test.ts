@@ -3,13 +3,16 @@ import { Nails } from '../nails';
 
 const nailsConfig = {
   el: 'body',
+  // tslint:disable-next-line: object-literal-sort-keys
   data: {
     ipsum: '1',
+    // tslint:disable-next-line: object-literal-sort-keys
     dolor: '2',
     sit: '3',
     amet: '4',
   },
   methods: {
+    // tslint:disable-next-line: no-empty
     onInit() { },
     // tslint:disable-next-line: no-empty
     onMounted(currentState: State) { },
