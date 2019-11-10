@@ -13,6 +13,7 @@ import { RenderingEngine } from './core/engine/engine';
 import { Injector } from './core/injector';
 import { State } from './core/state';
 
+
 class Factory {
   public create<T>(type: new () => T): T {
     return new type();
@@ -60,7 +61,7 @@ export class Nails {
     this.engine.indexDOM();
     this.componentEngine.renderComponents();
     this.engine.setTitle();
-    this.state.methods.getState = function() {
+    this.state.methods.getState = function () {
       return this.state;
     };
     if (typeof this.state.methods.onMounted !== 'undefined') {
@@ -93,23 +94,28 @@ export class Nails {
   }
 
   public setUpProxy() {
-    const handler = {
-      state: this.state,
-      // tslint:disable-next-line: object-literal-sort-keys
-      notifyDom: this.notifyDOM,
-      engine: this.engine,
+    if ('Proxy' in Window) {
+      const handler = {
+        state: this.state,
+        // tslint:disable-next-line: object-literal-sort-keys
+        notifyDom: this.notifyDOM,
+        engine: this.engine,
 
-      get(target: any, prop: any, receiver: any) {
-        return target[prop];
-      },
-      set(target: any, prop: any, value: string) {
-        target[prop] = value;
-        this.notifyDom(target, prop, '');
-        return true;
-      },
-    };
+        get(target: any, prop: any, receiver: any) {
+          return target[prop];
+        },
+        set(target: any, prop: any, value: string) {
+          target[prop] = value;
+          this.notifyDom(target, prop, '');
+          return true;
+        },
+      };
 
-    const proxy = new Proxy(this.state.data, handler);
-    this.state.data = proxy;
+      const proxy = new Proxy(this.state.data, handler);
+      this.state.data = proxy;
+    } else {
+      console.log('IE or worse detected. Failing gracefully');
+    }
+
   }
 }
