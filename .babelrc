@@ -1,6 +1,6 @@
 {
     "presets": [
-        "@babel/typescript",
+        "@babel/preset-typescript",
     ],
     "plugins": [
         "transform-class-properties"
