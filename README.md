@@ -3,12 +3,13 @@
   
 
 # NailsFramework
-
   
 
 NailsFramework or short NailsJS is a new Javascript library.
 
+
   
+
 
 ```I'm proud to announce that NailsJS enters the first stable state. You can safely use it. Please take a look at our branches to see, what version best suits you```
 
