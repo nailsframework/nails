@@ -1,6 +1,6 @@
 {
   "name": "@nailsframework/nails",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "The Typescript Library",
   "main": "lib/nails.js",
   "types": "lib/nails.d.ts",
