@@ -1,6 +1,5 @@
 
-[![Build Status](https://travis-ci.org/nailsframework/nailsjs.svg?branch=master)](https://travis-ci.org/nailsframework/nailsjs)
-
+[![Build Status](https://travis-ci.org/nailsframework/nails.svg?branch=master)](https://travis-ci.org/nailsframework/nails)
   
 
 # NailsFramework
