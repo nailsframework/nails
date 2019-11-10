@@ -5,4 +5,4 @@ install:
   - npm i -g jest
   - npm i
   - npm test
-  - build
+  - npm run build
