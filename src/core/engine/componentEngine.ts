@@ -70,7 +70,7 @@ export class ComponentEngine {
   public setInstanceIdOnElement(element: HTMLElement, component: IComponent): any {
     const guid = Guid.newGuid();
     element.setAttribute('element-guid', guid);
-    this.state.instances.push(new Instance(guid, component));
+    this.state.instances.push(new Instance(guid, component, element));
     return guid;
   }
 
@@ -84,6 +84,30 @@ export class ComponentEngine {
       return null;
     }
     return foundInstances.pop();
+  }
+
+  public getElementAttributesByInstanceId(instanceId: string): NamedNodeMap {
+    const foundInstances = this.state.instances.filter((instance: Instance) => {
+      if (instance.getIdentifier() === instanceId) {
+        return instance;
+      }
+    });
+    if (foundInstances.length === 0) {
+      return null;
+    }
+    return foundInstances.pop().getElement().attributes;
+  }
+
+  public getElementAttributesByInstance(component: IComponent): NamedNodeMap {
+    const foundInstances = this.state.instances.filter((instance: Instance) => {
+      if (instance.getComponent() === component) {
+        return instance;
+      }
+    });
+    if (foundInstances.length === 0) {
+      return null;
+    }
+    return foundInstances.pop().getElement().attributes;
   }
 
   // tslint:disable-next-line:member-ordering

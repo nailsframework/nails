@@ -6,6 +6,7 @@ import { Injector } from '../core/injector';
 import { IActiveElement } from '../interfaces/ActiveElement';
 import { ComponentEngine } from './engine/componentEngine';
 import { RenderingEngine } from './engine/engine';
+import { IComponent } from '../interfaces/Component';
 
 export class State {
   public instance: State;
@@ -118,4 +119,13 @@ export class State {
 
     return elements;
   }
+
+  public getAttributesByInstanceId(instanceID: string): NamedNodeMap {
+    return this.componentEngine.getElementAttributesByInstanceId(instanceID);
+  }
+  public getAttributesByInstance(component: IComponent): NamedNodeMap {
+    return this.componentEngine.getElementAttributesByInstance(component);
+  }
 }
+
+
