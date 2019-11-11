@@ -1,6 +1,5 @@
 import { State } from './core/state';
 
-
 const get = (url: string, state: State, callback: (text: string, code: number) => void) => {
   const xmlHttp = new XMLHttpRequest();
   xmlHttp.open('GET', url, true);
@@ -17,4 +16,3 @@ const get = (url: string, state: State, callback: (text: string, code: number) =
   };
   xmlHttp.send(null);
 };
-

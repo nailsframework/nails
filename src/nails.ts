@@ -21,8 +21,6 @@ class Factory {
 
 // tslint:disable-next-line:max-classes-per-file
 export class Nails {
-
-
   public state: State;
   public engine: RenderingEngine;
   public componentEngine: ComponentEngine;
@@ -63,7 +61,7 @@ export class Nails {
     this.engine.indexDOM();
     this.componentEngine.renderComponents();
     this.engine.setTitle();
-    this.state.methods.getState = function () {
+    this.state.methods.getState = function() {
       return this.state;
     };
     if (typeof this.state.methods.onMounted !== 'undefined') {
@@ -82,7 +80,6 @@ export class Nails {
       this.injector.insert(instance);
     }
   }
-
 
   public setUpProxy() {
     if (typeof window.Proxy !== 'undefined') {
