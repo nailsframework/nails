@@ -61,7 +61,7 @@ export class Nails {
     this.engine.indexDOM();
     this.componentEngine.renderComponents();
     this.engine.setTitle();
-    this.state.methods.getState = function() {
+    this.state.methods.getState = function () {
       return this.state;
     };
     if (typeof this.state.methods.onMounted !== 'undefined') {
@@ -81,12 +81,24 @@ export class Nails {
     }
   }
 
+  public notifyDOM(target: any, prop: any, value: string) {
+    const refs = this.state.findElementsByObject(target, prop);
+    if (refs === [] || refs.length === 0) {
+      return;
+    }
+    for (const ref of refs) {
+      this.engine.updateInterpolatedElement(ref.element, ref.content);
+      this.engine.executeDirectivesOnElement(ref.element, false);
+    }
+
+    return true;
+  }
   public setUpProxy() {
     if (typeof window.Proxy !== 'undefined') {
       const handler = {
         state: this.state,
         // tslint:disable-next-line: object-literal-sort-keys
-        notifyDom: this.engine.notifyDOM,
+        notifyDom: this.notifyDOM,
         engine: this.engine,
 
         get(target: any, prop: any, receiver: any) {
