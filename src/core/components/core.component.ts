@@ -6,7 +6,6 @@ import { State } from '../state';
 export class CoreComponent implements IComponent {
     public selector: string = 'component';
     public state: any;
-    constructor() { }
 
     public render() {
         /* html */
