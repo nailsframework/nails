@@ -84,10 +84,6 @@ export class Nails {
   }
 
 
-  s = function () {
-    console.log('s called');
-  }
-
   public setUpProxy() {
     if (typeof window.Proxy !== 'undefined') {
       const handler = {

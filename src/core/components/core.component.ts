@@ -1,12 +1,17 @@
-import { IComponent } from "../../interfaces/Component";
-import { State } from "../state";
-import { ComponentEngine } from "../engine/componentEngine";
-import { RenderingEngine } from "../engine/engine";
+import { IComponent } from '../../interfaces/Component';
+import { ComponentEngine } from '../engine/componentEngine';
+import { RenderingEngine } from '../engine/engine';
+import { State } from '../state';
 
 export class CoreComponent implements IComponent {
     public selector: string = 'component'
     constructor(public state: State) {
 
+    }
+
+    public render() {
+        /* html */
+        return `<div></div>`
     }
     private useState() {
         const renderingEngine = new RenderingEngine(this.state);
@@ -30,11 +35,6 @@ export class CoreComponent implements IComponent {
             const proxy = new Proxy(this, handler);
             this.state.data = proxy;
         }
-    }
-
-    render() {
-        /* html */
-        return `<div></div>`
     }
 
 }
