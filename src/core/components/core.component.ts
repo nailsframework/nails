@@ -18,7 +18,7 @@ export class CoreComponent implements IComponent {
             const handler = {
                 state: this,
                 // tslint:disable-next-line: object-literal-sort-keys
-                notifyDom: this..noifyDOM,
+                notifyDom: this.notifyDOM,
                 engine: renderingEngine,
 
                 get(target: any, prop: any, receiver: any) {
