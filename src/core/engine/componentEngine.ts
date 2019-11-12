@@ -131,6 +131,7 @@ export class ComponentEngine {
         console.log(instance);
       }
     }
+  }
   // tslint:disable-next-line:member-ordering
   public renderComponents(exclude?: HTMLElement) {
     this.injectComponents();
