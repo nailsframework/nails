@@ -5,6 +5,7 @@ import { Router } from '../components/router.component';
 import { Guid } from '../math/Guid';
 import { State } from '../state';
 import { RenderingEngine } from './engine';
+import { inheritInnerComments } from '@babel/types';
 
 export class ComponentEngine {
   public state: State;
@@ -140,74 +141,30 @@ export class ComponentEngine {
     }
     nContentElement.innerHTML = content.innerHTML;
   }
+
+  public generateTempElement(innerHTML: string) {
+    const element = document.createElement('n-template');
+    element.innerHTML = innerHTML;
+    return element;
+  }
   // tslint:disable-next-line:member-ordering
   public renderComponents(exclude?: HTMLElement) {
     this.injectComponents();
     // tslint:disable-next-line:max-line-length
-    if (
-      typeof this.state.mountedComponents !== 'undefined' &&
-      this.state.mountedComponents !== null &&
-      this.state.mountedComponents.length > 0
-    ) {
-      for (const component of this.state.mountedComponents) {
-        const elements = document.getElementsByTagName(component.selector);
-        if (elements.length === 0) {
-          console.log('no elements with the Tag name: ' + component.selector + ' have been found');
-          continue;
-        }
-        for (const element of elements) {
-          let preservedHTML = '';
-          if (element.childNodes.length > 0) {
-            preservedHTML = element.innerHTML;
-          }
-          const tmpElement = document.createElement('div');
-          let componentHTML = component.render();
-          tmpElement.innerHTML = componentHTML;
-          if (componentHTML.includes('<' + component.selector + '>')) {
-            continue;
-          }
-          const nContents = this.getAllDescendantsForElementWithTagName(element, 'n-content');
-          for (const ncontent of nContents) {
-            if (ncontent.childNodes.length > 0) {
-              continue;
-            }
-            const render = document.createElement('n-template');
-            render.innerHTML = preservedHTML;
-            this.renderNContent(ncontent, render);
-            componentHTML = ncontent.innerHTML;
-          }
-
-          this.setInstanceIdOnElement(element, component);
-          if (this.shallRenderElement(element)) {
-            element.innerHTML = componentHTML;
-          }
-
-          // this.engine.executeInerpolationsOnElement(element);
-          // this.traverseElementAndExecuteDirectives(element);
-          preservedHTML = '';
-        }
+    for (const component of this.state.mountedComponents) {
+      const elements = document.getElementsByTagName(component.selector);
+      if (elements.length === 0) {
+        continue;
       }
-      for (const component of this.state.mountedComponents) {
-        const elements = document.getElementsByTagName(component.selector);
-        if (elements.length === 0) {
-          continue;
-        }
-        for (const element of elements) {
-          if (element.childNodes.length > 0) {
-            if (element === exclude) {
-              continue;
-            }
-
-            if (this.shallRenderElement(element)) {
-              this.traverseElementAndExecuteDirectives(element);
-              this.engine.executeInterpolationsOnElement(element);
-              this.renderedElements.push(element);
-              this.setComponentVariables(element);
-            }
+      for (const element of elements) {
+        const html = component.render();
+        const tmpElement = this.generateTempElement(html);
+        if (this.getAllDescendantsForElementWithTagName(tmpElement, 'n-content').length > 0) {
+          for (const nContent of this.getAllDescendantsForElementWithTagName(tmpElement, 'n-content')) {
+            this.renderNContent(nContent, this.generateTempElement(element.innerHTML));
           }
         }
       }
-      this.renderedElements = [];
     }
   }
 
