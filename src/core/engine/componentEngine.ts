@@ -151,7 +151,6 @@ export class ComponentEngine {
     ) {
       let rendering = true;
       while (rendering) {
-
         for (const component of this.state.mountedComponents) {
           const elements = document.getElementsByTagName(component.selector);
           if (elements.length === 0) {
@@ -180,15 +179,13 @@ export class ComponentEngine {
               componentHTML = c.innerHTML;
             }
 
-            if(!element.hasAttribute('element-guid')){
+            if (!element.hasAttribute('element-guid')) {
               this.setInstanceIdOnElement(element, component);
               element.innerHTML = componentHTML;
               rendering = true;
-            }else{
+            } else {
               rendering = false;
             }
-
-            
 
             // this.engine.executeInerpolationsOnElement(element);
             // this.traverseElementAndExecuteDirectives(element);
