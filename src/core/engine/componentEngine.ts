@@ -150,50 +150,49 @@ export class ComponentEngine {
       this.state.mountedComponents.length > 0
     ) {
       let rendering = true;
-      while (rendering) {
-        for (const component of this.state.mountedComponents) {
-          const elements = document.getElementsByTagName(component.selector);
-          if (elements.length === 0) {
-            console.log('no elements with the Tag name: ' + component.selector + ' have been found');
+      for (const component of this.state.mountedComponents) {
+        const elements = document.getElementsByTagName(component.selector);
+        if (elements.length === 0) {
+          console.log('no elements with the Tag name: ' + component.selector + ' have been found');
+          rendering = false;
+          continue;
+        }
+        for (const element of elements) {
+          let preservedHTML = '';
+          if (element.childNodes.length > 0) {
+            preservedHTML = element.innerHTML;
+          }
+          const tmpElement = document.createElement('div');
+          let componentHTML = component.render();
+          tmpElement.innerHTML = componentHTML;
+          if (componentHTML.includes('<' + component.selector + '>')) {
             rendering = false;
             continue;
           }
-          for (const element of elements) {
-            let preservedHTML = '';
-            if (element.childNodes.length > 0) {
-              preservedHTML = element.innerHTML;
-            }
-            const tmpElement = document.createElement('div');
-            let componentHTML = component.render();
-            tmpElement.innerHTML = componentHTML;
-            if (componentHTML.includes('<' + component.selector + '>')) {
-              rendering = false;
+          const cs = this.getAllDescendantsForElementWithTagName(element, 'n-content');
+          for (const c of cs) {
+            if (c.childNodes.length > 0) {
               continue;
             }
-            const cs = this.getAllDescendantsForElementWithTagName(element, 'n-content');
-            for (const c of cs) {
-              if (c.childNodes.length > 0) {
-                continue;
-              }
-              const render = document.createElement('n-template');
-              render.innerHTML = preservedHTML;
-              this.renderNContent(c, render);
-              componentHTML = c.innerHTML;
-            }
-
-            if (!element.hasAttribute('element-guid')) {
-              this.setInstanceIdOnElement(element, component);
-              element.innerHTML = componentHTML;
-              rendering = true;
-            } else {
-              rendering = false;
-            }
-
-            // this.engine.executeInerpolationsOnElement(element);
-            // this.traverseElementAndExecuteDirectives(element);
-            preservedHTML = '';
+            const render = document.createElement('n-template');
+            render.innerHTML = preservedHTML;
+            this.renderNContent(c, render);
+            componentHTML = c.innerHTML;
           }
+
+          if (!element.hasAttribute('element-guid')) {
+            this.setInstanceIdOnElement(element, component);
+            element.innerHTML = componentHTML;
+            rendering = true;
+          } else {
+            rendering = false;
+          }
+
+          // this.engine.executeInerpolationsOnElement(element);
+          // this.traverseElementAndExecuteDirectives(element);
+          preservedHTML = '';
         }
+
       }
       for (const component of this.state.mountedComponents) {
         const elements = document.getElementsByTagName(component.selector);
@@ -255,22 +254,6 @@ export class ComponentEngine {
     return element.querySelectorAll(tagName);
   }
 
-  private elementHasElementWithTagName(element: HTMLElement, tagName: string): boolean {
-    tagName = tagName.toUpperCase();
-    if (element.children.length === 0) {
-      return element.tagName === tagName;
-    }
-
-    for (const child of element.children) {
-      if (child.tagName === tagName) {
-        return true;
-      }
-      if (this.elementHasElementWithTagName(child as HTMLElement, tagName)) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   private shallRenderElement(element: HTMLElement): boolean {
     // Don't forget to clear this array as it may messes with the DOM.
