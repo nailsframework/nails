@@ -144,7 +144,7 @@ export class ComponentEngine {
 
         let newHtml;
         for (const component of this.state.mountedComponents) {
-          firstRun = true;
+          firstRun = false;
           const elements = document.getElementsByTagName(component.selector);
           if (elements.length === 0) {
             console.log('no elements with the Tag name: ' + component.selector + ' have been found');
