@@ -211,7 +211,6 @@ export class ComponentEngine {
       }
       this.renderedElements = [];
     }
-    alert('done rendering');
   }
 
   public recreateComponentsByName(name: string) {
