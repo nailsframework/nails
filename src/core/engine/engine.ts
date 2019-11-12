@@ -169,8 +169,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -273,21 +273,25 @@ export class RenderingEngine {
     const instance = this.componentEngine.getInstanceOfElementOrNull(element);
     interpolation = this.stripAndTrimInterpolation(interpolation);
     if (this.state.data.hasOwnProperty(interpolation)) {
+      console.log('Found in data');
+
       return this.state.data[interpolation]; //  Handle interpolations with . inside
     }
     // Interpolation might be defined in a state from the object.
 
     if (instance === null) {
+      console.log('returning null');
       return interpolation;
     }
 
     if (instance.hasOwnProperty(interpolation)) {
+      console.log('returning component intepolation');
       return instance[interpolation];
     }
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
