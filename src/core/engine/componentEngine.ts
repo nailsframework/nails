@@ -125,38 +125,6 @@ export class ComponentEngine {
       }
     }
   }
-
-  private getFirstChildOfElementWithTagNameOrNull(element: HTMLElement, tagName: string): HTMLElement {
-    if (element.children.length === 0) {
-      return element
-    }
-
-    for (const child of element.children) {
-      if (child.tagName === tagName) {
-        return child as HTMLElement;
-      }
-      if (this.elementHasElementWithTagName(child as HTMLElement, tagName)) {
-        return child as HTMLElement;
-      }
-    }
-    return null;
-  }
-
-  private elementHasElementWithTagName(element: HTMLElement, tagName: string): boolean {
-    if (element.children.length === 0) {
-      return element.tagName === tagName;
-    }
-
-    for (const child of element.children) {
-      if (child.tagName === tagName) {
-        return true;
-      }
-      if (this.elementHasElementWithTagName(child as HTMLElement, tagName)) {
-        return true;
-      }
-    }
-    return false;
-  }
   // tslint:disable-next-line:member-ordering
   public renderComponents(exclude?: HTMLElement) {
     this.injectComponents();
@@ -188,7 +156,7 @@ export class ComponentEngine {
               continue;
             }
             if (this.elementHasElementWithTagName(tmpElement, 'n-content')) {
-              let nContentElement = this.getFirstChildOfElementWithTagNameOrNull(element, 'n-content');
+              const nContentElement = this.getFirstChildOfElementWithTagNameOrNull(element, 'n-content');
               nContentElement.innerHTML = preservedHTML;
             }
 
@@ -257,6 +225,38 @@ export class ComponentEngine {
 
   public recreateAllComponents() {
     this.renderComponents();
+  }
+
+  private getFirstChildOfElementWithTagNameOrNull(element: HTMLElement, tagName: string): HTMLElement {
+    if (element.children.length === 0) {
+      return element;
+    }
+
+    for (const child of element.children) {
+      if (child.tagName === tagName) {
+        return child as HTMLElement;
+      }
+      if (this.elementHasElementWithTagName(child as HTMLElement, tagName)) {
+        return child as HTMLElement;
+      }
+    }
+    return null;
+  }
+
+  private elementHasElementWithTagName(element: HTMLElement, tagName: string): boolean {
+    if (element.children.length === 0) {
+      return element.tagName === tagName;
+    }
+
+    for (const child of element.children) {
+      if (child.tagName === tagName) {
+        return true;
+      }
+      if (this.elementHasElementWithTagName(child as HTMLElement, tagName)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private shallRenderElement(element: HTMLElement): boolean {
