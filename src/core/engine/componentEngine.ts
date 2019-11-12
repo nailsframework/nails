@@ -1,3 +1,4 @@
+import { inheritInnerComments } from '@babel/types';
 import { Instance } from '../../classes/Instance';
 import { IComponent } from '../../interfaces/Component';
 import { Nails } from '../../nails';
@@ -5,7 +6,6 @@ import { Router } from '../components/router.component';
 import { Guid } from '../math/Guid';
 import { State } from '../state';
 import { RenderingEngine } from './engine';
-import { inheritInnerComments } from '@babel/types';
 
 export class ComponentEngine {
   public state: State;
