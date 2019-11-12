@@ -149,7 +149,6 @@ export class ComponentEngine {
       this.state.mountedComponents !== null &&
       this.state.mountedComponents.length > 0
     ) {
-
       let oldHTML = document.body.innerHTML;
       let newHTML = '';
       while (newHTML !== oldHTML) {
