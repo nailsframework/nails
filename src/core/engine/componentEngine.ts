@@ -137,9 +137,10 @@ export class ComponentEngine {
       let firstRun = true;
       let changed = false;
       for (let i = 0; i < 300; i++) {
-        if (!firstRun && !changed) return;
+        if (!firstRun && !changed) {
+          return;
+        }
         const html = document.body.innerHTML;
-
 
         let newHtml;
         for (const component of this.state.mountedComponents) {
