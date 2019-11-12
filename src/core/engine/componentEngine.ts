@@ -169,24 +169,21 @@ export class ComponentEngine {
             rendering = false;
             continue;
           }
-          const cs = this.getAllDescendantsForElementWithTagName(element, 'n-content');
-          for (const c of cs) {
-            if (c.childNodes.length > 0) {
+          const nContents = this.getAllDescendantsForElementWithTagName(element, 'n-content');
+          for (const ncontent of nContents) {
+            if (ncontent.childNodes.length > 0) {
               continue;
             }
             const render = document.createElement('n-template');
             render.innerHTML = preservedHTML;
-            this.renderNContent(c, render);
-            componentHTML = c.innerHTML;
+            this.renderNContent(ncontent, render);
+            componentHTML = ncontent.innerHTML;
           }
 
-          if (!element.hasAttribute('element-guid')) {
-            this.setInstanceIdOnElement(element, component);
-            element.innerHTML = componentHTML;
-            rendering = true;
-          } else {
-            rendering = false;
-          }
+          this.setInstanceIdOnElement(element, component);
+          element.innerHTML = componentHTML;
+          rendering = true;
+
 
           // this.engine.executeInerpolationsOnElement(element);
           // this.traverseElementAndExecuteDirectives(element);
