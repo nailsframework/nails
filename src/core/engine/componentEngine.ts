@@ -177,6 +177,10 @@ export class ComponentEngine {
             if (this.elementHasElementWithTagName(tmpElement, 'n-content')) {
               console.log('n-content found');
               const nContentElement = this.getFirstChildOfElementWithTagNameOrNull(element, 'n-content');
+
+              if (nContentElement === null) {
+                continue;
+              }
               const nContentRenderElement = document.createElement('n-template');
               nContentRenderElement.innerHTML = preservedHTML;
               this.renderNContent(nContentElement, nContentRenderElement);
@@ -261,9 +265,8 @@ export class ComponentEngine {
       if (child.tagName === tagName) {
         return child as HTMLElement;
       }
-      if (this.elementHasElementWithTagName(child as HTMLElement, tagName)) {
-        return child as HTMLElement;
-      }
+      return this.getFirstChildOfElementWithTagNameOrNull(child as HTMLElement, tagName)
+
     }
     return null;
   }
