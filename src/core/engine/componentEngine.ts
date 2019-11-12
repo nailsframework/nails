@@ -256,25 +256,10 @@ export class ComponentEngine {
   }
 
   private getFirstChildOfElementWithTagNameOrNull(element: HTMLElement, tagName: string): HTMLElement {
-    tagName = tagName.toUpperCase();
-    if (element.children.length === 0) {
-      if (element.tagName === tagName) {
-        console.warn('returned element');
-        return element;
-      }
-      console.warn('returned null');
-      return null;
-    }
-
-    for (const child of element.children) {
-      if (child.tagName === tagName) {
-        console.warn('returned a child');
-        return child as HTMLElement;
-      }
-      return this.getFirstChildOfElementWithTagNameOrNull(child as HTMLElement, tagName);
-    }
-    console.error('n-content child not found.');
+    const elements = element.querySelectorAll(tagName);
+    console.warn(element);
     return null;
+
   }
 
   private elementHasElementWithTagName(element: HTMLElement, tagName: string): boolean {
