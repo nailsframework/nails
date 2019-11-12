@@ -189,7 +189,6 @@ export class ComponentEngine {
       }
     }
     this.renderedElements = [];
-
   }
 
   public recreateComponentsByName(name: string) {
