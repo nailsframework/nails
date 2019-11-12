@@ -260,10 +260,10 @@ export class ComponentEngine {
     tagName = tagName.toUpperCase();
     if (element.children.length === 0) {
       if (element.tagName === tagName) {
-        console.warn('returned element')
+        console.warn('returned element');
         return element;
       }
-      console.warn('returned null')
+      console.warn('returned null');
       return null;
     }
 
