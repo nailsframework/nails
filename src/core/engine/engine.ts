@@ -1,9 +1,9 @@
 'use strict';
 import { ActiveElement } from '../../classes/ActiveElement';
+import { Instance } from '../../classes/Instance';
 import { NailsDirectives } from '../../directiveDefinitions';
 import { State } from '../state';
 import { ComponentEngine } from './componentEngine';
-import { Instance } from '../../classes/Instance';
 export class RenderingEngine {
   public state: State;
   public directives: NailsDirectives;
@@ -289,6 +289,7 @@ export class RenderingEngine {
     console.log(instance);
     if (instance.getComponent().hasOwnProperty(interpolation)) {
       console.log('returning component intepolation');
+      // tslint:disable-next-line:no-eval
       return eval('instance.getComponent()[interpolation]');
     }
 
