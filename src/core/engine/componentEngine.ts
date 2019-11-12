@@ -264,7 +264,7 @@ export class ComponentEngine {
 
     for (const child of element.children) {
       if (child.tagName === tagName) {
-        console.warn('returned a child')
+        console.warn('returned a child');
         return child as HTMLElement;
       }
       return this.getFirstChildOfElementWithTagNameOrNull(child as HTMLElement, tagName);
