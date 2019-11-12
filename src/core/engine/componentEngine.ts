@@ -125,6 +125,38 @@ export class ComponentEngine {
       }
     }
   }
+
+  private getFirstChildOfElementWithTagNameOrNull(element: HTMLElement, tagName: string): HTMLElement {
+    if (element.children.length === 0) {
+      return element
+    }
+
+    for (const child of element.children) {
+      if (child.tagName === tagName) {
+        return child as HTMLElement;
+      }
+      if (this.elementHasElementWithTagName(child as HTMLElement, tagName)) {
+        return child as HTMLElement;
+      }
+    }
+    return null;
+  }
+
+  private elementHasElementWithTagName(element: HTMLElement, tagName: string): boolean {
+    if (element.children.length === 0) {
+      return element.tagName === tagName;
+    }
+
+    for (const child of element.children) {
+      if (child.tagName === tagName) {
+        return true;
+      }
+      if (this.elementHasElementWithTagName(child as HTMLElement, tagName)) {
+        return true;
+      }
+    }
+    return false;
+  }
   // tslint:disable-next-line:member-ordering
   public renderComponents(exclude?: HTMLElement) {
     this.injectComponents();
@@ -141,16 +173,25 @@ export class ComponentEngine {
         for (const component of this.state.mountedComponents) {
           const elements = document.getElementsByTagName(component.selector);
           if (elements.length === 0) {
+            console.log('no elements with the Tag name: ' + component.selector + ' have been found');
             continue;
           }
           for (const element of elements) {
+            let preservedHTML = '';
             if (element.childNodes.length > 0) {
-              continue;
+              preservedHTML = element.innerHTML;
             }
+            const tmpElement = document.createElement('div');
             const componentHTML = component.render();
+            tmpElement.innerHTML = componentHTML;
             if (componentHTML.includes('<' + component.selector + '>')) {
               continue;
             }
+            if (this.elementHasElementWithTagName(tmpElement, 'n-content')) {
+              let nContentElement = this.getFirstChildOfElementWithTagNameOrNull(element, 'n-content');
+              nContentElement.innerHTML = preservedHTML;
+            }
+
             this.setInstanceIdOnElement(element, component);
             element.innerHTML = componentHTML;
 
