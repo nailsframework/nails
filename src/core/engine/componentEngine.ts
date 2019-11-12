@@ -183,7 +183,6 @@ export class ComponentEngine {
                 nContentRenderElement.innerHTML = preservedHTML;
                 this.renderNContent(nContentElement, nContentRenderElement);
               }
-
             } else {
               console.log('n-content not found');
             }
