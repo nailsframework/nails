@@ -257,7 +257,7 @@ export class ComponentEngine {
 
   private getFirstChildOfElementWithTagNameOrNull(element: HTMLElement, tagName: string): HTMLElement {
     const elements = element.querySelectorAll(tagName);
-    console.warn(element);
+    console.warn(elements);
     return null;
   }
 
