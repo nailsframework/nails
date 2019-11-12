@@ -3,6 +3,7 @@ import { ActiveElement } from '../../classes/ActiveElement';
 import { NailsDirectives } from '../../directiveDefinitions';
 import { State } from '../state';
 import { ComponentEngine } from './componentEngine';
+import { Instance } from '../../classes/Instance';
 export class RenderingEngine {
   public state: State;
   public directives: NailsDirectives;
@@ -169,8 +170,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -270,7 +271,7 @@ export class RenderingEngine {
     return interpolations;
   }
   public getObjectReferenceByInterpolationName(interpolation: string, element: HTMLElement) {
-    const instance = this.componentEngine.getInstanceOfElementOrNull(element);
+    const instance = this.componentEngine.getInstanceOfElementOrNull(element) as Instance;
     interpolation = this.stripAndTrimInterpolation(interpolation);
     console.log(interpolation);
     if (this.state.data.hasOwnProperty(interpolation)) {
@@ -286,16 +287,16 @@ export class RenderingEngine {
     }
 
     console.log(instance);
-    if (instance.hasOwnProperty(interpolation)) {
+    if (instance.getComponent().hasOwnProperty(interpolation)) {
       console.log('returning component intepolation');
-      return instance[interpolation];
+      return eval('instance.getComponent()[interpolation]');
     }
 
     return interpolation;
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
