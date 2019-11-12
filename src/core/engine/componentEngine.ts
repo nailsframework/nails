@@ -166,6 +166,7 @@ export class ComponentEngine {
             let componentHTML = component.render();
             tmpElement.innerHTML = componentHTML;
             if (componentHTML.includes('<' + component.selector + '>')) {
+              rendering = false;
               continue;
             }
             const cs = this.getAllDescendantsForElementWithTagName(element, 'n-content');
