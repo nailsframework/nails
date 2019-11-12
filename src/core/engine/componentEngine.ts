@@ -119,6 +119,8 @@ export class ComponentEngine {
       console.log(instance);
       return;
     }
+    console.log(instance);
+    console.log('Above is the instance')
 
     for (const attribute of elementAttributes) {
       console.log(attribute.name);
