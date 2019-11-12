@@ -170,8 +170,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -237,12 +237,6 @@ export class RenderingEngine {
     stripped = stripped.substring(0, stripped.length - 1);
 
     return this.getObjectReferenceByInterpolationName(interpolation, element);
-    if (typeof this.state.data[stripped.split('.')[0]] === 'undefined') {
-      // tslint:disable-next-line:max-line-length
-      return 'undefined'; // This saves us from from crashing when user tries to user data.key.subkey where data.key is not defined. Also leaves n-for alone
-    }
-    // tslint:disable-next-line:no-eval
-    return eval('this.state.data.' + stripped);
   }
 
   public removeWhiteSpaceFromString(str: string) {
@@ -275,26 +269,17 @@ export class RenderingEngine {
   public getObjectReferenceByInterpolationName(interpolation: string, element: HTMLElement) {
     const instance = this.componentEngine.getInstanceOfElementOrNull(element) as Instance;
     interpolation = this.stripAndTrimInterpolation(interpolation);
-    console.log(interpolation);
     if (this.state.data.hasOwnProperty(interpolation)) {
-      console.log('Found in data');
 
       return this.state.data[interpolation]; //  Handle interpolations with . inside
     }
     // Interpolation might be defined in a state from the object.
 
     if (instance === null) {
-      console.log('returning null');
       return interpolation;
     }
 
-    console.log(instance);
     if (instance.getComponent().hasOwnProperty(interpolation)) {
-      console.log('returning component intepolation');
-      console.log('instance.getComponent().' + interpolation);
-      // tslint:disable-next-line:no-console
-      // tslint:disable-next-line: no-eval
-      console.log(eval('instance.getComponent().' + interpolation));
       // tslint:disable-next-line:no-eval
       return eval('instance.getComponent().' + interpolation);
     }
@@ -303,7 +288,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
@@ -375,7 +360,6 @@ export class RenderingEngine {
   }
   public interpolateElement(element: HTMLElement, interpolations: string[]) {
     // tslint:disable-next-line: no-console
-    console.log('interpolating with ' + interpolations);
     for (const interpolation of interpolations) {
       this.state.disableElementIfNeeded(element);
       const value = this.getValueOfInterpolation(interpolation, element);
@@ -451,7 +435,6 @@ export class RenderingEngine {
           interpolation,
         );
       }
-      console.log(interpolations);
       this.interpolateElement(element as HTMLElement, interpolations);
     } else {
       // tslint:disable-next-line:max-line-length

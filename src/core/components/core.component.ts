@@ -11,7 +11,6 @@ export class CoreComponent implements IComponent {
   }
 
   public set(target: any, prop: any, value: string) {
-    console.log('t:' + target + 'p: ' + prop);
     target[prop] = value;
     this.notifyDOM(target, prop, '');
     return true;
