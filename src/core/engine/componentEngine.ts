@@ -192,7 +192,6 @@ export class ComponentEngine {
           // this.traverseElementAndExecuteDirectives(element);
           preservedHTML = '';
         }
-
       }
       for (const component of this.state.mountedComponents) {
         const elements = document.getElementsByTagName(component.selector);
@@ -253,7 +252,6 @@ export class ComponentEngine {
   private getAllDescendantsForElementWithTagName(element: HTMLElement, tagName: string): NodeListOf<HTMLElement> {
     return element.querySelectorAll(tagName);
   }
-
 
   private shallRenderElement(element: HTMLElement): boolean {
     // Don't forget to clear this array as it may messes with the DOM.
