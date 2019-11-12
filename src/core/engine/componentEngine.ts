@@ -149,10 +149,9 @@ export class ComponentEngine {
       this.state.mountedComponents !== null &&
       this.state.mountedComponents.length > 0
     ) {
-      let oldHTML = document.body.innerHTML;
-      let newHTML = '';
-      while (newHTML !== oldHTML) {
-        oldHTML = document.body.innerHTML;
+      let rendering = true;
+      while (rendering) {
+
         for (const component of this.state.mountedComponents) {
           const elements = document.getElementsByTagName(component.selector);
           if (elements.length === 0) {
@@ -181,15 +180,21 @@ export class ComponentEngine {
               componentHTML = c.innerHTML;
             }
 
-            this.setInstanceIdOnElement(element, component);
-            element.innerHTML = componentHTML;
+            if(!element.hasAttribute('element-guid')){
+              this.setInstanceIdOnElement(element, component);
+              element.innerHTML = componentHTML;
+              rendering = true;
+            }else{
+              rendering = false;
+            }
+
+            
 
             // this.engine.executeInerpolationsOnElement(element);
             // this.traverseElementAndExecuteDirectives(element);
             preservedHTML = '';
           }
         }
-        newHTML = document.body.innerHTML;
       }
       for (const component of this.state.mountedComponents) {
         const elements = document.getElementsByTagName(component.selector);
