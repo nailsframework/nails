@@ -2,10 +2,11 @@
 import { ActiveElement } from '../../classes/ActiveElement';
 import { NailsDirectives } from '../../directiveDefinitions';
 import { State } from '../state';
+import { ComponentEngine } from './componentEngine';
 export class RenderingEngine {
   public state: State;
   public directives: NailsDirectives;
-
+  public componentEngine: ComponentEngine;
   constructor(state: State) {
     if (typeof state === 'undefined' || state === null) {
       // tslint:disable-next-line:no-console
@@ -13,21 +14,10 @@ export class RenderingEngine {
     }
     this.state = state;
     this.directives = new NailsDirectives();
+    this.componentEngine = new ComponentEngine(this.state, this, null, []);
   }
 
-  public notifyDOM(target: any, prop: any, value: string) {
-    console.log('state is: ' + this.state.findElementsByObject);
-    const refs = this.state.findElementsByObject(target, prop);
-    if (refs === [] || refs.length === 0) {
-      return;
-    }
-    for (const ref of refs) {
-      this.updateInterpolatedElement(ref.element, ref.content);
-      this.executeDirectivesOnElement(ref.element, false);
-    }
 
-    return true;
-  }
 
   public indexDOM() {
     if (typeof this.state.element !== 'undefined') {
@@ -66,7 +56,7 @@ export class RenderingEngine {
       for (const el of activeElements) {
         this.executeDirectivesOnElement(el, true);
       }
-      this.executeInerpolationsOnElement(element as HTMLElement);
+      this.executeInterpolationsOnElement(element as HTMLElement);
     }
   }
 
@@ -181,8 +171,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -281,13 +271,26 @@ export class RenderingEngine {
     }
     return interpolations;
   }
-  public getObjectReferenceByInterpolationName(interpolation: string) {
+  public getObjectReferenceByInterpolationName(interpolation: string, element: HTMLElement) {
+    const instance = this.componentEngine.getInstanceOfElementOrNull(element);
     interpolation = this.stripAndTrimInterpolation(interpolation);
-    return this.state.data[interpolation]; // H andle interpolations with . inside
+    if (this.state.data.hasOwnProperty(interpolation)) {
+      return this.state.data[interpolation]; //  Handle interpolations with . inside
+    }
+    // Interpolation might be defined in a state from the object.
+
+    if (instance === null) {
+      return interpolation;
+    }
+
+    if (instance.hasOwnProperty(interpolation)) {
+      return instance[interpolation];
+    }
+
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
@@ -407,9 +410,9 @@ export class RenderingEngine {
     return san;
   }
 
-  public executeInerpolationsOnElement(element: HTMLElement) {
+  public executeInterpolationsOnElement(element: HTMLElement) {
     for (const child of element.childNodes) {
-      this.executeInerpolationsOnElement(child as HTMLElement);
+      this.executeInterpolationsOnElement(child as HTMLElement);
     }
 
     const interpolations = this.getInterpolationsForTextContent(element.nodeValue);
@@ -428,7 +431,7 @@ export class RenderingEngine {
       for (const interpolation of interpolations) {
         this.state.addActiveElement(
           element as HTMLElement,
-          this.getObjectReferenceByInterpolationName(interpolation),
+          this.getObjectReferenceByInterpolationName(interpolation, element),
           element.nodeValue,
           interpolation,
         );

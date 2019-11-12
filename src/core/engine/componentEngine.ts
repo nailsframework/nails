@@ -161,7 +161,7 @@ export class ComponentEngine {
 
             if (this.shallRenderElement(element)) {
               this.traverseElementAndExecuteDirectives(element);
-              this.engine.executeInerpolationsOnElement(element);
+              this.engine.executeInterpolationsOnElement(element);
               this.renderedElements.push(element);
             }
           }
