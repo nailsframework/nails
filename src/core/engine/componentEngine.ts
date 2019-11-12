@@ -184,7 +184,7 @@ export class ComponentEngine {
             if (!element.hasAttribute('element-guid')) {
               this.setInstanceIdOnElement(element, component);
               element.innerHTML = componentHTML;
-              rendering = true;
+              rendering = false;
             } else {
               rendering = false;
             }
