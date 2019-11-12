@@ -126,7 +126,6 @@ export class ComponentEngine {
     }
   }
 
-
   public renderNContent(nContentElement: HTMLElement, content: HTMLElement) {
     if (nContentElement.hasAttribute('select')) {
       for (const child of content.children) {
