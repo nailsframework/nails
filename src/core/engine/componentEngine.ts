@@ -115,11 +115,18 @@ export class ComponentEngine {
 
     const instance = this.getInstanceOfElementOrNull(element);
     if (instance === null) {
+      console.log('bailing, instance was null');
+      // tslint:disable: no-console
+      console.log(instance);
       return;
     }
 
     for (const attribute of elementAttributes) {
+      console.log(attribute.name);
+
       if (instance.getComponent().hasOwnProperty(attribute.name)) {
+        console.log('setting ' + attribute.value);
+
         instance.getComponent()[attribute.name] = attribute.value;
       }
     }
