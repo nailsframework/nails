@@ -269,10 +269,10 @@ export class ComponentEngine {
   }
 
   private elementHasElementWithTagName(element: HTMLElement, tagName: string): boolean {
+    tagName = tagName.toUpperCase();
     if (element.children.length === 0) {
       return element.tagName === tagName;
     }
-    console.warn(element.tagName);
 
     for (const child of element.children) {
       if (child.tagName === tagName) {
