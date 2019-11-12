@@ -19,7 +19,7 @@ export class CoreComponent implements IComponent {
     target[prop] = value;
     this.notifyDOM(target, prop, '');
     return true;
-  };
+  }
   public render() {
     /* html */
     return `<div></div>`;
