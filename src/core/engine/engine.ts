@@ -17,8 +17,6 @@ export class RenderingEngine {
     this.componentEngine = new ComponentEngine(this.state, this, null, []);
   }
 
-
-
   public indexDOM() {
     if (typeof this.state.element !== 'undefined') {
       let element = null;
@@ -171,8 +169,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-          directive +
-          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+            directive +
+            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -286,11 +284,10 @@ export class RenderingEngine {
     if (instance.hasOwnProperty(interpolation)) {
       return instance[interpolation];
     }
-
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) { }
+  public interpolateOnTextWithState(text: string, state: State) {}
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
