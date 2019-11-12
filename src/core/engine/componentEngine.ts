@@ -187,7 +187,7 @@ export class ComponentEngine {
                   nContentRenderElement.innerHTML = preservedHTML;
                   this.renderNContent(nContentElement, nContentRenderElement);
                 } else {
-                  console.warn('n-content element was null')
+                  console.warn('n-content element was null');
                 }
               }
             } else {
