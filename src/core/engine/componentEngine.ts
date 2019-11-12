@@ -125,6 +125,19 @@ export class ComponentEngine {
       }
     }
   }
+
+
+  public renderNContent(nContentElement: HTMLElement, content: HTMLElement) {
+    if (nContentElement.hasAttribute('select')) {
+      for (const child of content.children) {
+        if (child.tagName === nContentElement.getAttribute('select')) {
+          nContentElement.innerHTML = child.innerHTML;
+          return;
+        }
+      }
+    }
+    nContentElement.innerHTML = content.innerHTML;
+  }
   // tslint:disable-next-line:member-ordering
   public renderComponents(exclude?: HTMLElement) {
     this.injectComponents();
@@ -163,9 +176,13 @@ export class ComponentEngine {
               continue;
             }
             if (this.elementHasElementWithTagName(tmpElement, 'n-content')) {
+              console.log('n-content found');
               const nContentElement = this.getFirstChildOfElementWithTagNameOrNull(element, 'n-content');
-              nContentElement.innerHTML = preservedHTML;
-              changed = true;
+              const nContentRenderElement = document.createElement('n-template');
+              nContentRenderElement.innerHTML = preservedHTML;
+              this.renderNContent(nContentElement, nContentRenderElement);
+            } else {
+              console.log('n-content not found');
             }
 
             this.setInstanceIdOnElement(element, component);
