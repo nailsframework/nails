@@ -110,6 +110,21 @@ export class ComponentEngine {
     return foundInstances.pop().getElement().attributes;
   }
 
+  public setComponentVariables(element: HTMLElement) {
+    const elementAttributes = element.attributes as NamedNodeMap;
+
+    const instance = this.getInstanceOfElementOrNull(element);
+    if (instance === null) {
+      return;
+    }
+
+    for (const attribute of elementAttributes) {
+      if (instance.getComponent().hasOwnProperty(attribute.name)) {
+        instance.getComponent()[attribute.name] = attribute.value;
+      }
+    }
+
+  }
   // tslint:disable-next-line:member-ordering
   public renderComponents(exclude?: HTMLElement) {
     this.injectComponents();
@@ -163,6 +178,7 @@ export class ComponentEngine {
               this.traverseElementAndExecuteDirectives(element);
               this.engine.executeInterpolationsOnElement(element);
               this.renderedElements.push(element);
+              this.setComponentVariables(element);
             }
           }
         }
