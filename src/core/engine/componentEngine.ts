@@ -257,12 +257,14 @@ export class ComponentEngine {
   }
 
   private getFirstChildOfElementWithTagNameOrNull(element: HTMLElement, tagName: string): HTMLElement {
+    tagName = tagName.toUpperCase();
     if (element.children.length === 0) {
       return element;
     }
 
     for (const child of element.children) {
       if (child.tagName === tagName) {
+        console.warn('returned a child')
         return child as HTMLElement;
       }
       return this.getFirstChildOfElementWithTagNameOrNull(child as HTMLElement, tagName);
