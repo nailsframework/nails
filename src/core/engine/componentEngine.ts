@@ -184,7 +184,6 @@ export class ComponentEngine {
           element.innerHTML = componentHTML;
           rendering = true;
 
-
           // this.engine.executeInerpolationsOnElement(element);
           // this.traverseElementAndExecuteDirectives(element);
           preservedHTML = '';
