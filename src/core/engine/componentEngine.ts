@@ -163,7 +163,6 @@ export class ComponentEngine {
         if (this.getAllDescendantsForElementWithTagName(tmpElement, 'n-content').length > 0) {
           for (const nContent of this.getAllDescendantsForElementWithTagName(tmpElement, 'n-content')) {
             this.renderNContent(nContent, this.generateTempElement(element.innerHTML));
-
           }
         }
         element.innerHTML = html;
