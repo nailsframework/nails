@@ -178,12 +178,12 @@ export class ComponentEngine {
               console.log('n-content found');
               const nContentElement = this.getFirstChildOfElementWithTagNameOrNull(element, 'n-content');
 
-              if (nContentElement === null) {
-                continue;
+              if (!nContentElement === null) {
+                const nContentRenderElement = document.createElement('n-template');
+                nContentRenderElement.innerHTML = preservedHTML;
+                this.renderNContent(nContentElement, nContentRenderElement);
               }
-              const nContentRenderElement = document.createElement('n-template');
-              nContentRenderElement.innerHTML = preservedHTML;
-              this.renderNContent(nContentElement, nContentRenderElement);
+
             } else {
               console.log('n-content not found');
             }
