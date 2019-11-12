@@ -372,6 +372,7 @@ export class RenderingEngine {
     return false;
   }
   public interpolateElement(element: HTMLElement, interpolations: string[]) {
+    // tslint:disable-next-line: no-console
     console.log('interpolating with ' + interpolations);
     for (const interpolation of interpolations) {
       this.state.disableElementIfNeeded(element);
