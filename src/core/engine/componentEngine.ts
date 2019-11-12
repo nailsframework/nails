@@ -169,6 +169,7 @@ export class ComponentEngine {
             let preservedHTML = '';
             if (element.childNodes.length > 0) {
               preservedHTML = element.innerHTML;
+              alert(preservedHTML);
             }
             const tmpElement = document.createElement('div');
             let componentHTML = component.render();
@@ -193,6 +194,7 @@ export class ComponentEngine {
 
             // this.engine.executeInerpolationsOnElement(element);
             // this.traverseElementAndExecuteDirectives(element);
+            preservedHTML = '';
           }
           newHtml = document.body.innerHTML;
           firstRun = false;
