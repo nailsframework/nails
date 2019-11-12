@@ -267,7 +267,7 @@ export class ComponentEngine {
       }
       return this.getFirstChildOfElementWithTagNameOrNull(child as HTMLElement, tagName);
     }
-    console.error('n-content child not found.')
+    console.error('n-content child not found.');
     return null;
   }
 
