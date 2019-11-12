@@ -188,7 +188,6 @@ export class ComponentEngine {
               componentHTML = c.innerHTML;
             }
 
-
             this.setInstanceIdOnElement(element, component);
             element.innerHTML = componentHTML;
 
