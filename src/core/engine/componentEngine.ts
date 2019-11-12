@@ -259,7 +259,6 @@ export class ComponentEngine {
     const elements = element.querySelectorAll(tagName);
     console.warn(element);
     return null;
-
   }
 
   private elementHasElementWithTagName(element: HTMLElement, tagName: string): boolean {
