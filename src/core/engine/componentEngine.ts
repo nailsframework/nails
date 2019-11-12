@@ -159,7 +159,7 @@ export class ComponentEngine {
           const elements = document.getElementsByTagName(component.selector);
           if (elements.length === 0) {
             console.log('no elements with the Tag name: ' + component.selector + ' have been found');
-            changed = false;
+            changed = true;
             continue;
           }
           for (const element of elements) {
