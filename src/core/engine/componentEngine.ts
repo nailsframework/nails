@@ -265,8 +265,7 @@ export class ComponentEngine {
       if (child.tagName === tagName) {
         return child as HTMLElement;
       }
-      return this.getFirstChildOfElementWithTagNameOrNull(child as HTMLElement, tagName)
-
+      return this.getFirstChildOfElementWithTagNameOrNull(child as HTMLElement, tagName);
     }
     return null;
   }
