@@ -184,7 +184,7 @@ export class ComponentEngine {
             if (!element.hasAttribute('element-guid')) {
               this.setInstanceIdOnElement(element, component);
               element.innerHTML = componentHTML;
-              rendering = false;
+              rendering = true;
             } else {
               rendering = false;
             }
@@ -217,6 +217,7 @@ export class ComponentEngine {
       }
       this.renderedElements = [];
     }
+    alert('done rendering');
   }
 
   public recreateComponentsByName(name: string) {
