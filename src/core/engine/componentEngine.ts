@@ -176,13 +176,16 @@ export class ComponentEngine {
             }
             if (this.elementHasElementWithTagName(tmpElement, 'n-content')) {
               console.log('n-content found');
-              const nContentElement = this.getFirstChildOfElementWithTagNameOrNull(element, 'n-content');
+              const nContentElements = this.getAllDescendantsForElementWithTagName(element, 'n-content');
 
-              if (!nContentElement === null) {
-                const nContentRenderElement = document.createElement('n-template');
-                nContentRenderElement.innerHTML = preservedHTML;
-                this.renderNContent(nContentElement, nContentRenderElement);
+              for (const nContentElement of nContentElements) {
+                if (!nContentElement === null) {
+                  const nContentRenderElement = document.createElement('n-template');
+                  nContentRenderElement.innerHTML = preservedHTML;
+                  this.renderNContent(nContentElement, nContentRenderElement);
+                }
               }
+
             } else {
               console.log('n-content not found');
             }
@@ -255,7 +258,7 @@ export class ComponentEngine {
     this.renderComponents();
   }
 
-  private getFirstChildOfElementWithTagNameOrNull(element: HTMLElement, tagName: string): HTMLElement {
+  private getAllDescendantsForElementWithTagName(element: HTMLElement, tagName: string): HTMLElement {
     const elements = element.querySelectorAll(tagName);
     console.warn(elements);
     return null;
