@@ -182,7 +182,6 @@ export class ComponentEngine {
               const nContentElements = this.getAllDescendantsForElementWithTagName(element, 'n-content');
               for (const nContentElement of nContentElements) {
                 if (!nContentElement === null) {
-
                   const nContentRenderElement = document.createElement('n-template');
                   nContentRenderElement.innerHTML = preservedHTML;
                   this.renderNContent(nContentElement, nContentRenderElement);
