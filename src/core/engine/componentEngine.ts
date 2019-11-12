@@ -180,11 +180,14 @@ export class ComponentEngine {
             if (this.elementHasElementWithTagName(tmpElement, 'n-content')) {
               console.log('n-content found');
               const nContentElements = this.getAllDescendantsForElementWithTagName(element, 'n-content');
+              console.warn(nContentElements);
               for (const nContentElement of nContentElements) {
                 if (!nContentElement === null) {
                   const nContentRenderElement = document.createElement('n-template');
                   nContentRenderElement.innerHTML = preservedHTML;
                   this.renderNContent(nContentElement, nContentRenderElement);
+                } else {
+                  console.warn('n-content element was null')
                 }
               }
             } else {
