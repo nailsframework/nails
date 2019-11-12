@@ -171,27 +171,23 @@ export class ComponentEngine {
               preservedHTML = element.innerHTML;
             }
             const tmpElement = document.createElement('div');
-            const componentHTML = component.render();
+            let componentHTML = component.render();
             tmpElement.innerHTML = componentHTML;
             changed = true;
             if (componentHTML.includes('<' + component.selector + '>')) {
               continue;
             }
-            if (this.elementHasElementWithTagName(tmpElement, 'n-content')) {
-              console.log('n-content found');
-              const nContentElements = this.getAllDescendantsForElementWithTagName(element, 'n-content');
-              console.warn(nContentElements);
-              for (const nContentElement of nContentElements) {
-                if (nContentElement.childNodes.length > 0) {
-                  continue;
-                }
-                const nContentRenderElement = document.createElement('n-template');
-                nContentRenderElement.innerHTML = preservedHTML;
-                this.renderNContent(nContentElement, nContentRenderElement);
+            const cs = this.getAllDescendantsForElementWithTagName(element, 'n-content');
+            for (const c of cs) {
+              if (c.childNodes.length > 0) {
+                continue;
               }
-            } else {
-              console.log('n-content not found');
+              const render = document.createElement('n-template');
+              render.innerHTML = preservedHTML;
+              this.renderNContent(c, render);
+              componentHTML = c.innerHTML;
             }
+
 
             this.setInstanceIdOnElement(element, component);
             element.innerHTML = componentHTML;
