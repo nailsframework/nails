@@ -66,6 +66,7 @@ export class ComponentEngine {
       }
       element = element.parentElement;
     }
+    return null;
   }
   public setInstanceIdOnElement(element: HTMLElement, component: IComponent): any {
     const guid = Guid.newGuid();
