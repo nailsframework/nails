@@ -170,8 +170,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -217,7 +217,7 @@ export class RenderingEngine {
 
     return interpolation;
   }
-  public getValueOfInterpolation(interpolation: string) {
+  public getValueOfInterpolation(interpolation: string, element: HTMLElement) {
     // This comes in the format of {{ interpolation }}
     interpolation = interpolation.trim();
     if (interpolation.match(/{{(.?\s?\w?.?\w\s?)+}}/g)) {
@@ -235,6 +235,8 @@ export class RenderingEngine {
       stripped += arg + '.';
     }
     stripped = stripped.substring(0, stripped.length - 1);
+
+    return this.getObjectReferenceByInterpolationName(interpolation, element);
     if (typeof this.state.data[stripped.split('.')[0]] === 'undefined') {
       // tslint:disable-next-line:max-line-length
       return 'undefined'; // This saves us from from crashing when user tries to user data.key.subkey where data.key is not defined. Also leaves n-for alone
@@ -301,7 +303,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
@@ -336,7 +338,7 @@ export class RenderingEngine {
     }
     let interpolatedText = originalText;
     for (const interpolation of interpolations) {
-      const value = this.getValueOfInterpolation(interpolation);
+      const value = this.getValueOfInterpolation(interpolation, ref);
 
       if (this.isElementDisabled(this.stripAndTrimInterpolation(interpolation), ref)) {
         continue;
@@ -376,7 +378,7 @@ export class RenderingEngine {
     console.log('interpolating with ' + interpolations);
     for (const interpolation of interpolations) {
       this.state.disableElementIfNeeded(element);
-      const value = this.getValueOfInterpolation(interpolation);
+      const value = this.getValueOfInterpolation(interpolation, element);
       if (this.isElementDisabled(this.stripAndTrimInterpolation(interpolation).trim(), element)) {
         continue;
       }
