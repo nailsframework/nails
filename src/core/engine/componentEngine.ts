@@ -115,7 +115,6 @@ export class ComponentEngine {
 
     const instance = this.getInstanceOfElementOrNull(element);
     if (instance === null) {
-      console.log('bailing, instance was null');
       // tslint:disable: no-console
       console.log(instance);
       return;
@@ -124,7 +123,7 @@ export class ComponentEngine {
     for (const attribute of elementAttributes) {
       console.log(attribute.name);
 
-      if (instance.getComponent().hasOwnProperty(attribute.name)) {
+      if (typeof instance.getComponent()[attribute.name] !== 'undefined') {
         console.log('setting ' + attribute.value);
 
         instance.getComponent()[attribute.name] = attribute.value;
