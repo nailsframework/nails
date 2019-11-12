@@ -149,20 +149,15 @@ export class ComponentEngine {
       this.state.mountedComponents !== null &&
       this.state.mountedComponents.length > 0
     ) {
-      let firstRun = true;
-      let changed = false;
-      for (let i = 0; i < 300; i++) {
-        if (!firstRun && !changed) {
-          return;
-        }
-        const html = document.body.innerHTML;
 
-        let newHtml;
+      let oldHTML = document.body.innerHTML;
+      let newHTML = '';
+      while (newHTML !== oldHTML) {
+        oldHTML = document.body.innerHTML;
         for (const component of this.state.mountedComponents) {
           const elements = document.getElementsByTagName(component.selector);
           if (elements.length === 0) {
             console.log('no elements with the Tag name: ' + component.selector + ' have been found');
-            changed = true;
             continue;
           }
           for (const element of elements) {
@@ -174,7 +169,6 @@ export class ComponentEngine {
             const tmpElement = document.createElement('div');
             let componentHTML = component.render();
             tmpElement.innerHTML = componentHTML;
-            changed = true;
             if (componentHTML.includes('<' + component.selector + '>')) {
               continue;
             }
@@ -196,12 +190,8 @@ export class ComponentEngine {
             // this.traverseElementAndExecuteDirectives(element);
             preservedHTML = '';
           }
-          newHtml = document.body.innerHTML;
-          firstRun = false;
         }
-        if (html === newHtml) {
-          break;
-        }
+        newHTML = document.body.innerHTML;
       }
       for (const component of this.state.mountedComponents) {
         const elements = document.getElementsByTagName(component.selector);
