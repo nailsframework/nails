@@ -284,6 +284,7 @@ export class RenderingEngine {
     }
 
     // Because, we want the developer to see that something went wrong.
+
     return 'undefined';
   }
 
