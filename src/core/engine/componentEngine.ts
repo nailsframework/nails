@@ -116,21 +116,12 @@ export class ComponentEngine {
     const instance = this.getInstanceOfElementOrNull(element);
     if (instance === null) {
       // tslint:disable: no-console
-      console.log(instance);
       return;
     }
-    console.log(instance);
-    console.log('Above is the instance');
-
     for (const attribute of elementAttributes) {
-      console.log(attribute.name);
 
       if (typeof instance.getComponent()[attribute.name] !== 'undefined') {
-        console.log('setting ' + attribute.value);
         instance.getComponent()[attribute.name] = attribute.value;
-      } else {
-        console.log(instance.getComponent()[attribute.name]);
-        console.log(instance);
       }
     }
   }
