@@ -163,7 +163,6 @@ export class ComponentEngine {
             let preservedHTML = '';
             if (element.childNodes.length > 0) {
               preservedHTML = element.innerHTML;
-              alert(preservedHTML);
             }
             const tmpElement = document.createElement('div');
             let componentHTML = component.render();
