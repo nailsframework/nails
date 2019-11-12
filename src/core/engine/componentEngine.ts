@@ -157,6 +157,7 @@ export class ComponentEngine {
         continue;
       }
       for (const element of elements) {
+        this.setInstanceIdOnElement(element, component);
         const html = component.render();
         const tmpElement = this.generateTempElement(html);
         if (this.getAllDescendantsForElementWithTagName(tmpElement, 'n-content').length > 0) {
