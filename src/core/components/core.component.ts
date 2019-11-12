@@ -10,10 +10,7 @@ export class CoreComponent implements IComponent {
     return new Proxy(this, this);
   }
 
-  public get(target: any, prop: any, value: any) {
-    console.log('got ' + value);
-    return target[prop];
-  }
+
   public set(target: any, prop: any, value: string) {
     console.log('t:' + target + 'p: ' + prop);
     target[prop] = value;
