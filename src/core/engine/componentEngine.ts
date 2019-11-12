@@ -149,12 +149,10 @@ export class ComponentEngine {
       this.state.mountedComponents !== null &&
       this.state.mountedComponents.length > 0
     ) {
-      let rendering = true;
       for (const component of this.state.mountedComponents) {
         const elements = document.getElementsByTagName(component.selector);
         if (elements.length === 0) {
           console.log('no elements with the Tag name: ' + component.selector + ' have been found');
-          rendering = false;
           continue;
         }
         for (const element of elements) {
@@ -166,7 +164,6 @@ export class ComponentEngine {
           let componentHTML = component.render();
           tmpElement.innerHTML = componentHTML;
           if (componentHTML.includes('<' + component.selector + '>')) {
-            rendering = false;
             continue;
           }
           const nContents = this.getAllDescendantsForElementWithTagName(element, 'n-content');
@@ -181,8 +178,9 @@ export class ComponentEngine {
           }
 
           this.setInstanceIdOnElement(element, component);
-          element.innerHTML = componentHTML;
-          rendering = true;
+          if (this.shallRenderElement(element)) {
+            element.innerHTML = componentHTML;
+          }
 
           // this.engine.executeInerpolationsOnElement(element);
           // this.traverseElementAndExecuteDirectives(element);
