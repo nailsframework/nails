@@ -257,7 +257,7 @@ export class ComponentEngine {
     this.renderComponents();
   }
 
-  private getAllDescendantsForElementWithTagName(element: HTMLElement, tagName: string): NodeListOf<Element> {
+  private getAllDescendantsForElementWithTagName(element: HTMLElement, tagName: string): NodeListOf<HTMLElement> {
     return element.querySelectorAll(tagName);
   }
 
