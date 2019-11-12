@@ -291,6 +291,7 @@ export class RenderingEngine {
       console.log('returning component intepolation');
       console.log('instance.getComponent().' + interpolation);
       // tslint:disable-next-line:no-console
+      // tslint:disable-next-line: no-eval
       console.log(eval('instance.getComponent().' + interpolation))
       // tslint:disable-next-line:no-eval
       return eval('instance.getComponent().' + interpolation);
