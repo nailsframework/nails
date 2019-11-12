@@ -290,6 +290,7 @@ export class RenderingEngine {
     if (instance.getComponent().hasOwnProperty(interpolation)) {
       console.log('returning component intepolation');
       console.log('instance.getComponent().' + interpolation);
+      // tslint:disable-next-line:no-console
       console.log(eval('instance.getComponent().' + interpolation))
       // tslint:disable-next-line:no-eval
       return eval('instance.getComponent().' + interpolation);
