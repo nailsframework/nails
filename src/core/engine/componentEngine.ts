@@ -125,11 +125,12 @@ export class ComponentEngine {
 
       if (typeof instance.getComponent()[attribute.name] !== 'undefined') {
         console.log('setting ' + attribute.value);
-
         instance.getComponent()[attribute.name] = attribute.value;
+      } else {
+        console.log(instance.getComponent()[attribute.name]);
+        console.log(instance);
       }
     }
-  }
   // tslint:disable-next-line:member-ordering
   public renderComponents(exclude?: HTMLElement) {
     this.injectComponents();
