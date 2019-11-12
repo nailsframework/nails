@@ -123,7 +123,6 @@ export class ComponentEngine {
         instance.getComponent()[attribute.name] = attribute.value;
       }
     }
-
   }
   // tslint:disable-next-line:member-ordering
   public renderComponents(exclude?: HTMLElement) {
