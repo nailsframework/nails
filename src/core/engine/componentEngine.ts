@@ -168,6 +168,28 @@ export class ComponentEngine {
         element.innerHTML = html;
       }
     }
+    for (const component of this.state.mountedComponents) {
+      const elements = document.getElementsByTagName(component.selector);
+      if (elements.length === 0) {
+        continue;
+      }
+      for (const element of elements) {
+        if (element.childNodes.length > 0) {
+          if (element === exclude) {
+            continue;
+          }
+
+          if (this.shallRenderElement(element)) {
+            this.traverseElementAndExecuteDirectives(element);
+            this.engine.executeInterpolationsOnElement(element);
+            this.renderedElements.push(element);
+            this.setComponentVariables(element);
+          }
+        }
+      }
+    }
+    this.renderedElements = [];
+
   }
 
   public recreateComponentsByName(name: string) {
