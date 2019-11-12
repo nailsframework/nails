@@ -170,8 +170,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -301,7 +301,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
@@ -372,6 +372,7 @@ export class RenderingEngine {
     return false;
   }
   public interpolateElement(element: HTMLElement, interpolations: string[]) {
+    console.log('interpolating with ' + interpolations);
     for (const interpolation of interpolations) {
       this.state.disableElementIfNeeded(element);
       const value = this.getValueOfInterpolation(interpolation);
@@ -447,6 +448,7 @@ export class RenderingEngine {
           interpolation,
         );
       }
+      console.log(interpolations);
       this.interpolateElement(element as HTMLElement, interpolations);
     } else {
       // tslint:disable-next-line:max-line-length
