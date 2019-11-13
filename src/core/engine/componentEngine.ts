@@ -229,28 +229,22 @@ export class ComponentEngine {
     const elements = element.children;
     const mountedComponents = this.state.mountedComponents as IComponent[];
     const selectors = [];
-    for (const component of mountedComponents) {
-      selectors.push(component.selector);
+    for (const c of mountedComponents) {
+      selectors.push(c.selector);
     }
-
-    console.log('rendering');
-    for (const el of elements) {
-      if (selectors.indexOf(el.tagName.toLowerCase()) >= 0) {
-        const components = this.findComponentsInMountedComponentsByTagName(el.tagName) as IComponent[];
-        if (components.length === 0) {
-          continue;
-        }
-        const component = this.generateTempElement(components[0].render());
-        const contentList = component.querySelectorAll('n-content');
-        const innerHTML = this.generateTempElement(el.innerHTML);
-        if (contentList.length > 0) {
-          for (const node of contentList) {
-            this.renderNContent(node as HTMLElement, innerHTML);
-          }
-        }
-        el.innerHTML = component.innerHTML;
-        this.renderElement(el as HTMLElement);
+    const components = this.findComponentsInMountedComponentsByTagName(element.tagName) as IComponent[];
+    const component = this.generateTempElement(components[0].render());
+    const contentList = component.querySelectorAll('n-content');
+    const innerHTML = this.generateTempElement(element.innerHTML);
+    if (contentList.length > 0) {
+      for (const node of contentList) {
+        this.renderNContent(node as HTMLElement, innerHTML);
       }
+    }
+    element.innerHTML = component.innerHTML;
+    for (const child of element.children) {
+      this.renderElement(child as HTMLElement);
+
     }
   }
 
