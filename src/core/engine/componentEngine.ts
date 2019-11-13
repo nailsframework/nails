@@ -232,7 +232,9 @@ export class ComponentEngine {
       selectors.push(c.selector);
     }
     // tslint:disable-next-line:max-line-length
-    const component = this.generateTempElement((this.findComponentInMountedComponentsByTagName(element.tagName) as IComponent).render());
+    const component = this.generateTempElement(
+      (this.findComponentInMountedComponentsByTagName(element.tagName) as IComponent).render(),
+    );
     const contentList = component.querySelectorAll('n-content');
     const innerHTML = this.generateTempElement(element.innerHTML);
     if (contentList.length > 0) {
