@@ -149,7 +149,7 @@ export class ComponentEngine {
     return element;
   }
 
-  public findComponentsInMountedComponentsByTagName(tagName: string) {
+  public findComponentInMountedComponentsByTagName(tagName: string) {
     console.log('tagName supplied is: ' + tagName);
     console.log(this.state.mountedComponents);
     console.log('above all c');
@@ -231,9 +231,8 @@ export class ComponentEngine {
     for (const c of mountedComponents) {
       selectors.push(c.selector);
     }
-    const components = this.findComponentsInMountedComponentsByTagName(element.tagName) as IComponent[];
-    console.log(components);
-    const component = this.generateTempElement(components[0].render());
+    // tslint:disable-next-line:max-line-length
+    const component = this.generateTempElement((this.findComponentInMountedComponentsByTagName(element.tagName) as IComponent).render());
     const contentList = component.querySelectorAll('n-content');
     const innerHTML = this.generateTempElement(element.innerHTML);
     if (contentList.length > 0) {
