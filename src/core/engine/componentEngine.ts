@@ -232,7 +232,7 @@ export class ComponentEngine {
       selectors.push(c.selector);
     }
     // tslint:disable-next-line:max-line-length
-    const component = this.findComponentInMountedComponentsByTagName(element.tagName) as IComponent
+    const component = this.findComponentInMountedComponentsByTagName(element.tagName) as IComponent;
     const componentElement = this.generateTempElement(component.render());
 
     const contentList = componentElement.querySelectorAll('n-content');
@@ -243,7 +243,7 @@ export class ComponentEngine {
       }
     }
     element.innerHTML = componentElement.innerHTML;
-    this.setInstanceIdOnElement(element, component)
+    this.setInstanceIdOnElement(element, component);
     for (const child of element.children) {
       this.renderElement(child as HTMLElement);
     }
