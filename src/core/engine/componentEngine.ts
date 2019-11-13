@@ -129,18 +129,14 @@ export class ComponentEngine {
   }
 
   public renderNContent(nContentElement: HTMLElement, content: HTMLElement) {
-    console.log('content is');
-    console.log(content);
     if (nContentElement.hasAttribute('select')) {
       for (const child of content.children) {
         if (child.tagName.toLowerCase() === nContentElement.getAttribute('select').toLowerCase()) {
           nContentElement.innerHTML = child.outerHTML;
-          console.log('adding ' + child.outerHTML);
         }
       }
       return;
     }
-    console.log('adding everything');
     nContentElement.innerHTML = content.innerHTML;
   }
 
