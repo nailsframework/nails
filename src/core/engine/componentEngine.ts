@@ -131,11 +131,12 @@ export class ComponentEngine {
   public renderNContent(nContentElement: HTMLElement, content: HTMLElement) {
     if (nContentElement.hasAttribute('select')) {
       for (const child of content.children) {
-        if (child.tagName === nContentElement.getAttribute('select')) {
+        if (child.tagName.toLowerCase() === nContentElement.getAttribute('select')) {
           nContentElement.innerHTML = child.innerHTML;
-          return;
         }
       }
+      return;
+
     }
     nContentElement.innerHTML = content.innerHTML;
   }
