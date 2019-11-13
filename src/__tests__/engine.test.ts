@@ -36,6 +36,17 @@ it('should interpolate', () => {
 
 it('should get Attributes', () => {
   element.setAttribute('test', 'worked');
+  element.setAttribute('n-for', 'let a of b');
+  element.setAttribute('n-if', 'true');
+  element.setAttribute('n-click', '');
+  element.setAttribute('n-form', 'test');
+  element.setAttribute('n-onchange', '');
+
+
+
+
+
+
   const guid = nails.componentEngine.setInstanceIdOnElement(element, null);
   expect(guid).toBeDefined();
   expect(nails.componentEngine.getElementAttributesByInstanceId(guid)).toBeInstanceOf(NamedNodeMap);
@@ -45,10 +56,13 @@ it('should get Attributes', () => {
   expect(nails.componentEngine.getElementAttributesByInstanceId('dead-beef')).toBe(null);
 });
 
-it('should create fake element', () => {
-  expect(componentEngine.generateTempElement('<div></div>')).toBeInstanceOf(Element);
+it('should index DOM', () => {
+  expect(nails.engine.indexDOM()).toBeFalsy();
 });
 
-it('should identify rendered element', () => {
-  expect(componentEngine.elementHasGuidSet(element)).toBe(true);
-});
+
+it('should execute directives on element ', () => {
+  expect(nails.engine.executeDirectivesOnElement(element, true)).toBeFalsy();
+  expect(nails.state.activeElements).toHaveLength(0);
+})
+

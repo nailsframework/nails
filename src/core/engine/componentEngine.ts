@@ -234,7 +234,7 @@ export class ComponentEngine {
     this.renderComponents();
   }
 
-  private renderElement(element: HTMLElement) {
+  public renderElement(element: HTMLElement) {
     if (this.elementHasGuidSet(element)) {
       return;
     }
