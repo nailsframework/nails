@@ -149,7 +149,6 @@ export class ComponentEngine {
     return element;
   }
 
-
   public restoreComponentElement(element: HTMLElement) {
     const nContents = element.querySelectorAll('n-content');
     let html = '';
