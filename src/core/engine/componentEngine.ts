@@ -226,13 +226,13 @@ export class ComponentEngine {
   }
 
   private renderElement(element: HTMLElement) {
-    const elements = element.children;
     const mountedComponents = this.state.mountedComponents as IComponent[];
     const selectors = [];
     for (const c of mountedComponents) {
       selectors.push(c.selector);
     }
     const components = this.findComponentsInMountedComponentsByTagName(element.tagName) as IComponent[];
+    console.log(components);
     const component = this.generateTempElement(components[0].render());
     const contentList = component.querySelectorAll('n-content');
     const innerHTML = this.generateTempElement(element.innerHTML);
