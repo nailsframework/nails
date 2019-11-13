@@ -51,7 +51,7 @@ export class ComponentEngine {
       return;
     }
     if (element.childNodes.length > 0) {
-      for (const child of element.childNodes) {
+      for (const child of element.children) {
         this.traverseElementAndExecuteDirectives(child as HTMLElement);
       }
     }

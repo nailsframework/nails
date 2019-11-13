@@ -68,8 +68,8 @@ export class NailsDirectives {
   }
 
   public for(element: HTMLElement, statemenet: string, state: State) {
-    console.log('called');
     const engine = new RenderingEngine(state);
+    const componentEngine = new ComponentEngine(state, engine, null, []);
     engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], element);
 
     element.style.display = 'none';
@@ -104,9 +104,17 @@ export class NailsDirectives {
     }
     const descriptor = statemenet.split(' ')[1];
     const arr = statemenet.split(' ')[3];
-    const refArray = eval('state.data.' + arr);
-    if (typeof refArray === 'undefined' || refArray === null) {
-      return;
+    const context = componentEngine.getInstanceOfElementOrNull(element) as Instance;
+    let refArray = [];
+    if (context !== null) {
+      if (context.getComponent().hasOwnProperty(arr)) {
+        refArray = eval('context.getComponent().' + arr);
+      }
+    } else {
+      refArray = eval('state.data.' + arr);
+      if (typeof refArray === 'undefined' || refArray === null) {
+        return;
+      }
     }
 
     const parent = element.parentNode;
