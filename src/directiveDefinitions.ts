@@ -110,7 +110,8 @@ export class NailsDirectives {
       if (context.getComponent().hasOwnProperty(arr)) {
         refArray = eval('context.getComponent().' + arr);
       }
-    } else {
+    }
+    if (refArray.length === 0) {
       refArray = eval('state.data.' + arr);
       if (typeof refArray === 'undefined' || refArray === null) {
         return;
