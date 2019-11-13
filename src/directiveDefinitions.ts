@@ -130,7 +130,6 @@ export class NailsDirectives {
           child.setAttribute(attr.name, attr.value);
         }
       }
-      const componentEngine = new ComponentEngine(state, engine, null, null);
       componentEngine.traverseElementAndExecuteDirectives(child);
       // engine.executeDirectivesOnElement(child, true)
     }
