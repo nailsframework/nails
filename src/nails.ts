@@ -61,7 +61,7 @@ export class Nails {
     this.engine.indexDOM();
     this.componentEngine.renderComponents();
     this.engine.setTitle();
-    this.state.methods.getState = function() {
+    this.state.methods.getState = function () {
       return this.state;
     };
     if (typeof this.state.methods.onMounted !== 'undefined') {
