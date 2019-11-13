@@ -232,17 +232,18 @@ export class ComponentEngine {
       selectors.push(c.selector);
     }
     // tslint:disable-next-line:max-line-length
-    const component = this.generateTempElement(
-      (this.findComponentInMountedComponentsByTagName(element.tagName) as IComponent).render(),
-    );
-    const contentList = component.querySelectorAll('n-content');
-    const innerHTML = this.generateTempElement(element.innerHTML);
+    const component = this.findComponentInMountedComponentsByTagName(element.tagName) as IComponent
+    const componentElement = this.generateTempElement(component.render());
+
+    const contentList = componentElement.querySelectorAll('n-content');
+    const innerHTML = this.generateTempElement(componentElement.innerHTML);
     if (contentList.length > 0) {
       for (const node of contentList) {
         this.renderNContent(node as HTMLElement, innerHTML);
       }
     }
-    element.innerHTML = component.innerHTML;
+    element.innerHTML = componentElement.innerHTML;
+    this.setInstanceIdOnElement(element, component)
     for (const child of element.children) {
       this.renderElement(child as HTMLElement);
     }
