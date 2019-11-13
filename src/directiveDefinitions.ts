@@ -116,6 +116,8 @@ export class NailsDirectives {
         return;
       }
     }
+    // tslint:disable-next-line:no-console
+    console.log(refArray);
 
     const parent = element.parentNode;
     for (const i of refArray) {
