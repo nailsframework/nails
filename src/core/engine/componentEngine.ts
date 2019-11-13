@@ -6,6 +6,7 @@ import { Router } from '../components/router.component';
 import { Guid } from '../math/Guid';
 import { State } from '../state';
 import { RenderingEngine } from './engine';
+import { CoreComponent } from '../components/core.component';
 
 export class ComponentEngine {
   public state: State;
@@ -149,15 +150,10 @@ export class ComponentEngine {
   }
 
   public findComponentsInMountedComponentsByTagName(tagName: string) {
+    console.log('tagName supplied is: ' + tagName);
     tagName = tagName.toUpperCase();
-    const components = this.state.mountedComponents.filter((component: IComponent) => {
-      console.log(component);
-      console.log(tagName);
-      if (component.selector === tagName.toLowerCase()) {
-        return true;
-      }
-      return false;
-    });
+    const components = this.state.mountedComponents.find((i: IComponent) => i.selector === tagName.toLowerCase());
+    console.log(components)
     return components;
   }
   // tslint:disable-next-line:member-ordering
