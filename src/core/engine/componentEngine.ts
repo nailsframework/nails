@@ -247,7 +247,7 @@ export class ComponentEngine {
     const componentElement = this.generateTempElement(component.render());
 
     const contentList = componentElement.querySelectorAll('n-content');
-    const innerHTML = this.generateTempElement(componentElement.innerHTML);
+    const innerHTML = this.generateTempElement(element.innerHTML);
     if (contentList.length > 0) {
       for (const node of contentList) {
         this.renderNContent(node as HTMLElement, innerHTML);
