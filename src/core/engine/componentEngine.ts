@@ -233,6 +233,7 @@ export class ComponentEngine {
       selectors.push(component.selector);
     }
 
+    console.log('rendering');
     for (const el of elements) {
       if (selectors.indexOf(el.tagName.toLowerCase()) >= 0) {
         const components = this.findComponentsInMountedComponentsByTagName(el.tagName) as IComponent[];
