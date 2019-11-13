@@ -1,4 +1,4 @@
-import { inheritInnerComments, exportAllDeclaration } from '@babel/types';
+import { exportAllDeclaration, inheritInnerComments } from '@babel/types';
 import { Instance } from '../../classes/Instance';
 import { IComponent } from '../../interfaces/Component';
 import { Nails } from '../../nails';
@@ -155,36 +155,8 @@ export class ComponentEngine {
         return true;
       }
       return false;
-    })
+    });
     return components;
-  }
-
-  private renderElement(element: HTMLElement) {
-    const elements = element.children;
-    const mountedComponents = this.state.mountedComponents as IComponent[];
-    const selectors = [];
-    for (const component of mountedComponents) {
-      selectors.push(component.selector);
-    }
-
-    for (const el of elements) {
-      if (selectors.indexOf(el.tagName.toLowerCase()) >= 0) {
-        const components = this.findComponentsInMountedComponentsByTagName(el.tagName) as IComponent[];
-        if (components.length === 0) {
-          continue;
-        }
-        const component = this.generateTempElement(components[0].render());
-        const contentList = component.querySelectorAll('n-content');
-        const innerHTML = this.generateTempElement(el.innerHTML);
-        if (contentList.length > 0) {
-          for (const node of contentList) {
-            this.renderNContent(node as HTMLElement, innerHTML)
-          }
-        }
-        el.innerHTML = component.innerHTML;
-        this.renderElement(el as HTMLElement);
-      }
-    }
   }
   // tslint:disable-next-line:member-ordering
   public renderComponents(exclude?: HTMLElement) {
@@ -251,6 +223,34 @@ export class ComponentEngine {
 
   public recreateAllComponents() {
     this.renderComponents();
+  }
+
+  private renderElement(element: HTMLElement) {
+    const elements = element.children;
+    const mountedComponents = this.state.mountedComponents as IComponent[];
+    const selectors = [];
+    for (const component of mountedComponents) {
+      selectors.push(component.selector);
+    }
+
+    for (const el of elements) {
+      if (selectors.indexOf(el.tagName.toLowerCase()) >= 0) {
+        const components = this.findComponentsInMountedComponentsByTagName(el.tagName) as IComponent[];
+        if (components.length === 0) {
+          continue;
+        }
+        const component = this.generateTempElement(components[0].render());
+        const contentList = component.querySelectorAll('n-content');
+        const innerHTML = this.generateTempElement(el.innerHTML);
+        if (contentList.length > 0) {
+          for (const node of contentList) {
+            this.renderNContent(node as HTMLElement, innerHTML);
+          }
+        }
+        el.innerHTML = component.innerHTML;
+        this.renderElement(el as HTMLElement);
+      }
+    }
   }
 
   private getAllDescendantsForElementWithTagName(element: HTMLElement, tagName: string): NodeListOf<HTMLElement> {
