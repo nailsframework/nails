@@ -2,11 +2,11 @@ import { exportAllDeclaration, inheritInnerComments } from '@babel/types';
 import { Instance } from '../../classes/Instance';
 import { IComponent } from '../../interfaces/Component';
 import { Nails } from '../../nails';
+import { CoreComponent } from '../components/core.component';
 import { Router } from '../components/router.component';
 import { Guid } from '../math/Guid';
 import { State } from '../state';
 import { RenderingEngine } from './engine';
-import { CoreComponent } from '../components/core.component';
 
 export class ComponentEngine {
   public state: State;
@@ -153,7 +153,7 @@ export class ComponentEngine {
     console.log('tagName supplied is: ' + tagName);
     tagName = tagName.toUpperCase();
     const components = this.state.mountedComponents.find((i: IComponent) => i.selector === tagName.toLowerCase());
-    console.log(components)
+    console.log(components);
     return components;
   }
   // tslint:disable-next-line:member-ordering
