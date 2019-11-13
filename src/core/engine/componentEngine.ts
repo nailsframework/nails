@@ -136,7 +136,6 @@ export class ComponentEngine {
         }
       }
       return;
-
     }
     nContentElement.innerHTML = content.innerHTML;
   }
