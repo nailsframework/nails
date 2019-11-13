@@ -6,3 +6,7 @@ install:
   - npm i
   - npm test
   - npm run build
+scripts:
+  - npm install codecov -g
+after_success:
+  - codecov
