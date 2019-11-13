@@ -122,7 +122,7 @@ export class ComponentEngine {
       return;
     }
     for (const attribute of elementAttributes) {
-      if (typeof instance.getComponent()[attribute.name] !== 'undefined') {
+      if (instance.getComponent().hasOwnProperty(attribute.name)) {
         instance.getComponent()[attribute.name] = attribute.value;
       }
     }
