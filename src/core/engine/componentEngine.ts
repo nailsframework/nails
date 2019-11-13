@@ -149,13 +149,19 @@ export class ComponentEngine {
     return element;
   }
 
+
+  public restoreComponentElement(element: HTMLElement) {
+    const nContents = element.querySelectorAll('n-content');
+    let html = '';
+    for (const content of nContents) {
+      html += content.innerHTML;
+    }
+    element.innerHTML = html;
+  }
   public elementHasGuidSet(element: HTMLElement) {
     return element.hasAttribute('element-guid');
   }
   public findComponentInMountedComponentsByTagName(tagName: string) {
-    console.log('tagName supplied is: ' + tagName);
-    console.log(this.state.mountedComponents);
-    console.log('above all c');
     tagName = tagName.toUpperCase();
     const component = this.state.mountedComponents.find((i: IComponent) => i.selector === tagName.toLowerCase());
     if (typeof component === 'undefined') {
@@ -213,8 +219,10 @@ export class ComponentEngine {
       if (this.state.mountedComponents[name] === null) {
         return;
       }
+
       const elements = document.getElementsByTagName(name);
       for (const element of elements) {
+        this.restoreComponentElement(element as HTMLElement);
         const componentHTML = component.render();
         if (componentHTML.includes('<' + component.selector + '>')) {
           console.error('component ' + component.selector + ' has a recursion with no exit condition');
