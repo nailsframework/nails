@@ -151,6 +151,8 @@ export class ComponentEngine {
   public findComponentsInMountedComponentsByTagName(tagName: string) {
     tagName = tagName.toUpperCase();
     const components = this.state.mountedComponents.filter((component: IComponent) => {
+      console.log(component);
+      console.log(tagName);
       if (component.selector === tagName.toLowerCase()) {
         return true;
       }
