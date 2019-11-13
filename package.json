@@ -7,8 +7,13 @@
   "files": [
     "lib/*"
   ],
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ]
+  },
   "scripts": {
-    "coverage": "nyc npm run test",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "build": "npm run build:types && npm run build:js",
@@ -62,6 +67,7 @@
     "@types/jest": "^24.0.22",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "codecov": "^3.6.1",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "ts-jest": "^24.1.0",
