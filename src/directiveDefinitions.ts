@@ -68,7 +68,7 @@ export class NailsDirectives {
   }
 
   public for(element: HTMLElement, statemenet: string, state: State) {
-    console.log('called')
+    console.log('called');
     const engine = new RenderingEngine(state);
     engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], element);
 
