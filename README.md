@@ -1,6 +1,7 @@
 
 [![Build Status](https://travis-ci.org/nailsframework/nails.svg?branch=master)](https://travis-ci.org/nailsframework/nails)
-[![Codecov Coverage](https://img.shields.io/codecov/c/github/nailsframework/nails/&lt;master.svg?style=flat-square)](https://codecov.io/gh/nailsframework/nails)
+[![codecov](https://codecov.io/gh/nailsframework/nails/branch/master/graph/badge.svg)](https://codecov.io/gh/nailsframework/nails)
+
 
 
 # NailsFramework
