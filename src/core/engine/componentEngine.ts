@@ -244,7 +244,6 @@ export class ComponentEngine {
     element.innerHTML = component.innerHTML;
     for (const child of element.children) {
       this.renderElement(child as HTMLElement);
-
     }
   }
 
