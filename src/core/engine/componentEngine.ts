@@ -134,8 +134,8 @@ export class ComponentEngine {
     if (nContentElement.hasAttribute('select')) {
       for (const child of content.children) {
         if (child.tagName.toLowerCase() === nContentElement.getAttribute('select').toLowerCase()) {
-          nContentElement.innerHTML = child.innerHTML;
-          console.log('adding ' + child.innerHTML);
+          nContentElement.innerHTML = child.outerHTML;
+          console.log('adding ' + child.outerHTML);
         }
       }
       return;
