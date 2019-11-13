@@ -152,7 +152,7 @@ export class ComponentEngine {
   public findComponentsInMountedComponentsByTagName(tagName: string) {
     console.log('tagName supplied is: ' + tagName);
     console.log(this.state.mountedComponents);
-    console.log('above all c')
+    console.log('above all c');
     tagName = tagName.toUpperCase();
     const components = this.state.mountedComponents.find((i: IComponent) => i.selector === tagName.toLowerCase());
     console.log(components);
