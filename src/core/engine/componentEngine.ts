@@ -129,9 +129,6 @@ export class ComponentEngine {
   }
 
   public renderNContent(nContentElement: HTMLElement, content: HTMLElement) {
-    console.warn('rendering n-content element');
-    console.warn(nContentElement);
-    console.warn(content);
     if (nContentElement.hasAttribute('select')) {
       for (const child of content.children) {
         if (child.tagName === nContentElement.getAttribute('select')) {

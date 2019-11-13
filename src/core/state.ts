@@ -46,7 +46,6 @@ export class State {
   public addActiveDirectiveElement(key: string, statement: string, element: HTMLElement) {
     for (const el of this.activeDirectiveElements) {
       if (el.key === key && el.statement === statement && el.element === element) {
-        console.warn('refusing to insert element');
         return;
       }
     }
