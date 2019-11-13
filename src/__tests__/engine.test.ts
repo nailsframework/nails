@@ -1,5 +1,6 @@
 import { State } from '../core/state';
 import { Nails } from '../nails';
+import { ComponentEngine } from '../core/engine/componentEngine';
 
 const nailsConfig = {
   el: 'body',
@@ -13,14 +14,16 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
 };
 const nails = new Nails(nailsConfig);
 const testText = 'lorem {{ipsum}} {{ dolor}} {{sit}} {amet}';
 const element = document.createElement('div');
+const componentEngine = new ComponentEngine(nails.state, nails.engine, nails, []);
+
 element.innerHTML = testText;
 
 it('should interpolate', () => {
@@ -40,4 +43,12 @@ it('should get Attributes', () => {
   expect(nails.componentEngine.getElementAttributesByInstanceId(null)).toBe(null);
   expect(nails.componentEngine.getElementAttributesByInstanceId(undefined)).toBe(null);
   expect(nails.componentEngine.getElementAttributesByInstanceId('dead-beef')).toBe(null);
+});
+
+it('should create fake element', () => {
+  expect(componentEngine.generateTempElement('<div></div>')).toBeInstanceOf(Element);
+});
+
+it('should identify rendered element', () => {
+  expect(componentEngine.elementHasGuidSet(element)).toBe(true);
 });
