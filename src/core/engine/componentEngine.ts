@@ -149,6 +149,9 @@ export class ComponentEngine {
     return element;
   }
 
+  public elementHasGuidSet(element: HTMLElement) {
+    return element.hasAttribute('element-guid');
+  }
   public findComponentInMountedComponentsByTagName(tagName: string) {
     console.log('tagName supplied is: ' + tagName);
     console.log(this.state.mountedComponents);
@@ -228,6 +231,9 @@ export class ComponentEngine {
   }
 
   private renderElement(element: HTMLElement) {
+    if (this.elementHasGuidSet(element)) {
+      return;
+    }
     const mountedComponents = this.state.mountedComponents as IComponent[];
     const selectors = [];
     for (const c of mountedComponents) {
