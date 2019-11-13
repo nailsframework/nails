@@ -154,9 +154,11 @@ export class ComponentEngine {
     console.log(this.state.mountedComponents);
     console.log('above all c');
     tagName = tagName.toUpperCase();
-    const components = this.state.mountedComponents.find((i: IComponent) => i.selector === tagName.toLowerCase());
-    console.log(components);
-    return components;
+    const component = this.state.mountedComponents.find((i: IComponent) => i.selector === tagName.toLowerCase());
+    if (typeof component === 'undefined') {
+      return null;
+    }
+    return component;
   }
   // tslint:disable-next-line:member-ordering
   public renderComponents(exclude?: HTMLElement) {
@@ -233,6 +235,9 @@ export class ComponentEngine {
     }
     // tslint:disable-next-line:max-line-length
     const component = this.findComponentInMountedComponentsByTagName(element.tagName) as IComponent;
+    if (component === null) {
+      return;
+    }
     const componentElement = this.generateTempElement(component.render());
 
     const contentList = componentElement.querySelectorAll('n-content');
