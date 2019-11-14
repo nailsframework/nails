@@ -155,9 +155,9 @@ export class NailsDirectives {
     // tslint:disable-next-line:max-line-length
     const context = new Context(
       state,
-      new ComponentEngine(state, new RenderingEngine(state), null, null).getInstanceOfElementOrNull(element),
+      componentEngine.getInstanceOfElementOrNull(element),
     );
-    console.log(context.resolveOrUndefined(statement));
+    console.log(context.resolveOrUndefined(statement.trim()));
     console.log(statement);
     console.log(state);
     console.log(componentEngine.getInstanceOfElementOrNull(element));
