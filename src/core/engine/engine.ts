@@ -4,6 +4,7 @@ import { Instance } from '../../classes/Instance';
 import { NailsDirectives } from '../../directiveDefinitions';
 import { State } from '../state';
 import { ComponentEngine } from './componentEngine';
+import { Context } from '../context/context';
 
 export class RenderingEngine {
   public state: State;
@@ -172,8 +173,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -208,6 +209,7 @@ export class RenderingEngine {
 
     return interpolations;
   }
+
   public getNForInterpolation(interpolation: string) {
     interpolation = interpolation.trim();
     if (interpolation.match(/\[\[\[(( +)?\w+.?\w+( +)?)\]\]\]/g)) {
@@ -283,18 +285,13 @@ export class RenderingEngine {
       return interpolation;
     }
 
-    if (instance.getComponent().hasOwnProperty(interpolation)) {
-      // tslint:disable-next-line:no-eval
-      return eval('instance.getComponent().' + interpolation);
-    }
 
-    // Because, we want the developer to see that something went wrong.
-
-    return 'undefined';
+    const context = new Context(this.state, instance);
+    return context.resolveOrUndefined(interpolation);
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;

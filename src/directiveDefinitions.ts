@@ -3,6 +3,7 @@ import { Instance } from './classes/Instance';
 import { ComponentEngine } from './core/engine/componentEngine';
 import { RenderingEngine } from './core/engine/engine';
 import { State } from './core/state';
+import { Context } from './core/context/context';
 export class NailsDirectives {
   public directives: any;
   constructor() {
@@ -36,10 +37,12 @@ export class NailsDirectives {
       state.click.callbacks = [];
     }
     const callback = () => {
-      const context = componentEngine.getInstanceOfElementOrNull(element) as Instance;
-      if (context !== null) {
+      const instance = componentEngine.getInstanceOfElementOrNull(element) as Instance;
+      const context = new Context(state, instance);
+
+      if (instance !== null) {
         // tslint:disable-next-line: no-eval
-        eval('context.getComponent().' + statement);
+        eval('instance.getComponent().' + statement);
         return;
       }
       // tslint:disable-next-line: no-eval
@@ -104,21 +107,12 @@ export class NailsDirectives {
     }
     const descriptor = statemenet.split(' ')[1];
     const arr = statemenet.split(' ')[3];
-    const context = componentEngine.getInstanceOfElementOrNull(element) as Instance;
-    let refArray = [];
-    if (context !== null) {
-      if (context.getComponent().hasOwnProperty(arr)) {
-        refArray = eval('context.getComponent().' + arr);
-      }
-    }
-    if (refArray.length === 0) {
-      refArray = eval('state.data.' + arr);
-      if (typeof refArray === 'undefined' || refArray === null) {
-        return;
-      }
-    }
-    // tslint:disable-next-line:no-console
-    console.log(refArray);
+    const instance = componentEngine.getInstanceOfElementOrNull(element) as Instance;
+    const context = new Context(state, instance);
+
+    const refArray = context.resolveOrUndefined(arr);
+
+
 
     const parent = element.parentNode;
     for (const i of refArray) {
