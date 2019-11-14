@@ -111,8 +111,6 @@ export class NailsDirectives {
 
     const refArray = context.resolveOrUndefined(arr);
 
-
-
     const parent = element.parentNode;
     for (const i of refArray) {
       const child = document.createElement(element.nodeName);
