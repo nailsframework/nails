@@ -4,9 +4,9 @@ const nailsConfig = {
   el: 'body',
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
 };
 
@@ -17,4 +17,11 @@ it('should mount nails', () => {
   expect(nails.componentEngine).toBeDefined();
   expect(nails.engine).toBeDefined();
   expect(nails.injector).toBeDefined();
+});
+
+it('should inject deps', () => {
+  expect(nails.injector).toBeDefined();
+  expect(nails.injector.bootstrap()).toBeFalsy();
+  expect(nails.injector.insert(Nails)).toBeFalsy();
+  expect(nails.injector.resolve(Nails)).toBeUndefined();
 });

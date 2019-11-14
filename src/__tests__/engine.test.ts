@@ -64,5 +64,11 @@ it('should index DOM', () => {
 it('should execute directives on element ', () => {
   expect(nails.engine.executeDirectivesOnElement(element, true)).toBeFalsy();
   expect(nails.state.activeElements).toHaveLength(0);
+
+})
+
+it('should set attributes', () => {
+  expect(componentEngine.getInstanceOfElementOrNull(element)).toBe(null);
+  expect(componentEngine.setComponentVariables(element)).toBeFalsy();
 })
 

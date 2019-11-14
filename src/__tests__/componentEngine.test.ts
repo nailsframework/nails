@@ -54,6 +54,11 @@ it('should render all', () => {
     const fake = componentEngine.generateTempElement('<app />');
     componentEngine.renderComponents(fake);
     expect(fake).toBeTruthy();
+    expect(componentEngine.shallRenderElement(element)).toBe(true)
+    const fakeParent = componentEngine.generateTempElement('');
+    fakeParent.appendChild(fake);
+    componentEngine.renderedElements.push(fakeParent);
+
 })
 
 it('should recreate all', () => {

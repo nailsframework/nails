@@ -264,11 +264,11 @@ export class ComponentEngine {
     }
   }
 
-  private getAllDescendantsForElementWithTagName(element: HTMLElement, tagName: string): NodeListOf<HTMLElement> {
+  public getAllDescendantsForElementWithTagName(element: HTMLElement, tagName: string): NodeListOf<HTMLElement> {
     return element.querySelectorAll(tagName);
   }
 
-  private shallRenderElement(element: HTMLElement): boolean {
+  public shallRenderElement(element: HTMLElement): boolean {
     // Don't forget to clear this array as it may messes with the DOM.
     for (const parent of this.renderedElements) {
       if (this.engine.isDescendant(parent, element)) {
