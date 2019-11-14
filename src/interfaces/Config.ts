@@ -1,3 +1,3 @@
 export interface IConfig {
-    interpolationRegex: string
+  interpolationRegex: string;
 }
