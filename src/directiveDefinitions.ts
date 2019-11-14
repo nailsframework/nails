@@ -173,7 +173,7 @@ export class NailsDirectives {
         }
       }
     } else {
-      console.warn('statement: ' + statement + ' not found in context');
+      element.style.visibility = 'hidden';
     }
   }
 }
