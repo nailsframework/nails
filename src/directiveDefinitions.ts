@@ -70,6 +70,7 @@ export class NailsDirectives {
   }
 
   public for(element: HTMLElement, statemenet: string, state: State) {
+    console.error('called');
     const engine = new RenderingEngine(state);
     const componentEngine = new ComponentEngine(state, engine, null, []);
     engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], element);
@@ -154,10 +155,6 @@ export class NailsDirectives {
 
     // tslint:disable-next-line:max-line-length
     const context = new Context(state, componentEngine.getInstanceOfElementOrNull(element));
-    console.log(context.resolveOrUndefined(statement.trim()));
-    console.log(statement);
-    console.log(state);
-    console.log(componentEngine.getInstanceOfElementOrNull(element));
     if (context.resolveOrUndefined(statement)) {
       if (reversed) {
         if (!eval(state.data[statement])) {

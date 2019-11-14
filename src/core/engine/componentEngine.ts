@@ -54,7 +54,11 @@ export class ComponentEngine {
       }
     }
 
-    this.engine.executeDirectivesOnElement(element, true);
+    if (this.shallRenderElement(element)) {
+      this.engine.executeDirectivesOnElement(element, true);
+      console.log('calling');
+      this.renderedElements.push(element);
+    }
   }
 
   public getInstanceOfElementOrNull(element: HTMLElement): any {
