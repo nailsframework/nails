@@ -23,7 +23,7 @@ const nailsConfig = {
     res: {
       does() {
         return {
-          work: function() {
+          work: function () {
             return 'yes';
           },
         };
@@ -32,14 +32,16 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
 };
 
 class Component extends CoreComponent {
   public work: string = 'yes';
+  public result: string = '';
+
   constructor(state: State) {
     super(state);
   }
@@ -58,6 +60,7 @@ it('should resolve properties', () => {
   expect(context.resolveOrUndefined(resolve)).toBe('yes');
   expect(context.resolveOrUndefined('res.does().work()')).toBe('yes');
   context = new Context(nails.state, instance);
-
   expect(context.resolveOrUndefined('work')).toBe('yes');
+  expect(context.resolveOrUndefined('result')).toBe('');
+
 });
