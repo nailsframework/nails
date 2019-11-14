@@ -1,5 +1,11 @@
 import { State } from '../core/state';
 import { Nails } from '../nails';
+class Sample {
+  constructor() {
+
+  }
+}
+
 const nailsConfig = {
   el: 'body',
   methods: {
@@ -8,7 +14,11 @@ const nailsConfig = {
     // tslint:disable-next-line: no-empty
     onMounted(currentState: State) { },
   },
+  // tslint:disable-next-line:object-literal-sort-keys
+  declarations: [Sample]
 };
+
+
 
 const nails = new Nails(nailsConfig);
 
@@ -20,8 +30,11 @@ it('should mount nails', () => {
 });
 
 it('should inject deps', () => {
+  const instance = new Sample();
+
   expect(nails.injector).toBeDefined();
-  expect(nails.injector.bootstrap()).toBeFalsy();
-  expect(nails.injector.insert(Nails)).toBeFalsy();
-  expect(nails.injector.resolve(Nails)).toBeUndefined();
+  expect(nails.injector.resolve(Sample)).toBeDefined();
+  expect(nails.injector.state).toBeDefined();
+  expect(nails.injector.insert(Sample)).toBeFalsy();
+  expect(nails.state.injectors).toHaveLength(1);
 });
