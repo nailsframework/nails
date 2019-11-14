@@ -170,8 +170,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -258,6 +258,8 @@ export class RenderingEngine {
     }
     // text may come in this format 'hi, this is {{test}} and this is {{abc}}'
     const matches = text.match(/{{(.?\s?\w?.?\w\s?(\(\))?)+}}/g); // TODO: Regex is not perfect. May start with .
+    // tslint:disable-next-line:no-console
+    console.log(matches);
     if (matches === null) {
       return [];
     }
@@ -289,7 +291,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
