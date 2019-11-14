@@ -114,7 +114,6 @@ export class NailsDirectives {
     if (!refArray) {
       return;
     }
-    console.log(refArray);
 
     const parent = element.parentNode;
     for (const i of refArray) {
