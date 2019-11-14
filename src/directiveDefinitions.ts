@@ -161,7 +161,7 @@ export class NailsDirectives {
     console.log(context.resolveOrUndefined(statement));
     console.log(statement);
     console.log(state);
-    console.log(componentEngine.getInstanceOfElementOrNull(element);
+    console.log(componentEngine.getInstanceOfElementOrNull(element));
     if (context.resolveOrUndefined(statement)) {
       if (reversed) {
         if (!eval(state.data[statement])) {
