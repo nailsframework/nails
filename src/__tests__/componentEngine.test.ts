@@ -22,9 +22,9 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
   components: [AppComponent],
 };
@@ -76,4 +76,6 @@ it('should get instance ', () => {
 
 it('should render n-content', () => {
   expect(componentEngine.renderNContent(element, element)).toBeFalsy();
+  expect(componentEngine.traverseElementAndExecuteDirectives(element)).toBeFalsy();
+  expect(componentEngine.engine).toBeDefined();
 });
