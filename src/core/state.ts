@@ -5,9 +5,9 @@ import { Router } from '../core/components/router.component';
 import { Injector } from '../core/injector';
 import { IActiveElement } from '../interfaces/ActiveElement';
 import { IComponent } from '../interfaces/Component';
+import { Context } from './context/context';
 import { ComponentEngine } from './engine/componentEngine';
 import { RenderingEngine } from './engine/engine';
-import { Context } from './context/context';
 
 export class State {
   public instance: State;
