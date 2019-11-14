@@ -1,5 +1,4 @@
 import { IComponent } from '../../interfaces/Component';
-import { ComponentEngine } from '../engine/componentEngine';
 import { RenderingEngine } from '../engine/engine';
 import { State } from '../state';
 

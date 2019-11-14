@@ -1,8 +1,6 @@
-import { exportAllDeclaration, inheritInnerComments } from '@babel/types';
 import { Instance } from '../../classes/Instance';
 import { IComponent } from '../../interfaces/Component';
 import { Nails } from '../../nails';
-import { CoreComponent } from '../components/core.component';
 import { Router } from '../components/router.component';
 import { Guid } from '../math/Guid';
 import { State } from '../state';

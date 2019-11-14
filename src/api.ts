@@ -16,3 +16,7 @@ const get = (url: string, state: State, callback: (text: string, code: number) =
   };
   xmlHttp.send(null);
 };
+
+if (false) {
+  get(null, null, null);
+}

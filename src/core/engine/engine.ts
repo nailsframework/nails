@@ -4,7 +4,6 @@ import { Instance } from '../../classes/Instance';
 import { NailsDirectives } from '../../directiveDefinitions';
 import { State } from '../state';
 import { ComponentEngine } from './componentEngine';
-import * as config from '../../../config/config.json';
 
 export class RenderingEngine {
   public state: State;
