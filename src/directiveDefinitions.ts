@@ -95,7 +95,7 @@ export class NailsDirectives {
         }
         stripped = stripped.substring(0, stripped.length - 1);
 
-        if (engine.getValueOfInterpolation(interpolation, element) !== 'undefined') {
+        if (engine.getValueOfInterpolation(interpolation, element) !== undefined) {
           html = html.replace(interpolation, engine.getValueOfInterpolation(interpolation, element));
         } else {
           // tslint:disable: no-eval
