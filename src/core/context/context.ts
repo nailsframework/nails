@@ -2,7 +2,7 @@ import { Instance } from '../../classes/Instance';
 import { State } from '../state';
 
 export class Context {
-  constructor(public state: State, public instance: Instance) {}
+  constructor(public state: State, public instance: Instance) { }
 
   public resolveOrUndefined(path: any): any {
     const strippedPath = this.stripFunctionCalls(path);
