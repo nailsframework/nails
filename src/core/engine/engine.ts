@@ -170,8 +170,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -220,7 +220,7 @@ export class RenderingEngine {
   public getValueOfInterpolation(interpolation: string, element: HTMLElement) {
     // This comes in the format of {{ interpolation }}
     interpolation = interpolation.trim();
-    if (interpolation.match(/{{(.?\s?\w?.?\w\s?)+}}/g)) {
+    if (interpolation.match(/{{\s?(\.?\w?(\((\w+(\((\w+)?\))?)?\))?)+\s?}}/g)) {
       interpolation = this.stripAndTrimInterpolation(interpolation);
     } else {
       console.warn('Not found interpolation in submitted value: ' + interpolation);
@@ -292,7 +292,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
