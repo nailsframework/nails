@@ -102,8 +102,6 @@ export class State {
   }
   public findElementsByObject(obj: any, prop: string) {
     const elements = [];
-    console.log('active elements are: ');
-    console.log(this.activeElements);
     const context = new Context(this, null);
     for (const element of this.activeElements) {
       if (context.stripFunctionCalls(this.stripAndTrimInterpolation(element.interpolation)) === prop) {

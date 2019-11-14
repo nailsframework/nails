@@ -21,12 +21,8 @@ export class CoreComponent implements IComponent {
 
   private notifyDOM(target: any, prop: any, value: string) {
     const renderingEngine = new RenderingEngine(this.state);
-    console.log('EVENT');
-    console.log(target);
-    console.log(prop);
 
     const refs = this.state.findElementsByObject(target, prop);
-    console.log(refs);
     if (refs === [] || refs.length === 0) {
       return;
     }
