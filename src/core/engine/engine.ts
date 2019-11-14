@@ -2,9 +2,9 @@
 import { ActiveElement } from '../../classes/ActiveElement';
 import { Instance } from '../../classes/Instance';
 import { NailsDirectives } from '../../directiveDefinitions';
+import { Context } from '../context/context';
 import { State } from '../state';
 import { ComponentEngine } from './componentEngine';
-import { Context } from '../context/context';
 
 export class RenderingEngine {
   public state: State;

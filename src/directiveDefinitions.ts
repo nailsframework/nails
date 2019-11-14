@@ -1,9 +1,9 @@
 'use strict';
 import { Instance } from './classes/Instance';
+import { Context } from './core/context/context';
 import { ComponentEngine } from './core/engine/componentEngine';
 import { RenderingEngine } from './core/engine/engine';
 import { State } from './core/state';
-import { Context } from './core/context/context';
 export class NailsDirectives {
   public directives: any;
   constructor() {
@@ -38,7 +38,6 @@ export class NailsDirectives {
     }
     const callback = () => {
       const instance = componentEngine.getInstanceOfElementOrNull(element) as Instance;
-      const context = new Context(state, instance);
 
       if (instance !== null) {
         // tslint:disable-next-line: no-eval

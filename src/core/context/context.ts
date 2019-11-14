@@ -1,5 +1,5 @@
-import { State } from "../state";
-import { Instance } from "../../classes/Instance";
+import { Instance } from '../../classes/Instance';
+import { State } from '../state';
 
 export class Context {
     constructor(public state: State, public instance: Instance) {
