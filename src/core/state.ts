@@ -7,6 +7,7 @@ import { IActiveElement } from '../interfaces/ActiveElement';
 import { IComponent } from '../interfaces/Component';
 import { ComponentEngine } from './engine/componentEngine';
 import { RenderingEngine } from './engine/engine';
+import { Context } from './context/context';
 
 export class State {
   public instance: State;
@@ -103,8 +104,9 @@ export class State {
     const elements = [];
     console.log('active elements are: ');
     console.log(this.activeElements);
+    const context = new Context(this, null);
     for (const element of this.activeElements) {
-      if (this.stripAndTrimInterpolation(element.interpolation) === prop) {
+      if (context.stripFunctionCalls(this.stripAndTrimInterpolation(element.interpolation)) === prop) {
         elements.push(element);
       }
     }
