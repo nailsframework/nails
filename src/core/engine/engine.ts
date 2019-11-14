@@ -4,10 +4,13 @@ import { Instance } from '../../classes/Instance';
 import { NailsDirectives } from '../../directiveDefinitions';
 import { State } from '../state';
 import { ComponentEngine } from './componentEngine';
+import * as config from '../../../config/config.json';
+
 export class RenderingEngine {
   public state: State;
   public directives: NailsDirectives;
   public componentEngine: ComponentEngine;
+
   constructor(state: State) {
     if (typeof state === 'undefined' || state === null) {
       // tslint:disable-next-line:no-console
@@ -170,8 +173,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -220,7 +223,7 @@ export class RenderingEngine {
   public getValueOfInterpolation(interpolation: string, element: HTMLElement) {
     // This comes in the format of {{ interpolation }}
     interpolation = interpolation.trim();
-    if (interpolation.match(/{{\s?(\.?\w?(\((\w+(\((\w+)?\))?)?\))?)+\s?}}/g)) {
+    if (interpolation.match(/({{.*?}})/g)) {
       interpolation = this.stripAndTrimInterpolation(interpolation);
     } else {
       console.warn('Not found interpolation in submitted value: ' + interpolation);
@@ -258,7 +261,7 @@ export class RenderingEngine {
     }
     // text may come in this format 'hi, this is {{test}} and this is {{abc}}'
     // tslint:disable-next-line: max-line-length
-    const matches = text.match(/{{\s?(\.?\w?(\((\w+(\((\w+)?\))?)?\))?)+\s?}}/g); // TODO: Regex is not perfect. May start with .
+    const matches = text.match(/({{.*?}})/g); // TODO: Regex is not perfect. May start with .
     // tslint:disable-next-line:no-console
     console.log(matches);
     if (matches === null) {
@@ -292,7 +295,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
