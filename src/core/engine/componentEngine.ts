@@ -56,7 +56,6 @@ export class ComponentEngine {
 
     if (this.shallRenderElement(element)) {
       this.engine.executeDirectivesOnElement(element, true);
-      console.log('calling');
       this.renderedElements.push(element);
     }
   }
