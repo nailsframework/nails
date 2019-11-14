@@ -3,16 +3,16 @@ import { Nails } from '../nails';
 import { Router } from '../core/components/router.component';
 import { MockComponent } from '../mocks/mock.component';
 class Sample {
-  constructor() { }
+  constructor() {}
 }
 
 const nailsConfig = {
   el: 'body',
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() { },
+    onInit() {},
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) { },
+    onMounted(currentState: State) {},
   },
   // tslint:disable-next-line:object-literal-sort-keys
   declarations: [Sample],
@@ -35,7 +35,7 @@ it('should navigate', () => {
   expect(router.routings).toBeUndefined();
   expect(router.state).toBeDefined();
   expect(router.getHashRoute()).toBe('test');
-  expect(router.isFunction(function () { })).toBeTruthy();
+  expect(router.isFunction(function() {})).toBeTruthy();
   expect(router.addRoutings([])).toBeFalsy();
 });
 

@@ -151,7 +151,10 @@ export class NailsDirectives {
       reversed = true;
     }
     // tslint:disable-next-line:max-line-length
-    const context = new Context(state, new ComponentEngine(state, null, null, null).getInstanceOfElementOrNull(element));
+    const context = new Context(
+      state,
+      new ComponentEngine(state, null, null, null).getInstanceOfElementOrNull(element),
+    );
     if (context.resolveOrUndefined(statement)) {
       if (reversed) {
         if (!eval(state.data[statement])) {
