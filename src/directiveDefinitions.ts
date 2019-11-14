@@ -150,7 +150,8 @@ export class NailsDirectives {
       statement = statement.substring(1);
       reversed = true;
     }
-    if (state.data.hasOwnProperty(statement)) {
+    const context = new Context(state, new ComponentEngine(state, null, null, null).getInstanceOfElementOrNull(element));
+    if (context.resolveOrUndefined(statement)) {
       if (reversed) {
         if (!eval(state.data[statement])) {
           element.style.visibility = 'visible';
