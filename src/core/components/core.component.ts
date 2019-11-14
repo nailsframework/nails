@@ -26,6 +26,7 @@ export class CoreComponent implements IComponent {
     console.log(prop);
 
     const refs = this.state.findElementsByObject(target, prop);
+    console.log(refs);
     if (refs === [] || refs.length === 0) {
       return;
     }
