@@ -1,24 +1,20 @@
 import { State } from '../core/state';
 import { Nails } from '../nails';
 class Sample {
-  constructor() {
-
-  }
+  constructor() {}
 }
 
 const nailsConfig = {
   el: 'body',
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() { },
+    onInit() {},
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) { },
+    onMounted(currentState: State) {},
   },
   // tslint:disable-next-line:object-literal-sort-keys
-  declarations: [Sample]
+  declarations: [Sample],
 };
-
-
 
 const nails = new Nails(nailsConfig);
 

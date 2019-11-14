@@ -14,9 +14,9 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() { },
+    onInit() {},
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) { },
+    onMounted(currentState: State) {},
   },
 };
 const nails = new Nails(nailsConfig);
@@ -42,11 +42,6 @@ it('should get Attributes', () => {
   element.setAttribute('n-form', 'test');
   element.setAttribute('n-onchange', '');
 
-
-
-
-
-
   const guid = nails.componentEngine.setInstanceIdOnElement(element, null);
   expect(guid).toBeDefined();
   expect(nails.componentEngine.getElementAttributesByInstanceId(guid)).toBeInstanceOf(NamedNodeMap);
@@ -60,15 +55,12 @@ it('should index DOM', () => {
   expect(nails.engine.indexDOM()).toBeFalsy();
 });
 
-
 it('should execute directives on element ', () => {
   expect(nails.engine.executeDirectivesOnElement(element, true)).toBeFalsy();
   expect(nails.state.activeElements).toHaveLength(0);
-
-})
+});
 
 it('should set attributes', () => {
   expect(componentEngine.getInstanceOfElementOrNull(element)).toBe(null);
   expect(componentEngine.setComponentVariables(element)).toBeFalsy();
-})
-
+});
