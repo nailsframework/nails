@@ -2,7 +2,7 @@ import { Instance } from '../../classes/Instance';
 import { State } from '../state';
 
 export class Context {
-  constructor(public state: State, public instance: Instance) {}
+  constructor(public state: State, public instance: Instance) { }
 
   public resolveContextOrUndefined(path: string) {
     path = this.stripFunctionCalls(path);
@@ -75,7 +75,7 @@ export class Context {
 
   private resolve(path: string, obj: any, separator = '.') {
     const properties = path.split(separator);
-    return properties.reduce((prev, curr) => prev[curr], obj);
+    return properties.reduce((prev, curr) => prev && prev[curr], obj);
   }
 
   private getFunctionCallString(expression: string): string {

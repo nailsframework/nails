@@ -1,6 +1,7 @@
 import { State } from '../core/state';
 import { Nails } from '../nails';
 import { ComponentEngine } from '../core/engine/componentEngine';
+import { MockComponent } from '../mocks/mock.component';
 
 const nailsConfig = {
   el: 'body',
@@ -16,9 +17,9 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
 };
 const nails = new Nails(nailsConfig);
@@ -44,7 +45,7 @@ it('should get Attributes', () => {
   element.setAttribute('n-form', 'test');
   element.setAttribute('n-onchange', '');
 
-  const guid = nails.componentEngine.setInstanceIdOnElement(element, null);
+  const guid = nails.componentEngine.setInstanceIdOnElement(element, new MockComponent(nails.state));
   expect(guid).toBeDefined();
   expect(nails.componentEngine.getElementAttributesByInstanceId(guid)).toBeInstanceOf(NamedNodeMap);
   expect(nails.componentEngine.getElementAttributesByInstanceId(guid).getNamedItem('test').value).toEqual('worked');
