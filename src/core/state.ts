@@ -108,7 +108,7 @@ export class State {
       if (stripped.split('.').length > 1) {
         stripped = stripped.split('.')[0]; // Monitor the whole project
       }
-      if (context.stripFunctionCalls(this.stripAndTrimInterpolation(element.interpolation)) === prop) {
+      if (context.stripFunctionCalls(stripped) === prop) {
         elements.push(element);
       }
     }
