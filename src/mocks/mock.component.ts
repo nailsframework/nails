@@ -8,7 +8,6 @@ export class MockComponent extends CoreComponent {
   constructor(state: State) {
     super(state);
     this.selector = 'mock';
-    console.log('instanciated');
   }
 
   public render() {

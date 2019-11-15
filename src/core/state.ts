@@ -104,6 +104,8 @@ export class State {
     const elements = [];
     const context = new Context(this, null);
     for (const element of this.activeElements) {
+      console.log(element.interpolation);
+      console.log(prop);
       if (context.stripFunctionCalls(this.stripAndTrimInterpolation(element.interpolation)) === prop) {
         elements.push(element);
       }

@@ -167,8 +167,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -271,7 +271,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
@@ -301,15 +301,12 @@ export class RenderingEngine {
   public updateInterpolatedElement(ref: HTMLElement, originalText: string) {
     this.executeDirectivesOnElement(ref, false);
     const interpolations = this.getInterpolationsForTextContent(originalText);
-    console.log(interpolations);
     if (interpolations.length === 0) {
       return;
     }
     let interpolatedText = originalText;
-    console.log(interpolatedText);
     for (const interpolation of interpolations) {
       const value = this.getValueOfInterpolation(interpolation, ref);
-      console.log(value);
 
       if (this.isElementDisabled(this.stripAndTrimInterpolation(interpolation), ref)) {
         continue;
@@ -318,7 +315,6 @@ export class RenderingEngine {
       interpolatedText = interpolatedText.replace(interpolation, value);
     }
 
-    console.log(interpolatedText);
     ref.textContent = interpolatedText;
   }
   public isDescendant(parent: HTMLElement, child: HTMLElement) {
