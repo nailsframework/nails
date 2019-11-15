@@ -108,6 +108,7 @@ export class State {
       if (stripped.split('.').length > 1) {
         stripped = stripped.split('.')[0]; // Monitor the whole project
       }
+      console.log(stripped);
       if (context.stripFunctionCalls(stripped) === prop) {
         elements.push(element);
       }
