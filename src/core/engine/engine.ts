@@ -173,8 +173,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -222,6 +222,9 @@ export class RenderingEngine {
     return interpolation;
   }
   public getValueOfInterpolation(interpolation: string, element: HTMLElement) {
+    const instance = this.componentEngine.getInstanceOfElementOrNull(element);
+    const context = new Context(this.state, instance);
+
     // This comes in the format of {{ interpolation }}
     interpolation = interpolation.trim();
     if (interpolation.match(/({{.*?}})/g)) {
@@ -231,16 +234,12 @@ export class RenderingEngine {
       return interpolation;
     }
     interpolation = interpolation.trim();
-    let stripped = this.stripAndTrimInterpolation(interpolation);
+    const stripped = this.stripAndTrimInterpolation(interpolation);
+    console.warn(stripped);
 
-    const args = stripped.split('.');
-    stripped = '';
-    for (const arg of args) {
-      stripped += arg + '.';
-    }
-    stripped = stripped.substring(0, stripped.length - 1);
-
-    return this.getObjectReferenceByInterpolationName(interpolation, element);
+    const value = context.resolveOrUndefined(stripped);
+    console.log(value);
+    return value;
   }
 
   public removeWhiteSpaceFromString(str: string) {
@@ -281,7 +280,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;

@@ -116,6 +116,9 @@ export class NailsDirectives {
     }
 
     const parent = element.parentNode;
+    if (parent === null) {
+      return;
+    }
     for (const i of refArray) {
       const child = document.createElement(element.nodeName);
       child.innerHTML = element.innerHTML;
