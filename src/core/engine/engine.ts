@@ -161,16 +161,14 @@ export class RenderingEngine {
   }
   public executeDirectivesOnElement(element: HTMLElement, add: boolean) {
     const directives = this.getElementDirectives(element);
-    console.log(directives);
     for (let directive of directives) {
       directive = this.removePrefix(directive);
       if (directive in this.directives) {
-        console.log('evaling ');
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -273,7 +271,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;
