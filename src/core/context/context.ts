@@ -2,7 +2,7 @@ import { Instance } from '../../classes/Instance';
 import { State } from '../state';
 
 export class Context {
-  constructor(public state: State, public instance: Instance) { }
+  constructor(public state: State, public instance: Instance) {}
 
   public resolveContextOrUndefined(path: string) {
     path = this.stripFunctionCalls(path);
@@ -48,7 +48,7 @@ export class Context {
     }
     if (stateResolve || stateResolve === '') {
       if (path !== strippedPath) {
-        console.log('executing function')
+        console.log('executing function');
         const functionCalls = this.getFunctionCallString(path);
         // tslint:disable-next-line:no-eval
         return eval('stateResolve' + '.' + functionCalls);

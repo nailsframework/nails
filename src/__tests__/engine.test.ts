@@ -10,15 +10,15 @@ const nailsConfig = {
     // tslint:disable-next-line: object-literal-sort-keys
     dolor: '2',
     sit: {
-      amet: '3'
+      amet: '3',
     },
     amet: '4',
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() { },
+    onInit() {},
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) { },
+    onMounted(currentState: State) {},
   },
 };
 const nails = new Nails(nailsConfig);
