@@ -104,8 +104,10 @@ export class State {
     const elements = [];
     const context = new Context(this, null);
     for (const element of this.activeElements) {
-      console.log(element.interpolation);
-      console.log(prop);
+      let stripped = this.stripAndTrimInterpolation(element.interpolation);
+      if (stripped.split('.').length > 1) {
+        stripped = stripped.split('.')[0]; // Monitor the whole project
+      }
       if (context.stripFunctionCalls(this.stripAndTrimInterpolation(element.interpolation)) === prop) {
         elements.push(element);
       }
