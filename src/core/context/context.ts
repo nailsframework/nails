@@ -2,8 +2,26 @@ import { Instance } from '../../classes/Instance';
 import { State } from '../state';
 
 export class Context {
-  constructor(public state: State, public instance: Instance) {}
+  constructor(public state: State, public instance: Instance) { }
 
+  public resolveContextOrUndefined(path: string) {
+    path = this.stripFunctionCalls(path);
+    let stateResolve;
+    let instanceResolve;
+
+    if (this.state) {
+      stateResolve = this.resolve(path, this.state.data);
+    }
+    if (this.instance) {
+      instanceResolve = this.resolve(path, this.instance);
+    }
+    if (instanceResolve || instanceResolve === '') {
+      return stateResolve;
+    }
+    if (stateResolve || stateResolve === '') {
+      return stateResolve;
+    }
+  }
   public resolveOrUndefined(path: any): any {
     const strippedPath = this.stripFunctionCalls(path);
 
@@ -20,7 +38,6 @@ export class Context {
     } else {
       stateResolve = null;
     }
-
     if (instanceResolve || instanceResolve === '') {
       if (path !== strippedPath) {
         const functionCalls = this.getFunctionCallString(path);
@@ -31,6 +48,7 @@ export class Context {
     }
     if (stateResolve || stateResolve === '') {
       if (path !== strippedPath) {
+        console.log('executing function')
         const functionCalls = this.getFunctionCallString(path);
         // tslint:disable-next-line:no-eval
         return eval('stateResolve' + '.' + functionCalls);

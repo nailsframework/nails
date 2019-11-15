@@ -9,18 +9,20 @@ const nailsConfig = {
     ipsum: '1',
     // tslint:disable-next-line: object-literal-sort-keys
     dolor: '2',
-    sit: '3',
+    sit: {
+      amet: '3'
+    },
     amet: '4',
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
 };
 const nails = new Nails(nailsConfig);
-const testText = 'lorem {{ipsum}} {{ dolor}} {{sit}} {amet}';
+const testText = 'lorem {{ipsum}} {{ dolor}} {{sit.amet}} {amet}';
 const element = document.createElement('div');
 const componentEngine = new ComponentEngine(nails.state, nails.engine, nails, []);
 
