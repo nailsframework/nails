@@ -99,12 +99,6 @@ export class RenderingEngine {
     const activeElement = new ActiveElement(element, null, '', name, '', '');
     this.state.disabledElements.push(activeElement);
   }
-  public getElementDerrivedObject(element: HTMLElement) {
-    return 'object';
-  }
-  public getElementDerrivedProperty(element: HTMLElement) {
-    return 'property';
-  }
   public getForArrayByStatement(statement: string) {
     const statements = statement.split(' ');
     return statements[statements.length];
@@ -173,8 +167,8 @@ export class RenderingEngine {
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -277,7 +271,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;

@@ -113,8 +113,8 @@ export class State {
       prop = prop.replace('!', '');
       element.statement = element.statement.replace('!', '');
       if (this.stripAndTrimInterpolation(element.statement) === prop) {
-        const activeElement = new ActiveElement(element.element, obj, element.element.innerText, '', '', '');
-        elements.push(activeElement);
+        ;
+        elements.push(element);
       }
     }
 
