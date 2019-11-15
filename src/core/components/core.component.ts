@@ -29,7 +29,7 @@ export class CoreComponent implements IComponent {
     console.log(refs);
 
     if (refs === [] || refs.length === 0) {
-      console.log('refs were empty??')
+      console.log('refs were empty??');
       return;
     }
     for (const ref of refs) {
