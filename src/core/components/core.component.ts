@@ -23,7 +23,7 @@ export class CoreComponent implements IComponent {
     const renderingEngine = new RenderingEngine(this.state);
     console.log('updating' + target);
 
-    console.log(this.state.activeElements)
+    console.log(this.state.activeElements);
 
     const refs = this.state.findElementsByObject(target, prop);
     console.log(refs);
