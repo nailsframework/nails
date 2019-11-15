@@ -30,7 +30,7 @@ export class CoreComponent implements IComponent {
     console.log(refs);
     for (const ref of refs) {
       renderingEngine.updateInterpolatedElement(ref.element, ref.content);
-      renderingEngine.executeDirectivesOnElement(ref.element, false);
+      //  renderingEngine.executeDirectivesOnElement(ref.element, false);
     }
 
     return true;
