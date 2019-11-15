@@ -3,8 +3,8 @@ import { State } from '../core/state';
 
 export class MockComponent extends CoreComponent {
   public ins: any = {
-    work: 'true'
-  }
+    work: 'true',
+  };
   constructor(state: State) {
     super(state);
     this.selector = 'mock';
