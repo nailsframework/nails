@@ -82,9 +82,7 @@ export class ForImplementation {
     private hideElement(e: HTMLElement) {
         e.hidden = true;
     }
-    private replaceAll(search: string, replacement: string, target: string) {
-        return target.replace(new RegExp(search, 'g'), replacement);
-    }
+
 
     private removeStatementFromElement(element: HTMLElement) {
         if (element.hasAttribute('n-for')) {
@@ -113,7 +111,7 @@ export class ForImplementation {
             }
             for (const str of interpolations) {
                 if (this.engine.stripAndTrimInterpolation(str) === this.statement.split(' ')[1]) {
-                    //const replacedHTML = this.replaceAll(str, idx, forElement.innerHTML);
+                    // const replacedHTML = this.replaceAll(str, idx, forElement.innerHTML);
                     // forElement.innerHTML = replacedHTML;
                 }
             }
