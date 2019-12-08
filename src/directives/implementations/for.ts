@@ -113,8 +113,8 @@ export class ForImplementation {
             }
             for (const str of interpolations) {
                 if (this.engine.stripAndTrimInterpolation(str) === this.statement.split(' ')[1]) {
-                    const replacedHTML = this.replaceAll(str, idx, forElement.innerHTML);
-                    //forElement.innerHTML = replacedHTML;
+                    //const replacedHTML = this.replaceAll(str, idx, forElement.innerHTML);
+                    // forElement.innerHTML = replacedHTML;
                 }
             }
             this.addToList(forElement);
