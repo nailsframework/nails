@@ -73,7 +73,6 @@ export class NailsDirectives {
   public for(element: HTMLElement, statement: string, state: State) {
     const implementation = new ForImplementation(state, element, statement);
     implementation.run();
-
   }
   public if(element: HTMLElement, statement: string, state: State) {
     if (statement === 'true' || statement === 'false') {
