@@ -1,7 +1,7 @@
-import { State } from '../core/state';
-import { Nails } from '../nails';
 import { ComponentEngine } from '../core/engine/componentEngine';
+import { State } from '../core/state';
 import { NailsDirectives } from '../directives/directiveDefinitions';
+import { Nails } from '../nails';
 
 const nailsConfig = {
   el: 'body',

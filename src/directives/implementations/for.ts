@@ -112,11 +112,6 @@ export class ForImplementation {
                     forElement.innerHTML = replacedHTML;
                 }
             }
-
-
-
-            console.warn(forElement.outerHTML)
-
             this.engine.executeInterpolationsOnElement(forElement);
             this.engine.executeDirectivesOnElement(forElement, true);
             this.addToList(forElement);

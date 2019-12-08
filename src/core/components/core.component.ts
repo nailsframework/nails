@@ -27,7 +27,6 @@ export class CoreComponent implements IComponent {
     if (refs === [] || refs.length === 0) {
       return;
     }
-    console.log(refs);
     for (const ref of refs) {
       renderingEngine.updateInterpolatedElement(ref.element, ref.content);
       //  renderingEngine.executeDirectivesOnElement(ref.element, false);

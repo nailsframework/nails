@@ -99,12 +99,14 @@ export class NailsDirectives {
     const context = new Context(state, componentEngine.getInstanceOfElementOrNull(element));
     if (context.resolveOrUndefined(statement)) {
       if (reversed) {
+        // tslint:disable-next-line:no-eval
         if (!eval(state.data[statement])) {
           element.style.visibility = 'visible';
         } else {
           element.style.visibility = 'hidden';
         }
       } else {
+        // tslint:disable-next-line:no-eval
         if (eval(state.data[statement])) {
           element.style.visibility = 'visible';
         } else {
