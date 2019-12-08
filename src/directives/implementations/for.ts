@@ -14,12 +14,12 @@ export class ForImplementation {
     private lastElement: HTMLElement = null;
 
     constructor(state: State, element: HTMLElement, statement: string) {
-        this.engine = new RenderingEngine(state);
+        this.state = state;
+        this.engine = new RenderingEngine(this.state);
         this.componentEngine = new ComponentEngine(state, this.engine, null, []);
         this.context = new Context(state, this.componentEngine.getInstanceOfElementOrNull(element));
         this.reference = this.context.resolveOrUndefined(statement.split(' ')[3]);
         this.element = element;
-        this.state = state;
         this.statement = statement;
     }
 
