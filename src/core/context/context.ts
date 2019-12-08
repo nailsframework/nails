@@ -2,10 +2,13 @@ import { Instance } from '../../classes/Instance';
 import { State } from '../state';
 
 export class Context {
-  constructor(public state: State, public instance: Instance) {}
+  constructor(public state: State, public instance: Instance) { }
 
   public resolveContextOrUndefined(path: string) {
     path = this.stripFunctionCalls(path);
+    if (path === '') {
+      throw new Error('Cannot have empty path on ResolveContext');
+    }
     let stateResolve;
     let instanceResolve;
 
@@ -20,6 +23,32 @@ export class Context {
     }
     if (stateResolve || stateResolve === '') {
       return stateResolve;
+    }
+  }
+  public resolveOrUndefinedCustomObject(path: string, object: any): any {
+    const stripped = this.stripFunctionCalls(path);
+
+    const resolved = this.resolve(stripped, object);
+
+
+    if (path === '') {
+      return object;
+    }
+
+    if (path.split('.').length === 1) {
+      if (object.hasOwnProperty(path)) {
+        return object[path];
+      } else {
+        return object;
+      }
+    }
+    if (stripped || stripped === '') {
+      if (path !== stripped) {
+        const functionCalls = this.getFunctionCallString(path);
+        // tslint:disable-next-line:no-eval
+        return eval('resolved' + '.' + functionCalls);
+      }
+      return resolved;
     }
   }
   public resolveOrUndefined(path: any): any {

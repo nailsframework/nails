@@ -1,7 +1,7 @@
 'use strict';
 import { ActiveElement } from '../../classes/ActiveElement';
 import { Instance } from '../../classes/Instance';
-import { NailsDirectives } from '../../directiveDefinitions';
+import { NailsDirectives } from '../../directives/directiveDefinitions';
 import { Context } from '../context/context';
 import { State } from '../state';
 import { ComponentEngine } from './componentEngine';
@@ -119,7 +119,7 @@ export class RenderingEngine {
   public removePrefix(directive: string) {
     return directive.substring(2);
   }
-  public prefixDiretive(directive: string) {
+  public prefixDirective(directive: string) {
     return 'n-' + directive;
   }
   public getElementDirectives(element: HTMLElement) {
@@ -128,7 +128,7 @@ export class RenderingEngine {
     }
     const directives: string[] = [];
     for (let directive of this.directives.directives) {
-      directive = this.prefixDiretive(directive);
+      directive = this.prefixDirective(directive);
       if ('hasAttribute' in element && element.hasAttribute(directive)) {
         directives.push(directive);
       }
@@ -151,7 +151,7 @@ export class RenderingEngine {
   }
 
   public getElementAttributeForDirective(element: HTMLElement, directive: string) {
-    directive = this.prefixDiretive(directive);
+    directive = this.prefixDirective(directive);
     if (element.hasAttribute(directive)) {
       return element.getAttribute(directive);
     } else {
@@ -164,11 +164,12 @@ export class RenderingEngine {
     for (let directive of directives) {
       directive = this.removePrefix(directive);
       if (directive in this.directives) {
+        console.warn(element.getAttribute('n-for'))
         // tslint:disable-next-line:no-eval
         eval(
           'this.directives.' +
-            directive +
-            '(element, this.getElementAttributeForDirective(element, directive), this.state)',
+          directive +
+          '(element, this.getElementAttributeForDirective(element, directive), this.state)',
         );
         const nDirectives = this.getElementDirectives(element);
         if (add) {
@@ -189,6 +190,9 @@ export class RenderingEngine {
     return interpolation;
   }
 
+  public insertAfter(newNode: HTMLElement, referenceNode: HTMLElement) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextElementSibling);
+  }
   public getNForInterpolations(content: string) {
     // tslint:disable-next-line:prefer-const
     let interpolations: string[];
@@ -271,7 +275,7 @@ export class RenderingEngine {
   }
 
   // tslint:disable-next-line:no-empty
-  public interpolateOnTextWithState(text: string, state: State) {}
+  public interpolateOnTextWithState(text: string, state: State) { }
   public getContentOfNodeIfTextNodeExists(node: Node): string {
     if (node.nodeType === 3) {
       return node.nodeValue;

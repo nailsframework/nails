@@ -17,9 +17,9 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
 };
 const nails = new Nails(nailsConfig);
@@ -39,7 +39,6 @@ it('should interpolate', () => {
 
 it('should get Attributes', () => {
   element.setAttribute('test', 'worked');
-  element.setAttribute('n-for', 'let a of b');
   element.setAttribute('n-if', 'true');
   element.setAttribute('n-click', '');
   element.setAttribute('n-form', 'test');

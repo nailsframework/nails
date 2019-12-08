@@ -1,9 +1,10 @@
 'use strict';
-import { Instance } from './classes/Instance';
-import { Context } from './core/context/context';
-import { ComponentEngine } from './core/engine/componentEngine';
-import { RenderingEngine } from './core/engine/engine';
-import { State } from './core/state';
+import { Instance } from '../classes/Instance';
+import { Context } from '../core/context/context';
+import { ComponentEngine } from '../core/engine/componentEngine';
+import { RenderingEngine } from '../core/engine/engine';
+import { State } from '../core/state';
+import { ForImplementation } from './implementations/for';
 export class NailsDirectives {
   public directives: any;
   constructor() {
@@ -69,72 +70,10 @@ export class NailsDirectives {
     });
   }
 
-  public for(element: HTMLElement, statemenet: string, state: State) {
-    console.error('called');
-    const engine = new RenderingEngine(state);
-    const componentEngine = new ComponentEngine(state, engine, null, []);
-    engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], element);
+  public for(element: HTMLElement, statement: string, state: State) {
+    const implementation = new ForImplementation(state, element, statement);
+    implementation.run();
 
-    element.style.display = 'none';
-    // tslint:disable-next-line: no-shadowed-variable
-    function interpolateCustomElement(
-      el: HTMLElement,
-      object: any,
-      // tslint:disable-next-line: no-shadowed-variable
-      descriptor: any,
-    ) {
-      // Performancewise, we render the whole html element.
-      let html = el.innerHTML;
-      const interpolations = engine.getInterpolationsForTextContent(html);
-      for (const interpolation of interpolations) {
-        let stripped = engine.stripAndTrimInterpolation(interpolation);
-        const args = stripped.split('.');
-        args[0] = '';
-        stripped = '';
-        for (const arg of args) {
-          stripped += arg + '.';
-        }
-        stripped = stripped.substring(0, stripped.length - 1);
-
-        if (engine.getValueOfInterpolation(interpolation, element) !== undefined) {
-          html = html.replace(interpolation, engine.getValueOfInterpolation(interpolation, element));
-        } else {
-          // tslint:disable: no-eval
-          html = html.replace(interpolation, engine.sanitize(eval('object' + stripped)));
-        }
-      }
-      el.innerHTML = html;
-    }
-    const descriptor = statemenet.split(' ')[1];
-    const arr = statemenet.split(' ')[3];
-    const instance = componentEngine.getInstanceOfElementOrNull(element) as Instance;
-    const context = new Context(state, instance);
-
-    const refArray = context.resolveOrUndefined(arr);
-
-    if (!refArray) {
-      return;
-    }
-
-    const parent = element.parentNode;
-    if (parent === null) {
-      return;
-    }
-    for (const i of refArray) {
-      const child = document.createElement(element.nodeName);
-      child.innerHTML = element.innerHTML;
-      interpolateCustomElement(child, i, descriptor);
-      parent.appendChild(child);
-      engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], child);
-
-      for (const attr of element.attributes) {
-        if (attr.name !== 'n-for' && attr.name !== 'style') {
-          child.setAttribute(attr.name, attr.value);
-        }
-      }
-      componentEngine.traverseElementAndExecuteDirectives(child);
-      // engine.executeDirectivesOnElement(child, true)
-    }
   }
   public if(element: HTMLElement, statement: string, state: State) {
     if (statement === 'true' || statement === 'false') {
