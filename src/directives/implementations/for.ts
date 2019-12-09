@@ -85,7 +85,6 @@ export class ForImplementation {
     private hideElement(e: HTMLElement) {
         e.hidden = true;
         e.setAttribute('disabled', '');
-        e.setAttribute('selected', 'false');
     }
     private replaceAll(search: string, replacement: string, target: string) {
         return target.replace(new RegExp(search, 'g'), replacement);
