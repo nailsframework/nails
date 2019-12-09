@@ -15,9 +15,9 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() { },
+    onInit() {},
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) { },
+    onMounted(currentState: State) {},
   },
 };
 const nails = new Nails(nailsConfig);
@@ -52,6 +52,6 @@ it('should render n-for', () => {
 
   directives.for(tElement, 'let a of [1,2,3,4]', nails.state);
   console.warn(parent.innerHTML);
-  expect(parent.children.length === 5)
+  expect(parent.children.length === 5);
   expect(parent.children[1].innerHTML).toContain('worked');
 });
