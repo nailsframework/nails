@@ -55,7 +55,3 @@ it('should render n-for', () => {
   expect(parent.children.length === 5);
   expect(parent.children[1].innerHTML).toContain('worked');
 });
-
-it('should resolve n-for', () => {
-  const parent = document.createElement('div');
-});

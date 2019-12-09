@@ -15,6 +15,7 @@ export class ForImplementation {
     private lastElement: HTMLElement = null;
 
     constructor(state: State, element: HTMLElement, statement: string) {
+        this.statement = statement;
         this.state = state;
         this.engine = new RenderingEngine(this.state);
         this.componentEngine = new ComponentEngine(state, this.engine, null, []);
@@ -22,7 +23,6 @@ export class ForImplementation {
         this.reference = this.context.resolveContextOrUndefined(this.statement.split(' ')[3]);
 
         this.element = element;
-        this.statement = statement;
     }
 
     public run() {
