@@ -51,9 +51,6 @@ export class ForImplementation {
         this.handleSelect(this.element.parentElement);
     }
 
-    private ensureSafeToAccess(element: HTMLElement): boolean {
-        return element.parentElement !== null;
-    }
     private addToList(element: HTMLElement) {
         const guid = Guid.newGuid();
         element.setAttribute('nails-generated-element', guid);
