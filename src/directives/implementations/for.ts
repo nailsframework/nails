@@ -147,12 +147,12 @@ export class ForImplementation {
 
         return text;
     }
-    private executeDirectivesOnElement(element: HTMLElement) {
+    private executeDirectivesOnElement(element: Element) {
         for (const child of element.children) {
-            this.executeDirectivesOnElement(element);
+            this.executeDirectivesOnElement(child);
         }
 
-        this.engine.executeDirectivesOnElement(element, true);
+        this.engine.executeDirectivesOnElement(element as HTMLElement, true);
     }
     private interpolate(el: HTMLElement, ref: []) {
         const interpolations = this.engine.getInterpolationsForTextContent(el.outerHTML);
