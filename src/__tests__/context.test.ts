@@ -2,8 +2,8 @@ import { CoreComponent } from '../core/components/core.component';
 import { Context } from '../core/context/context';
 import { ComponentEngine } from '../core/engine/componentEngine';
 import { State } from '../core/state';
-import { Nails } from '../nails';
 import { MockComponent } from '../mocks/mock.component';
+import { Nails } from '../nails';
 
 const nailsConfig = {
   el: 'body',
@@ -24,7 +24,7 @@ const nailsConfig = {
     res: {
       does() {
         return {
-          work: function() {
+          work: function () {
             return 'yes';
           },
         };
@@ -33,9 +33,9 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
 };
 

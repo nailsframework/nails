@@ -2,7 +2,7 @@ import { Instance } from '../../classes/Instance';
 import { State } from '../state';
 
 export class Context {
-  constructor(public state: State, public instance: Instance) {}
+  constructor(public state: State, public instance: Instance) { }
 
   public resolveContextOrUndefined(path: string) {
     path = this.stripFunctionCalls(path);
@@ -38,7 +38,7 @@ export class Context {
       if (object.hasOwnProperty(path)) {
         return object[path];
       } else {
-        return object;
+        return;
       }
     }
     if (stripped || stripped === '') {
