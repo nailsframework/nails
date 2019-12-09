@@ -15,9 +15,9 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
 };
 const nails = new Nails(nailsConfig);
@@ -41,10 +41,10 @@ it('should mount directives', () => {
 });
 
 it('should render n-for', () => {
-  const tElement = document.createElement('div');
+  const tElement = document.createElement('option');
   const parent = document.createElement('select');
   tElement.innerHTML = `
-      <p>{{a}} {{test}}</p>
+      {{a}} {{test}}
   `;
   tElement.setAttribute('n-for', 'let a of [1,2,3,4]');
   tElement.setAttribute('id', '{{a}}');
@@ -52,17 +52,6 @@ it('should render n-for', () => {
 
   directives.for(tElement, 'let a of [1,2,3,4]', nails.state);
   console.warn(parent.innerHTML);
-  expect(parent.innerHTML).toEqual(
-    `<forcontainer><div n-for=\"let a of [1,2,3,4]\" id=\"{{a}}\" style="display: none;" hidden=\"\">
-      <p>{{a}} {{test}}</p>
-  </div><div>
-      <p>1 worked</p>
-  </div><div>
-      <p>2 worked</p>
-  </div><div>
-      <p>3 worked</p>
-  </div><div>
-      <p>4 worked</p>
-  </div></forcontainer>`,
-  );
+  expect(parent.children.length === 5)
+  expect(parent.children[1].innerHTML).toContain('worked');
 });
