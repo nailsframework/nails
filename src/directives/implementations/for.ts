@@ -1,8 +1,8 @@
 import { Context } from '../../core/context/context';
 import { ComponentEngine } from '../../core/engine/componentEngine';
 import { RenderingEngine } from '../../core/engine/engine';
-import { State } from '../../core/state';
 import { Guid } from '../../core/math/Guid';
+import { State } from '../../core/state';
 
 export class ForImplementation {
     private engine: RenderingEngine;
@@ -28,6 +28,7 @@ export class ForImplementation {
         this.element.style.display = 'none';
         this.engine.disableInterpolationForVariableNameOnElement(this.statement.split(' ')[1], this.element);
 
+
         const parent = this.element.parentElement;
         if (!parent) {
             throw new Error('Element ' + parent + ' has no parent');
@@ -41,6 +42,8 @@ export class ForImplementation {
                 throw new Error('Statement ' + this.statement + ' could not be translated into an object');
             }
         }
+        this.cleanUp();
+
 
         this.interpolate(this.element, this.reference);
         this.hideElement(this.element);
