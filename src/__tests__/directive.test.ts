@@ -15,9 +15,9 @@ const nailsConfig = {
   },
   methods: {
     // tslint:disable-next-line: no-empty
-    onInit() {},
+    onInit() { },
     // tslint:disable-next-line: no-empty
-    onMounted(currentState: State) {},
+    onMounted(currentState: State) { },
   },
 };
 const nails = new Nails(nailsConfig);
@@ -54,4 +54,8 @@ it('should render n-for', () => {
   console.warn(parent.innerHTML);
   expect(parent.children.length === 5);
   expect(parent.children[1].innerHTML).toContain('worked');
+});
+
+it('should resolve n-for', () => {
+  const parent = document.createElement('div');
 });
