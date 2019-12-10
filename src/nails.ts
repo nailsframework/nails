@@ -12,6 +12,7 @@ import { ComponentEngine } from './core/engine/componentEngine';
 import { RenderingEngine } from './core/engine/engine';
 import { Injector } from './core/injector';
 import { State } from './core/state';
+import { Observer, ChangeReport } from 'micro-observer';
 
 class Factory {
   public create<T>(type: new () => T): T {
@@ -61,7 +62,7 @@ export class Nails {
     this.engine.indexDOM();
     this.componentEngine.renderComponents();
     this.engine.setTitle();
-    this.state.methods.getState = function() {
+    this.state.methods.getState = function () {
       return this.state;
     };
     if (typeof this.state.methods.onMounted !== 'undefined') {
@@ -94,25 +95,12 @@ export class Nails {
     return true;
   }
   public setUpProxy() {
-    if (typeof window.Proxy !== 'undefined') {
-      const handler = {
-        state: this.state,
-        // tslint:disable-next-line: object-literal-sort-keys
-        notifyDom: this.notifyDOM,
-        engine: this.engine,
+    const proxy = Observer.create(this.state.data, (change: ChangeReport) => {
+      this.notifyDOM(change.target, change.property, change.target[change.property])
+      return true;
+    });
 
-        get(target: any, prop: any, receiver: any) {
-          return target[prop];
-        },
-        set(target: any, prop: any, value: string) {
-          target[prop] = value;
-          this.notifyDom(target, prop, '');
-          return true;
-        },
-      };
-
-      const proxy = new Proxy(this.state.data, handler);
-      this.state.data = proxy;
-    }
+    this.state.data = proxy;
   }
 }
+
