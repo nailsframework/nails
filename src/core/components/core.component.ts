@@ -1,23 +1,21 @@
+import { ChangeReport, Observer } from 'micro-observer';
 import { IComponent } from '../../interfaces/Component';
 import { RenderingEngine } from '../engine/engine';
 import { State } from '../state';
-import { Observer, ChangeReport } from 'micro-observer';
 
 export class CoreComponent implements IComponent {
   public selector: string = 'component';
 
-
   constructor(protected state: State) {
-
     const proxy = Observer.create(this, (change: ChangeReport) => {
-      this.notifyDOM(change.target, change.property, change.target[change.property])
+      this.notifyDOM(change.target, change.property, change.target[change.property]);
       return true;
     });
 
     return proxy;
   }
-  render() {
-    return '<div></div>'
+  public render() {
+    return '<div></div>';
   }
 
   private notifyDOM(target: any, prop: any, value: string) {

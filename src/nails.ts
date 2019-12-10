@@ -1,4 +1,5 @@
 'use strict';
+import { ChangeReport, Observer } from 'micro-observer';
 import 'ts-polyfill/lib/es2016-array-include';
 import 'ts-polyfill/lib/es2017-object';
 import 'ts-polyfill/lib/es2017-string';
@@ -12,7 +13,6 @@ import { ComponentEngine } from './core/engine/componentEngine';
 import { RenderingEngine } from './core/engine/engine';
 import { Injector } from './core/injector';
 import { State } from './core/state';
-import { Observer, ChangeReport } from 'micro-observer';
 
 class Factory {
   public create<T>(type: new () => T): T {
@@ -62,7 +62,7 @@ export class Nails {
     this.engine.indexDOM();
     this.componentEngine.renderComponents();
     this.engine.setTitle();
-    this.state.methods.getState = function () {
+    this.state.methods.getState = function() {
       return this.state;
     };
     if (typeof this.state.methods.onMounted !== 'undefined') {
@@ -96,11 +96,10 @@ export class Nails {
   }
   public setUpProxy() {
     const proxy = Observer.create(this.state.data, (change: ChangeReport) => {
-      this.notifyDOM(change.target, change.property, change.target[change.property])
+      this.notifyDOM(change.target, change.property, change.target[change.property]);
       return true;
     });
 
     this.state.data = proxy;
   }
 }
-
