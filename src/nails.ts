@@ -1,5 +1,5 @@
 'use strict';
-import { Observer, ChangeReport } from 'micro-observer';
+import { ChangeReport, Observer } from 'micro-observer';
 import 'ts-polyfill/lib/es2016-array-include';
 import 'ts-polyfill/lib/es2017-object';
 import 'ts-polyfill/lib/es2017-string';
@@ -62,7 +62,7 @@ export class Nails {
     this.engine.indexDOM();
     this.componentEngine.renderComponents();
     this.engine.setTitle();
-    this.state.methods.getState = function () {
+    this.state.methods.getState = function() {
       return this.state;
     };
     if (typeof this.state.methods.onMounted !== 'undefined') {
