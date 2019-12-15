@@ -78,8 +78,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.2",
-    "micro-observer": "0.0.19",
     "nyc": "^14.1.1",
+    "observable-slim": "^0.1.5",
+    "proxy-deep": "^2.2.1",
     "ts-polyfill": "^3.5.3"
   }
 }

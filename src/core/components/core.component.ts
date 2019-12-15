@@ -1,15 +1,15 @@
-import { ChangeReport, Observer } from 'micro-observer';
 import { IComponent } from '../../interfaces/Component';
 import { RenderingEngine } from '../engine/engine';
 import { State } from '../state';
+import DeepProxy from 'proxy-deep';
+import ObservableSlim from '../observation/observer';
 
 export class CoreComponent implements IComponent {
   public selector: string = 'component';
 
   constructor(protected state: State) {
-    const proxy = Observer.create(this, (change: ChangeReport) => {
-      this.notifyDOM(change.target, change.property, change.target[change.property]);
-      return true;
+    const proxy = ObservableSlim.create(test, true, (changes: any) => {
+      this.notifyDOM(changes.target, changes.property, changes.newValue);
     });
 
     return proxy;
