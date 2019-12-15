@@ -54,7 +54,7 @@ const ObservableSlim = (() => {
     let observable = originalObservable || null;
 
     // record the nested path taken to access this object -- if there was no path then we provide the first empty entry
-    const path = originalPath || [{ target: target, property: '' }];
+    const path = originalPath || [{ target, property: '' }];
     paths.push(path);
 
     // in order to accurately report the "previous value" of the "length" property on an Array
@@ -196,7 +196,7 @@ const ObservableSlim = (() => {
 
           // create a shallow copy of the path array -- if we didn't create a shallow copy then all nested objects would share the same path array and the path wouldn't be accurate
           const newPath = path.slice(0);
-          newPath.push({ target: targetProp, property: property });
+          newPath.push({ target: targetProp, property });
           return _create(targetProp, domDelay, observable, newPath);
         } else {
           return targetProp;
@@ -218,13 +218,13 @@ const ObservableSlim = (() => {
         changes.push({
           type: 'delete',
           // tslint:disable: object-literal-sort-keys
-          target: target,
-          property: property,
+          target,
+          property,
           newValue: null,
           previousValue: previousValue[property],
           currentPath: _getPath(target, property, undefined),
           jsonPointer: _getPath(target, property, true),
-          proxy: proxy,
+          proxy,
         });
 
         if (originalChange === true) {
@@ -303,14 +303,14 @@ const ObservableSlim = (() => {
 
           // store the change that just occurred. it is important that we store the change before invoking the other proxies so that the previousValue is correct
           changes.push({
-            type: type,
-            target: target,
-            property: property,
+            type,
+            target,
+            property,
             newValue: value,
             previousValue: receiver[property],
             currentPath: _getPath(target, property, undefined),
             jsonPointer: _getPath(target, property, true),
-            proxy: proxy,
+            proxy,
           });
 
           // mutations of arrays via .push or .splice actually modify the .length before the set handler is invoked
@@ -498,18 +498,18 @@ const ObservableSlim = (() => {
     if (observable === null) {
       observable = {
         parentTarget: target,
-        domDelay: domDelay,
+        domDelay,
         parentProxy: proxy,
         observers: [],
         paused: false,
-        path: path,
+        path,
         changesPaused: false,
       };
       observables.push(observable);
     }
 
     // store the proxy we've created so it isn't re-created unnecessairly via get handler
-    const proxyItem = { target: target, proxy: proxy, observable: observable };
+    const proxyItem = { target, proxy, observable };
 
     // if we have already created a Proxy for this target object then we add it to the corresponding array
     // on targetsProxy (targets and targetsProxy work together as a Hash table indexed by the actual target object).

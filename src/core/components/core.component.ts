@@ -7,7 +7,7 @@ export class CoreComponent implements IComponent {
   public selector: string = 'component';
 
   constructor(protected state: State) {
-    const proxy = ObservableSlim.create(test, true, (changes: any) => {
+    const proxy = ObservableSlim.create(this, true, (changes: any) => {
       this.notifyDOM(changes.target, changes.property, changes.newValue);
     });
 
