@@ -11,7 +11,7 @@
  *	reflecting changes in the model to the view. Observable Slim aspires to be as lightweight and easily
  *	understood as possible. Minifies down to roughly 3000 characters.
  */
-const ObservableSlim = (function () {
+const ObservableSlim = (() => {
     const paths = [];
     // An array that stores all of the observables created through the public create() method below.
     const observables: any[] = [];
@@ -28,8 +28,9 @@ const ObservableSlim = (function () {
     // to track that a given Proxy was modified from the 'set' handler
     let dupProxy: any[] = null;
 
-    let _getProperty = function (obj: any, path: any) {
-        return path.split('.').reduce(function (prev: any, curr: any) {
+    // tslint:disable-next-line:variable-name
+    const _getProperty = (obj: any, path: any) => {
+        return path.split('.').reduce((prev: any, curr: any) => {
             return prev ? prev[curr] : undefined
         }, obj || self)
     };
@@ -48,7 +49,8 @@ const ObservableSlim = (function () {
 			Returns:
 				An ES6 Proxy object.
 	*/
-    let _create = function (target: any, domDelay: any, originalObservable: any, originalPath: any): any {
+    // tslint:disable-next-line:variable-name
+    const _create = (target: any, domDelay: any, originalObservable: any, originalPath: any): any => {
 
         let observable = originalObservable || null;
 
@@ -59,7 +61,6 @@ const ObservableSlim = (function () {
         // in order to accurately report the "previous value" of the "length" property on an Array
         // we must use a helper property because intercepting a length change is not always possible as of 8/13/2018 in 
         // Chrome -- the new `length` value is already set by the time the `set` handler is invoked
-        if (target instanceof Array) { target.length }
 
         let changes: any[] = [];
 
@@ -73,12 +74,14 @@ const ObservableSlim = (function () {
 			Returns:
 				String of the nested path (e.g., hello.testing.1.bar or, if JSON pointer, /hello/testing/1/bar
 		*/
-        let _getPath = function (target: any, property: any, jsonPointer: any) {
+        // tslint:disable-next-line:variable-name
+        const _getPath = (_target: any, property: any, jsonPointer: any) => {
 
             let fullPath = '';
             let lastTarget = null;
 
             // loop over each item in the path and append it to full path
+            // tslint:disable-next-line: prefer-for-of
             for (let i = 0; i < path.length; i++) {
 
                 // if the current object was a member of an array, it's possible that the array was at one point
@@ -103,7 +106,9 @@ const ObservableSlim = (function () {
             return fullPath;
         };
 
-        let _notifyObservers = function (numChanges: any) {
+        // tslint:disable: variable-name
+        // tslint:disable: only-arrow-functions
+        const _notifyObservers = function (numChanges: any) {
 
             // if the observable is paused, then we don't want to execute any of the observer functions
             if (observable.paused === true) { return; }
@@ -120,6 +125,7 @@ const ObservableSlim = (function () {
                         changes = [];
 
                         // invoke any functions that are observing changes
+                        // tslint:disable: prefer-for-of
                         for (let i = 0; i < observable.observers.length; i++) { observable.observers[i](changesCopy); }
 
                     }
@@ -138,7 +144,8 @@ const ObservableSlim = (function () {
         };
 
         const handler = {
-            get(targe: any, property: any) {
+            // tslint:disable-next-line: no-shadowed-variable
+            get(target: any, property: any) {
 
                 // implement a simple check for whether or not the object is a proxy, this helps the .create() method avoid
                 // creating Proxies of Proxies.
@@ -149,7 +156,6 @@ const ObservableSlim = (function () {
                     // from the perspective of a given observable on a parent object, return the parent object of the given nested object
                 } else if (property === '__getParent') {
                     return function (i: any) {
-                        if (typeof i === 'undefined') { let i = 1; }
                         const parentPath = _getPath(target, '__getParent', undefined).split('.');
                         parentPath.splice(-(i + 1), (i + 1));
                         return _getProperty(observable.parentProxy, parentPath.join('.'));
@@ -167,16 +173,12 @@ const ObservableSlim = (function () {
                     return targetProp.bind(target);
                 }
 
-                // if we are traversing into a new object, then we want to record path to that object and return a new observable.
-                // recursively returning a new observable allows us a single Observable.observe() to monitor all changes on
                 // the target object and any objects nested within.
                 if (targetProp instanceof Object && targetProp !== null && target.hasOwnProperty(property)) {
 
-                    // if we've found a proxy nested on the object, then we want to retrieve the original object behind that proxy
                     if (targetProp.__isProxy === true) { targetProp = targetProp.__getTarget; }
 
                     // if the object accessed by the user (targetProp) already has a __targetPosition AND the object
-                    // stored at target[targetProp.__targetPosition] is not null, then that means we are already observing this object
                     // we might be able to return a proxy that we've already created for the object
                     if (targetProp.__targetPosition > -1 && targets[targetProp.__targetPosition] !== null) {
 
@@ -202,6 +204,7 @@ const ObservableSlim = (function () {
                     return targetProp;
                 }
             },
+            // tslint:disable: no-shadowed-variable
             deleteProperty(target: any, property: any) {
 
                 // was this change an original change or was it a change that was re-triggered below
@@ -217,6 +220,7 @@ const ObservableSlim = (function () {
                 // record the deletion that just took place
                 changes.push({
                     'type': 'delete'
+                    // tslint:disable: object-literal-sort-keys
                     , 'target': target
                     , 'property': property
                     , 'newValue': null
@@ -435,7 +439,7 @@ const ObservableSlim = (function () {
 
                                             // if there are no more observables assigned to the target object, then we can remove
                                             // the target object altogether. this is necessary to prevent growing memory consumption particularly with large data sets
-                                            if (currentTargetProxy.length == 0) {
+                                            if (currentTargetProxy.length === 0) {
                                                 // targetsProxy.splice(c,1);
                                                 targets[c] = null;
                                             }
@@ -533,8 +537,7 @@ const ObservableSlim = (function () {
 
             // test if the target is a Proxy, if it is then we need to retrieve the original object behind the Proxy.
             // we do not allow creating proxies of proxies because -- given the recursive design of ObservableSlim -- it would lead to sharp increases in memory usage
-            if (target.__isProxy === true) {
-            }
+
 
             // fire off the _create() method -- it will create a new observable and proxy and return the proxy
             const proxy = _create(target, domDelay, undefined, undefined);
@@ -612,7 +615,7 @@ const ObservableSlim = (function () {
                 }
             };
 
-            if (foundMatch == false) { throw new Error('ObseravableSlim could not resume observable -- matching proxy not found.'); }
+            if (foundMatch === false) { throw new Error('ObseravableSlim could not resume observable -- matching proxy not found.'); }
         },
 
 		/*	Method: pauseChanges
@@ -634,7 +637,7 @@ const ObservableSlim = (function () {
                 }
             };
 
-            if (foundMatch == false) { throw new Error('ObseravableSlim could not pause changes on observable -- matching proxy not found.'); }
+            if (foundMatch === false) { throw new Error('ObseravableSlim could not pause changes on observable -- matching proxy not found.'); }
         },
 
 		/*	Method: resumeChanges
@@ -653,7 +656,7 @@ const ObservableSlim = (function () {
                 }
             };
 
-            if (foundMatch == false) { throw new Error('ObseravableSlim could not resume changes on observable -- matching proxy not found.'); }
+            if (foundMatch === false) { throw new Error('ObseravableSlim could not resume changes on observable -- matching proxy not found.'); }
         },
 
 		/*	Method: remove

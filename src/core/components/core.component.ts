@@ -1,8 +1,7 @@
 import { IComponent } from '../../interfaces/Component';
 import { RenderingEngine } from '../engine/engine';
-import { State } from '../state';
-import DeepProxy from 'proxy-deep';
 import ObservableSlim from '../observation/observer';
+import { State } from '../state';
 
 export class CoreComponent implements IComponent {
   public selector: string = 'component';

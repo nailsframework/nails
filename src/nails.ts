@@ -11,8 +11,8 @@ import 'ts-polyfill/lib/es2020-string';
 import { ComponentEngine } from './core/engine/componentEngine';
 import { RenderingEngine } from './core/engine/engine';
 import { Injector } from './core/injector';
-import { State } from './core/state';
 import ObservableSlim from './core/observation/observer';
+import { State } from './core/state';
 
 class Factory {
   public create<T>(type: new () => T): T {
